@@ -5,10 +5,8 @@
         eMail Alias
         Samba Accounts
 
-Story H1(eMail Accounts): On the front end a user(Mail master) can get a link to manage , the services in ICT of which is the user email accounts.
-
-The mail master by accessing to this link on the web application he can manage Mail Account, Adding Mail Accounts, Removing Mail Accounts, managing Mail Account Service Add in requests, customize the different "mailboxes" view (on all accounts during login) and others similar to this group.
-
+Story H1(eMail Accounts):  On the email accounts management page a user(Mail master) can get a link to manage , the services in ICT of which is the user email accounts.
+The mail master by accessing to this link on the web application he can manage Mail Account, Adding Mail Accounts(S1 Eyuel.), Rem oving Mail Accounts, managing Mail Account Service Add in requests like FTP services and others, customize the different "mailboxes" view (on all accounts during login) and others similar to this group.
 Story H2(Proxy Service): A proxy administrator can get a page for setting a permission and denial of  access for the available proxy users in the university.
 
 The  proxy administrator can manage user accounts to get Proxy services of which is the Internet in  a listed form with the available service permission and add ins being in a check box  following the user list columns.
