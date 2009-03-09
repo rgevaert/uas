@@ -1,15 +1,21 @@
 # UAS: story for user administration website.
 
 S1. Pre-registration
-    - user can first register online from anywhere in the university.
+    - the pre-registration form should only be accessible form the intranet
+    - user can first register online from anywhere inside the university.
+    - 
+    - the system should provide automated or inperson approval that the user is really the
+      employee/student of the  university
 
-s2. User information is located by ID number
+s2. User information is located/searchable by ID number
+ - Only authorized secretary can access the registration users page1 
  -  the secretary asks the user if he has been pre-registered online
  - locate the user by id number/ Search on the homepage for registered user
  - check the user if he/she is the employee of the university
- - change the status of the user as "Email is Created"
+ - change the status of the pre-registered user to  "Email is Created" --> home
+   direcotry will  be created for the user
 
-S2. registration form on the home page
+S3. registration form on the home page
   - staff/student come to the ICT office
   - Registration home page will display registration form, 
   - the secretary registers the user's first/last name, ID Number... every
@@ -18,7 +24,7 @@ S2. registration form on the home page
   - EDIT/UPDATE/DELETE link will be displayed on the homepage, that incase wrong
     information is stored it can be edited/Deleted
 
-s3. Delete/Edit Links on the home page
+s4. Delete/Edit Links on the home page
   - Wrongly saved records will all be deleted one by one
   - Wrongly saved recored will be edited and saved againl.
   - if everything is okay, the email address is created and a final print out page will e
