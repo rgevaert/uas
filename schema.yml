@@ -40,3 +40,38 @@ propel:
     id:           ~
     type:         { type: varchar(255), required: true }
 
+  unix_account:
+    id:           ~
+    user_id:      { type: varchar(255), required: true} #unique together with user ID
+    host_name:    { type: varchar(255), required: true} #unique together with user ID
+    quota:        { type: integer }
+    ts_update:    ~
+
+  proxy_account:
+    id:           ~
+    user_id:      { type: varchar(255), required: true, index: unique }
+
+  ftp_account:
+    id:           ~
+    user_id:      { type: varchar(255), required: true}
+    domain_id:     { type: varchar(255), required: true}
+    up_bandwidth:  { type: integer }
+    dl_bandwidth:  { type: integer }
+    Ip_access:     { }
+    Quota:         { type: integer}
+    Qutoa_file:    { type: integer}
+    ts_update:     ~
+
+  samba_account:
+    id:           ~
+    user_id:      { type: varchar(255), required: true }
+    acount_flag:   { type: varchar(255), required: true }
+    host_name:    { type: varchar(255), required: true }
+    ts_update:    ~
+
+  email_alias:
+    id:           ~
+    user_id:      { type: varchar(255), required: true }
+    localpart:    { type: varchar(255), required: true }
+    destination:  { type: varchar(255), required: true }
+    ts_update:     ~
