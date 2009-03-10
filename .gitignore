@@ -1,7 +1,7 @@
-log/*
-cache/*
-web/uploads/*
-config/databases.yml
-data/sql/*
-config/propel.ini
+uasproject/uas/log/*
+uasproject/uas/cache/*
+uasproject/uas/web/uploads/*
+uasproject/uas/config/databases.yml
+uasproject/uas/data/sql/*
+uasproject/uas/config/propel.ini
 *~
