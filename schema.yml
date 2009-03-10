@@ -46,7 +46,7 @@ propel:
     user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true } 
     host_name:    { type: varchar(255), required: true}
     quota:        { type: varchar(32), required: true default: '500000S' }
-    ts_update:    ~
+    updated_at:    ~
     _uniques:     { unique_index02: [user_id, host_name] }
 
   proxy_account:
@@ -62,14 +62,14 @@ propel:
     ip_access:    { type: varchar(255), required: true  }
     quota:        { required: true default: '500000S'}
     qutoa_file:   { type: varchar(255), required: true default: 10 }
-    ts_update:    ~
+    updated_at:    ~
 
   samba_account:
     id:           ~
     user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true }
     acount_flag:  { type: varchar(255), required: true }
     host_name:    { type: varchar(255), required: true }
-    ts_update:    ~
+    updated_at:    ~
     _uniques:     { unique_index03: [user_id, host_name] }
 
   email_alias:
@@ -77,4 +77,4 @@ propel:
     user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true }
     local_part:   { type: varchar(255), foreignTable: user, foreignReference: local_part, required: true }
     destination:  { type: varchar(255), required: true, email: true}
-    ts_update:     ~
+    updated_at:     ~
