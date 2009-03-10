@@ -39,3 +39,20 @@ Mar 10 15:57:16 symfony [info] {sfWebDebugLogger} Configuration 2.17 ms (9)
 Mar 10 15:57:16 symfony [info] {sfWebDebugLogger} Action "default/index" 0.18 ms (1)
 Mar 10 15:57:16 symfony [info] {sfWebDebugLogger} View "Success" for "default/index" 24.45 ms (1)
 Mar 10 15:57:16 symfony [info] {sfWebResponse} Send content (26531 o)
+Mar 10 16:26:19 symfony [info] {sfPatternRouting} Connect sfRoute "homepage" (/)
+Mar 10 16:26:19 symfony [info] {sfPatternRouting} Connect sfRoute "default_index" (/:module)
+Mar 10 16:26:19 symfony [info] {sfPatternRouting} Connect sfRoute "default" (/:module/:action/*)
+Mar 10 16:26:19 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'default',  'action' => 'index',)
+Mar 10 16:26:19 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Mar 10 16:26:19 symfony [info] {sfFilterChain} Executing filter "sfCommonFilter"
+Mar 10 16:26:19 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Mar 10 16:26:19 symfony [info] {defaultActions} Call "defaultActions->executeIndex()"
+Mar 10 16:26:19 symfony [info] {sfPHPView} Render "/home/vlir/symfony/uas/uasproject/uas/lib/university/symfony/lib/controller/default/templates/indexSuccess.php"
+Mar 10 16:26:19 symfony [info] {sfPHPView} Decorate content with "/home/vlir/symfony/uas/uasproject/uas/lib/university/symfony/lib/controller/default/templates/defaultLayout.php"
+Mar 10 16:26:19 symfony [info] {sfPHPView} Render "/home/vlir/symfony/uas/uasproject/uas/lib/university/symfony/lib/controller/default/templates/defaultLayout.php"
+Mar 10 16:26:19 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Mar 10 16:26:19 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Mar 10 16:26:19 symfony [info] {sfWebDebugLogger} Configuration 2.56 ms (9)
+Mar 10 16:26:19 symfony [info] {sfWebDebugLogger} Action "default/index" 0.20 ms (1)
+Mar 10 16:26:19 symfony [info] {sfWebDebugLogger} View "Success" for "default/index" 17.69 ms (1)
+Mar 10 16:26:19 symfony [info] {sfWebResponse} Send content (26566 o)
