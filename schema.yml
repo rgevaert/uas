@@ -56,13 +56,10 @@ propel:
 
   ftp_account:
     id:           ~
-<<<<<<< HEAD:schema.yml
     user_id:      { type: varchar(255), foreignTable: users, foreignReference: id, required: true}
     domain_id:     { type: varchar(255), foreignTable: domains, foreignReference: id, required: true}
-=======
     user_id:       { type: varchar(255), required: true}
     domain_id:     { type: varchar(255), required: true}
->>>>>>> 84eb81fb1c07331dd9efb07e37e9e6c32f551951:schema.yml
     up_bandwidth:  { type: integer }
     dl_bandwidth:  { type: integer }
     ip_access:     { }
@@ -72,13 +69,10 @@ propel:
 
   samba_account:
     id:           ~
-<<<<<<< HEAD:schema.yml
     user_id:      { type: varchar(255), foreignTable: users, foreignReference: id, required: true }
     acount_flag:   { type: varchar(255), required: true }
-=======
     user_id:      { type: varchar(255), required: true }
     acount_flag:  { type: varchar(255), required: true }
->>>>>>> 84eb81fb1c07331dd9efb07e37e9e6c32f551951:schema.yml
     host_name:    { type: varchar(255), required: true }
     ts_update:    ~
     _uniques:     {samba_uniques:[user_id, host_name}
