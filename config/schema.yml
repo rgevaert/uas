@@ -14,7 +14,7 @@ propel:
     nt_password:  { type: varchar(255) }
     lm_password:  { type: varchar(255) }
     crypt_password: { type: varchar(255) }
-    unix_password:{ type: varchar(255) }
+    unix_password: { type: varchar(255) }
     gid:          { type: integer, required: true }
     uid:          { type: integer, required: true, index: unique, autoincrement: true }
     status:       { type: integer, required: true, default: 1 }
