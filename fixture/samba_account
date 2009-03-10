@@ -1,0 +1,8 @@
+samba_account:
+    id:           ~
+    user_id:     Jhon
+    acount_flag:  account flag
+    host_name:    www.ju.edu.et
+    ts_update:    ~
+    _uniques:      Jhon, www.ju.edu.et
+

@@ -1,0 +1,22 @@
+ user:
+    id:           ~
+    first_name:   Jhon
+    fathers_name: Mesfin
+    gfathers_name:Daneil
+    login:        Jhonm
+    phone:        251-911509090
+    nt_password:  ntpass
+    lm_password:  lmpass
+    crypt_password:
+                  cryptpass
+    unix_password:unixpass
+    gid:          1000001
+    uid:          9000090
+    status:       1
+    alt_email:    jhon@yahoo.com
+    home_directory: /home/vmail/ju.edu.et/Jhone.Mesfin/
+    expires_at:   { 09132009 }
+    created_at:   ~
+    updated_at:   ~
+    university_id:juco 300/2000
+   domain_id:    ju.edu.et

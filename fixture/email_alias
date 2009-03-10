@@ -1,0 +1,6 @@
+email_alias:
+    id:           ~
+    user_id:      Jhon
+    local_part:   { type: varchar(255), foreignTable: user, foreignReference: local_part, required: true }
+    destination:  jhonmes@yahoo.com
+    ts_update:     ~
