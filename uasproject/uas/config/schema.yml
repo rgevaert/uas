@@ -1,4 +1,83 @@
 propel:
-  _attributes:
-    package: lib.model
-    defaultIdMethod: native
+  domain:
+    id:           ~
+    name:         { type: varchar(255), required: true, index: unique }
+
+  user:
+    id:           ~
+    domain_id:    { type: integer, foreignTable: domain, foreignReference: id, required: true, onDelete: cascade }
+    first_name:   { type: varchar(255), required: true, index: true }
+    fathers_name: { type: varchar(255), required: true, index: true }
+    grand_fathers_name: { type: varchar(255), required: true, index: true }
+    login:        { type: varchar(255), required: true, index: unique }
+    phone:        { type: varchar(255) }
+    nt_password:  { type: varchar(255) }
+    lm_password:  { type: varchar(255) }
+    crypt_password: { type: varchar(255) }
+    unix_password:{ type: varchar(255) }
+    gid:          { type: integer, required: true }
+    uid:          { type: integer, required: true, index: unique, autoincrement: true }
+    status:       { type: integer, required: true, default: 1 }
+    alternate_email: { type: varchar(255), required: true }
+    home_directory: { type: varchar(255), required: true }
+    expires_at:   { type: timestamp, required: true }
+    created_at:   ~
+    updated_at:   ~
+    
+  university_id:
+    id:           ~
+    number:       { type: varchar(255), unique: true } 
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true, onDelete: cascade }
+
+  email_account:
+    id:           ~
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true }
+    local_part:   { type: varchar(255), required: true }
+    quota:        { type: varchar(32), required: true, default: '500000S' }
+    created_at:   ~
+    updated_at:   ~
+    _uniques:     { email_address: [local_part, domain_id] }
+  
+  unix_account:
+    id:           ~
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true, onDelete: cascade } 
+    host_name:    { type: varchar(255), required: true, index: true }
+    quota:        { type: integer, default: '500000' }
+    created_at:   ~
+    updated_at:   ~
+    _uniques:     { account: [user_id, host_name] }
+
+  proxy_account:
+    id:           ~
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true, onDelete: cascade } 
+    created_at:   ~
+    updated_at:   ~
+
+  ftp_account:
+    id:           ~
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true, onDelete: cascade } 
+    up_bandwidth: { type: integer, default: 0 }
+    dl_bandwidth: { type: integer, default: 0 }
+    ip_access:    { type: varchar(255), default: '*' }
+    quota_size:   { type: integer, default: 0}
+    quota_files:  { type: integer, default: 0}
+    created_at:   ~
+    updated_at:   ~
+
+  samba_account:
+    id:           ~
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true }
+    acount_flag:  { type: varchar(13), required: true, default: '[U          ]' }
+    host_name:    { type: varchar(255), required: true, index: true }
+    created_at:   ~
+    updated_at:   ~
+    _uniques:     { account: [user_id, host_name] }
+
+  email_alias:
+    id:           ~
+    local_part:   { type: varchar(255), required: true, index: true }
+    domain_id:    { type: integer, foreignTable: domain, foreignReference: id, required: true, onDelete: cascade }
+    destination:  { type: varchar(255), required: true }
+    created_at:   ~
+    updated_at:     ~
+    _uniques:     { email_alias: [local_part, domain_id, destination] }
