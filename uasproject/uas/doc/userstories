@@ -1,0 +1,97 @@
+# UAS: story for user administration website.
+
+S1. Pre-registration
+    - the pre-registration form should only be accessible form the intranet
+    - user can first register online from anywhere inside the university.
+    - 
+    - the system should provide automated or inperson approval that the user is really the
+      employee/student of the  university
+
+s2. User information is located/searchable by ID number
+ - Only authorized secretary can access the registration users page1 
+ -  the secretary asks the user if he has been pre-registered online
+ - locate the user by id number/ Search on the homepage for registered user
+ - check the user if he/she is the employee of the university
+ - change the status of the pre-registered user to  "Email is Created" --> home
+   direcotry will  be created for the user
+
+S3. registration form on the home page
+  - staff/student come to the ICT office
+  - Registration home page will display registration form, 
+  - the secretary registers the user's first/last name, ID Number... every
+    possible information from the users ID number, on the way checks the user
+    really works in the  university
+  - EDIT/UPDATE/DELETE link will be displayed on the homepage, that incase wrong
+    information is stored it can be edited/Deleted
+
+s4. Delete/Edit Links on the home page
+  - Wrongly saved records will all be deleted one by one
+  - Wrongly saved recored will be edited and saved againl.
+  - if everything is okay, the email address is created and a final print out page will e
+    given to the user
+  - 
+
+
+
+
+
+3. Service Administration 
+        eMail Accounts
+        Proxy Service
+        Unix Accounts
+        eMail Alias
+        Samba Accounts
+
+Story H1(eMail Accounts):  On the email accounts management page a user(Mail master) can get a link to manage , the services in ICT of which is the user email accounts.
+The mail master by accessing to this link on the web application he can manage Mail Account, Adding Mail Accounts(S1 Eyuel.), Rem oving Mail Accounts, managing Mail Account Service Add in requests like FTP services and others, customize the different "mailboxes" view (on all accounts during login) and others similar to this group.
+Story H2(Proxy Service): A proxy administrator can get a page for setting a permission and denial of  access for the available proxy users in the university.
+
+The  proxy administrator can manage user accounts to get Proxy services of which is the Internet in  a listed form with the available service permission and add ins being in a check box  following the user list columns.
+
+Story H3(Unix Accounts): With a page for setting the users on the UAS system to be Unix users  a system administrator is provided a page to manage users in and make them Unix users.
+
+System Administrator is able to reload  all or selected users to be Unix users with all the privileges and user profiles settings to be set in the Unix user administration and the users to be set being listed in a form with all the options as a check box to set users the required privilege.
+
+Story H4(eMail Alias): The mail master can create aliases can be created on the mail system using a single form page which have the ability to set aliases based on the available users. 
+
+Each e-mail alias must  forward e-mail messages on to each e-mail address defined.  This form can also be also be used to create generic e-mail addresses such as webmaster@example.com and info@example.com. 
+
+Story H5(Samba Accounts): System Administrators are provided a page to mange users in atabular columnar check box options to check and and un-check whether users will be samba users or not.
+With enabling users to be Samba Accounts, Windows Users are benefited with getting access to print and file and even other network services enabled to be managed by UAS system administrators.  
+
+
+
+#by yemane
+
+A user(Administrator/user/secretary) can modify/change/delete/a user account setting
+
+Story B1: An administrator can manages users disk quota
+       *an Admin can mange  disk quota if a user need more quota disk for his 
+Story B2: An administrator can mange users forgotten password 
+       *an Admin can mange and Change password for a selected account
+
+Story B3: A administrator can ask users status 
+       *an Admin can ask a user current status 
+	Account status determines whether a user can log in and receive mail. The account
+         status is displayed when account names are listed.
+
+The following account statuses can be set:
+	
+Active. Active is the normal status for a mailbox account. Mail is delivered and users can log into the client interface.
+	
+Maintenance. When a mailbox status is set to maintenance, login is disabled, and mail addressed to the account is queued at the MTA. An account can be set to maintenance mode for backing up, importing or restoring the mailbox.
+	
+Locked. When a mailbox status is locked, the user cannot log in, but mail is still delivered to the account. The locked status can be set, if you suspect that a mail account has been hacked or is being used in an unauthorized manner.
+	
+Closed. When a mailbox status is closed, the login is disabled, and messages are bounced. This status is used to soft-delete an account before deleting it from the server.
+	
+LockOut. Users who try to log in and do not enter their correct password are locked out of their account after a specified number of consecutive failed login attempts. An account’s status is automatically changed to Lockout. How long the account is locked out is set by COS or Account configuration, but you can change the lockout status at any time. 
+Story 
+
+
+B4: A administrator can mange users 
+       *an Admin can mange  disk quota if a user need to get his/her forgotten password.
+
+Story B5: A user can as for Searching for Addresses
+a user can use Search and Advanced Search to locate individual accounts, aliases, distribution lists, and resources on the LDAP server. From the search bar you quickly search by display name, first name, last name, the first part of the email address, alias, or delivery address. If you do not know the complete name, you can enter a partial name. Partial names can result in a list that has the partial name string anywhere in the information.
+
