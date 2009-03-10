@@ -1,42 +1,44 @@
 propel:
-  domains:
+  domain:
     id:           ~
     name:         { type: varchar(255), required: true, index: unique }
 
-  users:
+  user:
     id:           ~
-    first_name:   { type: varchar(255), required: true }
-    fathers_name: { type: varchar(255), required: true }
-    gfathers_name:{ type: varchar(255), required: true }
-    login_name:   { type: varchar(255), required: true, index: unique }
+    first_name:   { type: varchar(255), required: true, minlength: 2}
+    fathers_name: { type: varchar(255), required: true, minlength: 2}
+    gfathers_name:{ type: varchar(255), required: true, minlength: 2}
+    login:        { type: varchar(255), required: true, index: unique }
     phone:        { type: varchar(255) }
     nt_password:  { type: varchar(255), required: true }
     lm_password:  { type: varchar(255), required: true }
-    crpt_password:{ type: varchar(255), required: true }
+    crypt_password:
+                  { type: varchar(255), required: true }
     unix_password:{ type: varchar(255), required: true }
     gid:          { type: integer, required: true }
     uid:          { type: integer, required: true, index: unique }
     status:       { type: integer, required: true, default: 1 }
-    alt_email:    { type: varchar(255), required: true }
+    alt_email:    { type: varchar(255), required: true email: true}
+    home_directory: 
+                  { type: varchar(255), required: true }
     expires_at:   { type: timestamp, required: true }
     created_at:   ~
     updated_at:   ~
-    uni_id:       { type: integer, foreignTable: uni_ids, foreignReference: id, required: true, primaryKey: true, onDelete: cascade}
-    privilege_id: { type: integer, foreignTable: privilege, foreignReference: id, required: true }
-    domain_id:    { type: integer, foreignTable: domains, foreignReference: id, required: true }
+    university_id:{ type: integer, foreignTable: university_id, foreignReference: id, required: true, primaryKey: true, onDelete: cascade}
+    domain_id:    { type: integer, foreignTable: domain, foreignReference: id, required: true }
     
-  email_accounts:
+  email_account:
     id:           ~
     local_part:   { type: varchar(255), required: true }
-    quota:        { type: varchar(32), required: true default: '500000S'}
+    quota:        { type: varchar(32), required: true default: '500000S' }
     updated_at:   ~
-    uni_id:       { type: integer, foreignTable: uni_ids, foreignReference: id, required: true, primaryKey: true }
-  
-  privilege:
-    id:           ~
-    type:         { type: varchar(255), required: true }
+    university_id:{ type: integer, foreignTable: university_id, foreignReference: id, required: true, primaryKey: true }
     
-  uni_ids:
+    
+    _uniques:     { unique_index1: [local_part, domain_name] }
+
+ 
+  university_id:
     id:           ~
     type:         { type: varchar(255), required: true }
 
@@ -53,7 +55,7 @@ propel:
 
   ftp_account:
     id:           ~
-    user_id:      { type: varchar(255), required: true}
+    user_id:       { type: varchar(255), required: true}
     domain_id:     { type: varchar(255), required: true}
     up_bandwidth:  { type: integer }
     dl_bandwidth:  { type: integer }
@@ -65,7 +67,7 @@ propel:
   samba_account:
     id:           ~
     user_id:      { type: varchar(255), required: true }
-    acount_flag:   { type: varchar(255), required: true }
+    acount_flag:  { type: varchar(255), required: true }
     host_name:    { type: varchar(255), required: true }
     ts_update:    ~
 
