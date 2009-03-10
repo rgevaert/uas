@@ -1,0 +1,7 @@
+log/*
+cache/*
+web/uploads/*
+config/databases.yml
+data/sql/*
+config/propel.ini
+*~
