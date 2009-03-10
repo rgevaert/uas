@@ -16,7 +16,7 @@ propel:
     crypt_password: { type: varchar(255) }
     unix_password: { type: varchar(255) }
     gid:          { type: integer, required: true }
-    uid:          { type: integer, required: true, index: unique, autoincrement: true }
+    uid:          { type: integer, required: true, index: unique }
     status:       { type: integer, required: true, default: 1 }
     alternate_email: { type: varchar(255), required: true }
     home_directory: { type: varchar(255), required: true }
@@ -36,7 +36,7 @@ propel:
     quota:        { type: varchar(32), required: true, default: '500000S' }
     created_at:   ~
     updated_at:   ~
-    _uniques:     { email_address: [local_part, domain_id] }
+    _uniques:     { email_address: [local_part, user_id] }
   
   unix_account:
     id:           ~
