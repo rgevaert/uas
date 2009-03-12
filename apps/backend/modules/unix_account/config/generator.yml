@@ -12,9 +12,14 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
-      filter:  ~
+      fields:
+          user_id:
+              label: User
+      list:
+        display: [=user_login, hostname, quota]
+        batch_actions: {} 
+      filter:
+          display: [user_id, hostname]
       form:    ~
       edit:    ~
       new:     ~

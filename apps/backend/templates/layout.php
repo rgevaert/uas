@@ -16,9 +16,10 @@
 	<div id="menu">
 		<ul>
 			      <li class="first"><?php echo link_to('Users', '@user') ?></li>
-		          <li><?php echo link_to('User Identifications', '@user_identification') ?></li>
-		          <li><?php echo link_to('Email aliases', '@email_alias') ?></li>
+		          <li><?php echo link_to('Identifications', '@user_identification') ?></li>
+		          <li><?php echo link_to('Aliases', '@email_alias') ?></li>
 		          <li><?php echo link_to('Domains', '@domainname') ?></li>
+		          <li><?php echo link_to('Unix', '@unix_account') ?></li>
 		</ul>
 	</div>
 	<!-- end #menu -->
