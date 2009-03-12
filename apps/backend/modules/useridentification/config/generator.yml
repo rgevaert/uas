@@ -1,0 +1,23 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           UserIdentification
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          user_identification
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    
+        title: UAS - User Identification
+      filter:  ~
+      form:    ~
+      edit:    
+        title: Edit user Identification
+      new:
+        title: Add a new user Identification

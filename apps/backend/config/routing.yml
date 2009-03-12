@@ -1,3 +1,12 @@
+user_identification:
+  class: sfPropelRouteCollection
+  options:
+    model:               UserIdentification
+    module:              useridentification
+    prefix_path:         useridentification
+    column:              id
+    with_wildcard_routes: true
+
 user:
   class: sfPropelRouteCollection
   options:
