@@ -13,7 +13,8 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
+      list:
+        display: [login, full_name, status, expires_at]
       filter:  ~
       form:    ~
       edit:    ~
