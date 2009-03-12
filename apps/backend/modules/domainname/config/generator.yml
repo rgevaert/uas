@@ -12,9 +12,14 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    ~
-      filter:  ~
+      fields:  
+      list:    
+        title: User Administration System
+        batch_actions: {}
+        display: [name] 
+        object_actions: {}
+      filter:  
+        class: false
       form:    ~
       edit:    ~
       new:     ~
