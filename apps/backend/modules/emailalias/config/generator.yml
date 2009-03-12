@@ -15,10 +15,6 @@ generator:
       fields:
         domainname_id: 
                 label: Domain
-        local_part:
-                help: Provide the new alias name which is found before the @ sign
-        destination:
-                help: Provide a valid email address where the mail should be sent to
       list:    
         title: Email Aliases   
         display: [=local_part, domainname, destination]    
@@ -28,6 +24,17 @@ generator:
       edit:
         display: [local_part, domainname_id, destination]    
         title: Edit Email Aliases
+        fields:
+           local_part:
+                help: Provide the new alias name which is found before the @ sign
+           destination:
+                help: Provide a valid email address where the mail should be sent to
       new:
         display: [local_part, domainname_id, destination]     
         title: Add new Email Alias
+        fields:
+           local_part:
+                help: Provide the new alias name which is found before the @ sign
+           destination:
+                help: Provide a valid email address where the mail should be sent to
+

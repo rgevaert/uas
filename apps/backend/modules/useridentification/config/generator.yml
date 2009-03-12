@@ -12,8 +12,11 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
-      list:    
+      fields:  
+        user_id:
+            label: User
+      list:
+        display: [identification, user_fullname]    
         title: UAS - User Identification
       filter:  ~
       form:    ~
