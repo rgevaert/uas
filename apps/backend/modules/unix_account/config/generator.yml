@@ -1,0 +1,25 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           UnixAccount
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          unix_account
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:
+          user_id:
+              label: User
+      list:
+        display: [=user_login, hostname, quota]
+        batch_actions: {} 
+      filter:
+          display: [user_id, hostname]
+      form:    ~
+      edit:    ~
+      new:     ~
