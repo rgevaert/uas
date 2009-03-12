@@ -1,8 +1,0 @@
-unix_account:
-    id:           ~
-    user_id:      Jhon
-    host_name:    www.ju.edu.et
-    quota:        5000
-    ts_update:    ~
-    _uniques:    Jhon, www.ju.edu.et
-

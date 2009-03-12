@@ -1,8 +1,0 @@
- email_account:
-    id:           ~ 
-    quota:        5000
-    updated_at:   ~
-    university_id:staff
-    domain_id:  ju.edu.edu.et
-    _uniques:     Jhon.Mesfin, ju.edu.et
-  

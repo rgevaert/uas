@@ -13,5 +13,24 @@ class User extends BaseUser
     {
         return $this->getName() . " " . $this->getFathersName() . " " . $this->getGrandFathersName();
     }
-
+    
+    
+    
+    public function ToggleStatus()
+    {
+      
+         if($this->getStatus()=='activated')
+        {
+            $this->setStatus('disactivated');
+        }
+        elseif($this->getStatus()=='preregistered')
+        {
+            $this->setStatus('activated');
+        }
+        else
+        {
+            $this->setStatus('activated');
+        }
+         $this->save();
+    }
 }
