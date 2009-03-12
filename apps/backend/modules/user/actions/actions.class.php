@@ -38,6 +38,10 @@ class userActions extends autoUserActions
        
        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
        $this->redirect('@user');
-       
     }
+
+	public function executeListShow(sfWebRequest $request)
+	{
+		$this->user = $this->getRoute()->getObject();
+	}
 }

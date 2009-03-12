@@ -23,9 +23,10 @@ generator:
           label: Login Name
       list:
         object_actions:
+            show : ~
+            toggle_status : ~
             _edit: ~
             _delete: ~
-            toggle_status : ~
         batch_actions:
              _delete: ~
              toggle_status : ~
