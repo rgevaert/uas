@@ -10,7 +10,25 @@
  */
 class UserFormFilter extends BaseUserFormFilter
 {
+
   public function configure()
   {
+	$this->setWidget('status', new sfWidgetFormChoice(array(
+		'choices' => UserPeer::$status_types
+		))
+	);
+
+	$this->setValidator('status', new sfValidatorChoice(array(
+		'required' => false, 
+		'choices' => array_keys(UserPeer::$status_types)
+		))
+	);
   }
+
+	public function getFields()
+	{
+		return array_merge(parent::getFields(), array(
+			'status' => 'ForeignKey'
+			));
+	}
 }
