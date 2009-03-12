@@ -15,23 +15,14 @@ class userActions extends autoUserActions
 {
     public function executeListToggleStatus(sfWebRequest $request)
     {
-        $user = UserPeer::retrieveByPk($request->getParameter('id'));
-        
-        if($user->getStatus()=='activated')
-        {
-            $user->setStatus('disactivated');
-        }
-        elseif($user->getStatus()=='preregistered')
-        {
-            $user->setStatus('activated');
-        }
-        else
-        {
-            $user->setStatus('activated');
-        }
-        $user->save();
-        $this->redirect('@user');
-        
+        //$user = UserPeer::retrieveByPk($request->getParameter('id'));
+       // $user = $this->getRoute()->getObject();
+        $id = $request->getParameter('id'); 
+        $user = UserPeer::retrieveByPk($id);
+       
+        $user->ToggleStatus();
+        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
+        $this->redirect('@user');  
     }
     
     
@@ -40,28 +31,13 @@ class userActions extends autoUserActions
         $ids = $request->getParameter('ids'); 
         $users = UserPeer::retrieveByPks($ids);
         
-    foreach ($users as $user){
-                   
-        if($user->getStatus()=='activated')
+        foreach ($users as $user)
         {
-            $user->setStatus('disactivated');
+            $user->ToggleStatus();        
         }
-        elseif($user->getStatus()=='preregistered')
-        {
-            $user->setStatus('activated');
-        }
-        else
-        {
-            $user->setStatus('activated');
-        }
-         $user->save();
-        
-     }
        
+       $this->getUser()->setFlash('notice', 'Status is changed successfully.');
+       $this->redirect('@user');
        
-        $this->redirect('@user');
-       
-        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
-        
     }
 }
