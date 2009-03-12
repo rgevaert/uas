@@ -33,4 +33,35 @@ class userActions extends autoUserActions
         $this->redirect('@user');
         
     }
+    
+    
+    public function executeBatchToggle_status(sfWebRequest $request)
+    {
+        $ids = $request->getParameter('ids'); 
+        $users = UserPeer::retrieveByPks($ids);
+        
+    foreach ($users as $user){
+                   
+        if($user->getStatus()=='activated')
+        {
+            $user->setStatus('disactivated');
+        }
+        elseif($user->getStatus()=='preregistered')
+        {
+            $user->setStatus('activated');
+        }
+        else
+        {
+            $user->setStatus('activated');
+        }
+         $user->save();
+        
+     }
+       
+       
+        $this->redirect('@user');
+       
+        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
+        
+    }
 }

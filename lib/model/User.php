@@ -13,5 +13,12 @@ class User extends BaseUser
     {
         return $this->getName() . " " . $this->getFathersName() . " " . $this->getGrandFathersName();
     }
-
+    
+    
+    /*
+    public function executeBatchToggle_status()
+    {
+        return true ;
+    }
+*/
 }
