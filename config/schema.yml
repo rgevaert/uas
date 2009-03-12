@@ -1,11 +1,11 @@
 propel:
-  domain:
+  domainname:
     id:           ~
     name:         { type: varchar(255), required: true, index: unique }
 
   user:
     id:           ~
-    domain_id:    { type: integer, foreignTable: domain, foreignReference: id, required: true, onDelete: cascade }
+    domainname_id:    { type: integer, foreignTable: domainname, foreignReference: id, required: true, onDelete: cascade }
     name:   { type: varchar(255), required: true, index: true }
     fathers_name: { type: varchar(255), required: true, index: true }
     grand_fathers_name: { type: varchar(255), required: true, index: true }
@@ -25,7 +25,7 @@ propel:
     created_at:   ~
     updated_at:   ~
     _uniques:
-        email_address: [email_local_part, domain_id]
+        email_address: [email_local_part, domainname_id]
     
   user_identification:
     id:           ~
@@ -63,8 +63,8 @@ propel:
   email_alias:
     id:           ~
     local_part:   { type: varchar(255), required: true, index: true }
-    domain_id:    { type: integer, foreignTable: domain, foreignReference: id, required: true, onDelete: cascade }
+    domainname_id:    { type: integer, foreignTable: domainname, foreignReference: id, required: true, onDelete: cascade }
     destination:  { type: varchar(255), required: true }
     created_at:   ~
     updated_at:   ~
-    _uniques:     { email_alias: [local_part, domain_id, destination] }
+    _uniques:     { email_alias: [local_part, domainname_id, destination] }
