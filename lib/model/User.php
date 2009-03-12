@@ -15,10 +15,22 @@ class User extends BaseUser
     }
     
     
-    /*
-    public function executeBatchToggle_status()
+    
+    public function ToggleStatus()
     {
-        return true ;
+      
+         if($this->getStatus()=='activated')
+        {
+            $this->setStatus('disactivated');
+        }
+        elseif($this->getStatus()=='preregistered')
+        {
+            $this->setStatus('activated');
+        }
+        else
+        {
+            $this->setStatus('activated');
+        }
+         $this->save();
     }
-*/
 }
