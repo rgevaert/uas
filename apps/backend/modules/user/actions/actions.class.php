@@ -13,4 +13,24 @@ require_once dirname(__FILE__).'/../lib/userGeneratorHelper.class.php';
  */
 class userActions extends autoUserActions
 {
+    public function executeListToggleStatus(sfWebRequest $request)
+    {
+        $user = UserPeer::retrieveByPk($request->getParameter('id'));
+        
+        if($user->getStatus()=='activated')
+        {
+            $user->setStatus('disactivated');
+        }
+        elseif($user->getStatus()=='preregistered')
+        {
+            $user->setStatus('activated');
+        }
+        else
+        {
+            $user->setStatus('activated');
+        }
+        $user->save();
+        $this->redirect('@user');
+        
+    }
 }

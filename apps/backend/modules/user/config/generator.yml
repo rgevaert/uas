@@ -14,6 +14,10 @@ generator:
       actions: ~
       fields:  ~
       list:
+        object_actions:
+            _edit: ~
+            _delete: ~
+            toggle_status : ~
         display: [login, full_name, status, expires_at]
       filter:  ~
       form:    ~
