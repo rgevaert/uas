@@ -12,5 +12,12 @@ class UserForm extends BaseUserForm
 {
   public function configure()
   {
+    $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
+        'choices' => UserPeer::$status_types,
+        'expanded' => true,
+    ));
+    $this->validatorSchema['status'] = new sfValidatorChoice(array(
+        'choices' => array_keys(UserPeer::$status_types),
+    ));
   }
 }
