@@ -19,6 +19,5 @@ class FrontendUserForm extends UserForm
         $this['email_local_part'], $this['email_quota'],  $this['domainname_id'], 
         $this['gid'], $this['uid']
         );    
-    $this->validatorSchema['alternate_email'] = new sfValidatorEmail();
   }
 }

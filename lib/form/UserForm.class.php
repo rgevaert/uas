@@ -28,6 +28,7 @@ class UserForm extends BaseUserForm
 		'min' => 2000,
 		'max' => 100000,
 		));
+	$this->validatorSchema['alternate_email'] = new sfValidatorEmail();	
   }
   
   public function configure()
