@@ -1,0 +1,25 @@
+Bugs
+----
+
+* none
+
+Todo list
+---------
+* creating users - auto-generate a password and fill the needed fields
+* creating users - auto-generate uid
+* creating users - gid should be a drop-down box (2000 - users(*), 2001 - system, 2002 - other)
+* creating users - validate email quota field (/^\d[SC]$/)
+* creating users - take out the created/updated fields
+* creating users - pre-fill the expires-at field with 1 year to now
+* aliases "abc@domain.tld goes to def@otherdomain.tld"
+* domains -> click the user count to go to a pre-filtered list in the users
+* samba -> remove "updated at"
+* global -> new and edit should not have the created/updated fields
+* generated fixtures
+
+Nice to have
+-------------
+
+* links from a user to his unix account / ftp accounts / ...
+*
+
