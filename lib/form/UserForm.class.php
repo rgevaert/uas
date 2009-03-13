@@ -28,5 +28,12 @@ class UserForm extends BaseUserForm
 		'min' => 2000,
 		'max' => 100000,
 		));
+	$this->validatorSchema['email_quota'] = new sfValidatorRegex(array
+	     ('pattern'=>'/^[\d]+[SC]$/'));
+	
+	$this->widgetSchema['gid'] = new sfWidgetFormChoice(array(
+        'choices' => UserPeer::$gid_types,
+        'multiple' => false,
+    ));	   
   }
 }
