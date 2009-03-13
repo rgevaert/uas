@@ -10,7 +10,7 @@
  */
 class UserForm extends BaseUserForm
 {
-  public function configure_specific()
+  public function configure()
   {
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices' => UserPeer::$status_types,
@@ -28,11 +28,5 @@ class UserForm extends BaseUserForm
 		'min' => 2000,
 		'max' => 100000,
 		));
-  }
-  
-  public function configure()
-  {
-    parent::configure();
-    $this->configure_specific();
   }
 }

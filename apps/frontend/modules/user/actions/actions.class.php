@@ -40,14 +40,14 @@ class userActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $this->form = new FrontendUserForm($user);
+    $this->form = new UserForm($user);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $this->form = new FrontendUserForm($user);
+    $this->form = new UserForm($user);
 
     $this->processForm($request, $this->form);
 
