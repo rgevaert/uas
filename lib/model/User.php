@@ -3,6 +3,12 @@
 class User extends BaseUser
 {
 
+     public function __construct()
+	{
+		parent::__construct();                
+                $this->setExpiresAt(time() + 360*86400);
+	}
+
     public function __toString()
     {
         return $this->getName(). ' '. $this->getFathersName(). ' ('. $this->getEmailAddress() . ')';
@@ -33,5 +39,12 @@ class User extends BaseUser
             $this->setStatus('activated');
         }
         $this->save();
+    }
+    public function displayExtendExpiresAt()
+    {
+        $extend = time() + 360*86400;
+        $this->setExpiresAt($extend);        
+        echo $extend;
+        //return true;
     }
 }
