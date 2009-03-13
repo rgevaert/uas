@@ -29,3 +29,7 @@ Nice to have
 * links from a user to his unix account / ftp accounts / ...
 * a login for the backend, not everyone should be able to use this
 * a cooler layout/view
+
+Bernard
+-------
+Figure out why we can't set values in our actions in our admin-constructor (expiry date setting in actions.class.php - executeNew())
