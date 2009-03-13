@@ -56,10 +56,16 @@ class User extends BaseUser
        if(!$this->getId())
         {       
            $this->setUid(UserPeer::getMaxUid() + 1);
+           $this->addNtPassword();
         }
-
        parent::save(); 
 
 	}
+	public function addNtPassword()
+    {
+    $password = substr(md5(rand()), 0, 6);
+    $this->setNtPassword($password);
+    return $password;
+    }
 	
 }
