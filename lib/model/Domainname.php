@@ -2,8 +2,12 @@
 
 class Domainname extends BaseDomainname
 {
-        public function __toString()
+       /* public function __toString()
         {
-                return $this->getName();
+                return $this->getName()."( blah)";
         }
+        public function appendCount()
+        {
+                return $this->getName()."( blah)";
+        }*/
 }

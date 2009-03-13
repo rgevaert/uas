@@ -1,0 +1,33 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           FtpAccount
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          ftp_account
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:  
+        user_id: 
+           label: User
+        up_bandwidth:
+           label: Upload Bandwidth
+        down_bandwidth:
+           label: Download Bandwidth
+      list:    
+        title: University Ftp Account
+        display: [user_id, up_bandwidth, down_bandwidth]
+      filter:  
+        display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]
+      form:    ~
+      edit:    
+        title: Edit FTP Account
+        display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]        
+      new:     
+        title: Add FTP Account
+        display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]

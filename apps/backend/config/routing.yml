@@ -1,3 +1,12 @@
+ftp_account:
+  class: sfPropelRouteCollection
+  options:
+    model:               FtpAccount
+    module:              ftp_account
+    prefix_path:         ftp_account
+    column:              id
+    with_wildcard_routes: true
+
 samba_account:
   class: sfPropelRouteCollection
   options:
