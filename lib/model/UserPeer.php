@@ -7,13 +7,12 @@ class UserPeer extends BaseUserPeer
         'disactivated' => 'Disactivated',
         'preregistered' => 'Preregistered',
         );
-  static public $gid_types = array (
+    static public $gid_types = array (
         '2000' => 'User',
         '2001' => 'System',
         '2002' => 'Other',
         );
-
-	static public function getMaxUid()
+    static public function getMaxUid()
 	{
 		$connection = Propel::getConnection();
 		$query = "SELECT MAX(" . UserPeer::UID . ") AS max FROM " . UserPeer::TABLE_NAME;
