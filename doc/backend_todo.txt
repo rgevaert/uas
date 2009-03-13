@@ -16,10 +16,17 @@ Todo list
 * samba -> remove "updated at"
 * global -> new and edit should not have the created/updated fields
 * generated fixtures
+* prefill the "new" pages with normal defaults for certain fields
+
+* remove the "is empty" from the filter fields where it isn't needed
+* add help labels where needed - make sure they don't show up in the filters (or shorten them there)
+
+* ADD TESTS
 
 Nice to have
 -------------
 
+* persons picture with the users (image upload)
 * links from a user to his unix account / ftp accounts / ...
-*
-
+* a login for the backend, not everyone should be able to use this
+* a cooler layout/view
