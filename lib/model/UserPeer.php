@@ -7,4 +7,5 @@ class UserPeer extends BaseUserPeer
         'disactivated' => 'Disactivated',
         'preregistered' => 'Preregistered',
         );
+
 }
