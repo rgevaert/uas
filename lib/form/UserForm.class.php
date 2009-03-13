@@ -27,6 +27,7 @@ class UserForm extends BaseUserForm
 	$this->validatorSchema['uid'] = new sfValidatorInteger(array(
 		'min' => 2000,
 		'max' => 100000,
+		'required' => false,
 		));
 
 	$this->validatorSchema['email_quota'] = new sfValidatorRegex(array
