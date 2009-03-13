@@ -10,7 +10,7 @@
  */
 class UserForm extends BaseUserForm
 {
-  public function configure()
+  public function configure_specific()
   {
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices' => UserPeer::$status_types,
@@ -27,7 +27,9 @@ class UserForm extends BaseUserForm
 	$this->validatorSchema['uid'] = new sfValidatorInteger(array(
 		'min' => 2000,
 		'max' => 100000,
+		'required' => false,
 		));
+
 	$this->validatorSchema['email_quota'] = new sfValidatorRegex(array
 	     ('pattern'=>'/^[\d]+[SC]$/'));
 	
@@ -35,5 +37,13 @@ class UserForm extends BaseUserForm
         'choices' => UserPeer::$gid_types,
         'multiple' => false,
     ));	   
+
+	$this->validatorSchema['alternate_email'] = new sfValidatorEmail();	
+  }
+  
+  public function configure()
+  {
+    parent::configure();
+    $this->configure_specific();
   }
 }

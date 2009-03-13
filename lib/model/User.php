@@ -40,6 +40,7 @@ class User extends BaseUser
         }
         $this->save();
     }
+
     public function displayExtendExpiresAt()
     {
         $extend = time() + 360*86400;
@@ -47,4 +48,18 @@ class User extends BaseUser
         echo $extend;
         //return true;
     }
+
+    
+    
+    public function save(PropelPDO $con = null)
+	{
+       if(!$this->getId())
+        {       
+           $this->setUid(UserPeer::getMaxUid() + 1);
+        }
+
+       parent::save(); 
+
+	}
+	
 }

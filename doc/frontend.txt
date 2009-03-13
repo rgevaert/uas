@@ -1,0 +1,2 @@
+1) generate module for frontend:
+   symfony propel:generate-module --with-show frontend user User
