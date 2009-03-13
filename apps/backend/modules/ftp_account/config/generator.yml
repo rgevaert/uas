@@ -16,9 +16,9 @@ generator:
         user_id: 
            label: User
         up_bandwidth:
-           label: Upload Bandwidth
+           label: Up Bw
         down_bandwidth:
-           label: Download Bandwidth
+           label: Down BW
       list:    
         title: University Ftp Account
         display: [user_fullname, up_bandwidth, down_bandwidth]
@@ -27,7 +27,33 @@ generator:
       form:    ~
       edit:    
         title: Edit FTP Account
-        display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]        
+        display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]  
+        fields:
+           up_bandwidth:
+                label: Upload Bandwidth
+                help: Number between 50000 and 100000 (number is in Kb)
+           down_bandwidth:
+                label: Download Bandwidth
+                help: Number between 50000 and 100000 (number is in Kb)
+           quota_size:
+                label: Quota Size
+                help: Number between 5000 and 10000 (number is in Kb)
+           quota_files:
+                label: Number of Quota files
+                help: Number between 5 and 100      
       new:     
         title: Add FTP Account
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]
+        fields:
+           up_bandwidth:
+                label: Upload Bandwidth
+                help: Number between 50000 and 100000 (number is in Kb)
+           down_bandwidth:
+                label: Download Bandwidth
+                help: Number between 50000 and 100000 (number is in Kb)
+           quota_size:
+                label: Quota Size
+                help: Number between 5000 and 10000 (number is in Kb)
+           quota_files:
+                label: Number of Quota files
+                help: Number between 5 and 100
