@@ -29,6 +29,7 @@ Nice to have
 * links from a user to his unix account / ftp accounts / ...
 * a login for the backend, not everyone should be able to use this
 * a cooler layout/view
+* add a "server" table to the system
 
 Bernard
 -------
