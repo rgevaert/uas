@@ -21,22 +21,6 @@ class userActions extends sfActions
     $this->forward404Unless($this->user);
   }
 
-  public function executeNew(sfWebRequest $request)
-  {
-    $this->form = new UserForm();
-  }
-
-  public function executeCreate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod('post'));
-
-    $this->form = new UserForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
-  }
-
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
@@ -52,16 +36,6 @@ class userActions extends sfActions
     $this->processForm($request, $this->form);
 
     $this->setTemplate('edit');
-  }
-
-  public function executeDelete(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-
-    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $user->delete();
-
-    $this->redirect('user/index');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
