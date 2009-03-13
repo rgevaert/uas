@@ -12,5 +12,9 @@ class FtpAccountForm extends BaseFtpAccountForm
 {
   public function configure()
   {
+        $this->validatorSchema['up_bandwidth'] = new sfValidatorNumber(array('min'=>50000, 'max'=>100000));        
+        $this->validatorSchema['down_bandwidth'] = new sfValidatorNumber(array('min'=>50000, 'max'=>100000));       
+        $this->validatorSchema['quota_files'] = new sfValidatorNumber(array('min'=>5, 'max'=>100)); 
+        $this->validatorSchema['quota_size'] = new sfValidatorNumber(array('min'=>5000, 'max'=>10000));
   }
 }
