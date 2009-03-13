@@ -1,0 +1,24 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           SambaAccount
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          samba_account
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields: 
+         updated_at:
+           label: Update At
+      list:   
+        display: [ user_id, hostname, updated_at]
+      filter:  
+        display: [ user_id, hostname, updated_at]
+      form:    ~
+      edit:    ~
+      new:     ~
