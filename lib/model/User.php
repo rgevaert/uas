@@ -5,8 +5,7 @@ class User extends BaseUser
 
     public function __toString()
     {
-        return $this->getName(). ' '. $this->getFathersName(). ' ('. $this->getEmailLocalPart().')';
-                
+        return $this->getName(). ' '. $this->getFathersName(). ' ('. $this->getEmailAddress() . ')';
     }
 
     public function getFullName()
@@ -14,12 +13,14 @@ class User extends BaseUser
         return $this->getName() . " " . $this->getFathersName() . " " . $this->getGrandFathersName();
     }
     
-    
+    public function getEmailAddress()
+    {
+        return $this->getEmailLocalPart(). '@' . $this->getDomainName();
+    }    
     
     public function ToggleStatus()
     {
-      
-         if($this->getStatus()=='activated')
+        if($this->getStatus()=='activated')
         {
             $this->setStatus('disactivated');
         }
@@ -31,6 +32,6 @@ class User extends BaseUser
         {
             $this->setStatus('activated');
         }
-         $this->save();
+        $this->save();
     }
 }
