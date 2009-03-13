@@ -1,84 +1,47 @@
 <table>
+  <thead>
+    <tr>
+      <th colspan="2">Account information for <?php echo $user->getFullName() ?></th>
+    </tr>
+  </thead>
   <tbody>
     <tr>
-      <th>Id:</th>
-      <td><?php echo $user->getId() ?></td>
-    </tr>
-    <tr>
-      <th>Domainname:</th>
-      <td><?php echo $user->getDomainnameId() ?></td>
-    </tr>
-    <tr>
-      <th>Name:</th>
-      <td><?php echo $user->getName() ?></td>
-    </tr>
-    <tr>
-      <th>Fathers name:</th>
-      <td><?php echo $user->getFathersName() ?></td>
-    </tr>
-    <tr>
-      <th>Grand fathers name:</th>
-      <td><?php echo $user->getGrandFathersName() ?></td>
+      <th>Full name:</th>
+      <td><?php echo $user->getFullName() ?></td>
     </tr>
     <tr>
       <th>Login:</th>
       <td><?php echo $user->getLogin() ?></td>
     </tr>
     <tr>
-      <th>Phone:</th>
-      <td><?php echo $user->getPhone() ?></td>
-    </tr>
-    <tr>
-      <th>Nt password:</th>
-      <td><?php echo $user->getNtPassword() ?></td>
-    </tr>
-    <tr>
-      <th>Lm password:</th>
-      <td><?php echo $user->getLmPassword() ?></td>
-    </tr>
-    <tr>
-      <th>Crypt password:</th>
-      <td><?php echo $user->getCryptPassword() ?></td>
-    </tr>
-    <tr>
-      <th>Unix password:</th>
-      <td><?php echo $user->getUnixPassword() ?></td>
-    </tr>
-    <tr>
-      <th>Gid:</th>
-      <td><?php echo $user->getGid() ?></td>
-    </tr>
-    <tr>
-      <th>Uid:</th>
-      <td><?php echo $user->getUid() ?></td>
-    </tr>
-    <tr>
       <th>Status:</th>
       <td><?php echo $user->getStatus() ?></td>
     </tr>
     <tr>
-      <th>Alternate email:</th>
-      <td><?php echo $user->getAlternateEmail() ?></td>
-    </tr>
+      <th>Expires at:</th>
+      <td><?php echo $user->getExpiresAt() ?></td>
+    </tr>    
     <tr>
-      <th>Email local part:</th>
-      <td><?php echo $user->getEmailLocalPart() ?></td>
+      <th colspan="2">Email</th>
+    </tr>     
+    <tr>
+      <th>Email address:</th>
+      <td><?php echo $user->getEmailAddress() ?></td>
     </tr>
     <tr>
       <th>Email quota:</th>
       <td><?php echo $user->getEmailQuota() ?></td>
     </tr>
     <tr>
-      <th>Expires at:</th>
-      <td><?php echo $user->getExpiresAt() ?></td>
-    </tr>
+      <th colspan="2">Contact information</th>
+    </tr>    
     <tr>
-      <th>Created at:</th>
-      <td><?php echo $user->getCreatedAt() ?></td>
+      <th>Phone:</th>
+      <td><?php echo $user->getPhone() ?></td>
     </tr>
-    <tr>
-      <th>Updated at:</th>
-      <td><?php echo $user->getUpdatedAt() ?></td>
+   <tr>
+      <th>Alternate email:</th>
+      <td><?php echo $user->getAlternateEmail() ?></td>
     </tr>
   </tbody>
 </table>
