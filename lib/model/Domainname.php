@@ -2,6 +2,7 @@
 
 class Domainname extends BaseDomainname
 {
+
         public function getUserCount()
         {
           $criteria = new Criteria();
@@ -9,9 +10,4 @@ class Domainname extends BaseDomainname
           return DomainnamePeer::getUserCount($criteria);
         }
 
-
-        public function __toString()
-        {
-                return $this->getName();
-        }
 }

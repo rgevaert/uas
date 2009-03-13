@@ -19,5 +19,14 @@ class UserForm extends BaseUserForm
     $this->validatorSchema['status'] = new sfValidatorChoice(array(
         'choices' => array_keys(UserPeer::$status_types),
     ));
+
+    $this->validatorSchema['gid'] = new sfValidatorInteger(array(
+		'min' => 2000,
+		'max' => 10000,
+	));
+	$this->validatorSchema['uid'] = new sfValidatorInteger(array(
+		'min' => 2000,
+		'max' => 100000,
+		));
   }
 }
