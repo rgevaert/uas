@@ -52,5 +52,3 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-
-  <a href="<?php echo url_for('user/new') ?>">New</a>
