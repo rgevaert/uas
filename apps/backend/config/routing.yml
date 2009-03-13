@@ -1,3 +1,12 @@
+samba_account:
+  class: sfPropelRouteCollection
+  options:
+    model:               SambaAccount
+    module:              samba_account
+    prefix_path:         samba_account
+    column:              id
+    with_wildcard_routes: true
+
 unix_account:
   class: sfPropelRouteCollection
   options:
