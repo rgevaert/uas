@@ -16,6 +16,9 @@ Todo list
 * samba -> remove "updated at"
 * global -> new and edit should not have the created/updated fields
 
+Finished tasks
+---------------
+
 * generated fixtures: RUDY
 
 Nice to have
