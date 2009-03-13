@@ -15,7 +15,11 @@ Todo list
 * domains -> click the user count to go to a pre-filtered list in the users
 * samba -> remove "updated at"
 * global -> new and edit should not have the created/updated fields
-* generated fixtures
+
+Finished tasks
+---------------
+
+* generated fixtures: RUDY
 
 Nice to have
 -------------
