@@ -19,7 +19,7 @@ generator:
         title: Email aliases
         layout: stacked
         display: [local_part, destination]
-        params: %%email_alias%% %%destination%%
+        params: %%email_alias%% &rarr; %%destination%%
       filter:  
         display: [local_part, domainname_id, destination]
       form:    ~
