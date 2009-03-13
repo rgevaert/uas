@@ -1,0 +1,55 @@
+User:
+<?php for ($i = 100; $i <= 199; $i++): ?>
+  user_<?php echo $i ?>:
+    domainname_id:      <?php echo ($i % 2) ? "ju\n" : "mu\n" ?>
+    name:               <?php echo "N" . $i ."\n" ?>
+    fathers_name:       <?php echo "F" . $i ."\n" ?>
+    grand_fathers_name: <?php echo "G" . $i ."\n" ?>
+    login:              <?php echo "log" . $i ."\n" ?>
+    gid:                2000
+    uid:                <?php echo 2000 + $i . "\n" ?>
+    alternate_email:    <?php echo $i ."@somewhere.com\n" ?>
+    email_local_part:   <?php echo "email" . $i ."\n" ?>
+    expires_at:         2010-12-31
+
+<?php endfor; ?>
+
+UserIdentification:
+<?php for ($i = 100; $i <= 199; $i++): ?>
+  useridentification_a<?php echo $i ?>:
+    identification: 2000/<?php echo $i."\n" ?>
+    user_id:        user_<?php echo $i."\n" ?>
+    
+  useridentification_b<?php echo $i ?>:
+    identification: STAFF/<?php echo $i."\n" ?>
+    user_id:        user_<?php echo $i."\n" ?>
+<?php endfor; ?>
+
+
+UnixAccount:
+<?php for ($i = 100; $i <= 199; $i++): ?>
+  unix_account_s<?php echo $i ?>:
+    hostname:       <?php echo ($i % 2) ? "server.ju.edu.et\n" : "server.mu.edu.et\n" ?>
+    user_id:        user_<?php echo $i."\n" ?>
+
+
+  unix_account_l<?php echo $i ?>:
+    hostname:       <?php echo ($i % 2) ? "ltsp.ju.edu.et\n" : "ltsp.mu.edu.et\n" ?>
+    user_id:        user_<?php echo $i."\n" ?>
+
+<?php endfor; ?>
+
+SambaAccount:
+<?php for ($i = 100; $i <= 199; $i++): ?>
+  samba_account<?php echo $i ?>:
+    hostname:       <?php echo ($i % 2) ? "smb1.ju.edu.et\n" : "smb1.mu.edu.et\n" ?>
+    user_id:        user_<?php echo $i."\n" ?>
+
+<?php endfor; ?>
+
+FtpAccount:
+<?php for ($i = 100; $i <= 199; $i++): ?>
+  ftp_account<?php echo $i ?>:
+    user_id:        user_<?php echo $i."\n" ?>
+
+<?php endfor; ?>
