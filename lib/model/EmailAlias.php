@@ -9,7 +9,6 @@ class EmailAlias extends BaseEmailAlias
     
     public function getEmailAlias()
     {
-        //return $this->__toString()."   &Rarr;";
-        return $this->__toString()."   --->";
+        return $this->__toString();
     }
 }
