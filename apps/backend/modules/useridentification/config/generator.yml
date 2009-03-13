@@ -17,7 +17,7 @@ generator:
             label: User
       list:
         display: [identification, user_fullname]    
-        title: UAS - User Identification
+        title: User identification
       filter:  ~
       form:    ~
       edit:    

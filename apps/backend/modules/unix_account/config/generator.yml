@@ -16,6 +16,7 @@ generator:
           user_id:
               label: User
       list:
+        title: Unix accounts
         display: [=user_login, hostname, quota]
         batch_actions: {} 
       filter:

@@ -14,7 +14,7 @@ generator:
       actions: ~
       fields:  
       list:    
-        title: User Administration System
+        title: Domainname list
         batch_actions: {}
         display: [name, UserCount] 
         object_actions: {}
