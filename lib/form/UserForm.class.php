@@ -19,12 +19,14 @@ class UserForm extends BaseUserForm
     $this->validatorSchema['status'] = new sfValidatorChoice(array(
         'choices' => array_keys(UserPeer::$status_types),
     ));
-    // by anchoring(^) and  matching($) the expression validates every item must be posetive integer
-    $this->validatorSchema['gid'] = new sfValidatorRegex(array(
-        'pattern' => '[^\d*$]' 
-        ));
-    $this->validatorSchema['uid'] = new sfValidatorRegex(array(
-        'pattern' => '[^\d*$]'
-        ));
+
+    $this->validatorSchema['gid'] = new sfValidatorInteger(array(
+		'min' => 2000,
+		'max' => 10000,
+	));
+	$this->validatorSchema['uid'] = new sfValidatorInteger(array(
+		'min' => 2000,
+		'max' => 100000,
+		));
   }
 }
