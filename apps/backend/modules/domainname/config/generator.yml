@@ -16,7 +16,7 @@ generator:
       list:    
         title: User Administration System
         batch_actions: {}
-        display: [name] 
+        display: [name, UserCount] 
         object_actions: {}
       filter:  
         class: false
