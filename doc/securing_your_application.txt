@@ -1,0 +1,22 @@
+Generating my module "session"
+- this gives me my actions.class.php in session
+
+	./symfony generate:module backend session
+
+Setting my settings.yml file 
+- changing the .actions parameters for login 
+	
+  .actions:
+    login_module:           session
+    login_action:           index
+
+Start setting your security.yml files correctly
+	- Attention!!! -> security.yml for session-module
+	- Set the other security.yml files as wanted/needed
+
+Define the needed actions:
+	executeLogin (setAuthenticated(true))
+	executeLogout (setAuthenticated(false))
+	executeIndex (redirect ?? )
+
+
