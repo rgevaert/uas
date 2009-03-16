@@ -15,7 +15,7 @@ Todo list
 * domains -> click the user count to go to a pre-filtered list in the users
 * samba -> remove "updated at"
 * global -> new and edit should not have the created/updated fields
-
+* email quota: the field in the database has a number followed by a S (or C).  We can ignore the C option and not use it.  But the size is important.  Maybe we should show it in megabyte. and let the user insert in in megabyte.  Maybe we should provide the user with only a dropdown box where he can select X MB (in increments of 100MB.  The field that is written into the database is in bytes.
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 
