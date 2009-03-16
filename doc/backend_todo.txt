@@ -21,6 +21,12 @@ Todo list
 
 * ADD TESTS
 
+* Add the restriction to the backend that you need to login (admin/pa55w0rd)
+* Add additional user credentials: admin, secretary, sysadmin
+	- get the credentials from the login (admin / sysadmin / secretary)
+	- restrict the correct pages to the correct credentials
+
+* Frontend: add login to the frontend, and show the information of the logged in user
 
 Nice to have
 -------------
