@@ -39,18 +39,14 @@ class sessionActions extends sfActions
 		$this->redirect('@user');
 	}
   }
-
-	public function executeShow(sfWebRequest $request){
-		
-	}
-
+  
 	public function executeLogout(sfWebRequest $request)
 	{
 		$this->getUser()->setAuthenticated(false);
 		$this->getUser()->clearCredentials();
 
 		$this->getUser()->setFlash('notice', 'You have been logged out!');
-		$this->redirect('@user');
+    		$this->redirect('session/login');
 	}
 
 }
