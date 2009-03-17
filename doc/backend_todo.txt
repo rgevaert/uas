@@ -18,6 +18,7 @@ Todo list
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 * Show a list with last viewed users/accounts/... 
+* Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
 
 * ADD TESTS
 
