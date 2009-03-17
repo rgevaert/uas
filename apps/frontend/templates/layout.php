@@ -8,5 +8,7 @@
   </head>
   <body>
     <?php echo $sf_content ?>
+          <!--<li><?php echo link_to('Backend Users', '') ?></li>-->
+          <li><?php echo link_to('Logout', 'session/logout') ?></li>
   </body>
 </html>

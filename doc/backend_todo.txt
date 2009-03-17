@@ -6,18 +6,22 @@ Bugs
 Todo list
 ---------
 * creating users - auto-generate a password and fill the needed fields
-* creating users - auto-generate uid
-* creating users - gid should be a drop-down box (2000 - users(*), 2001 - system, 2002 - other)
+  current:
+  --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen) : e.g.: pwgen -1 -y -B 
+  uas:
+  --> implement function in PHP that does the above :)
 * creating users - validate email quota field (/^\d[SC]$/)
+  --> the field in the database has a number followed by a S (or C).  We can ignore the C option and not use it.  But the size is important.  Maybe we should show it in megabyte. and let the user insert in in megabyte.  Maybe we should provide the user with only a dropdown box where he can select X MB (in increments of 100MB.  The field that is written into the database is in bytes.
 * creating users - take out the created/updated fields
 * creating users - pre-fill the expires-at field with 1 year to now
 * aliases "abc@domain.tld goes to def@otherdomain.tld"
 * domains -> click the user count to go to a pre-filtered list in the users
 * samba -> remove "updated at"
 * global -> new and edit should not have the created/updated fields
-* email quota: the field in the database has a number followed by a S (or C).  We can ignore the C option and not use it.  But the size is important.  Maybe we should show it in megabyte. and let the user insert in in megabyte.  Maybe we should provide the user with only a dropdown box where he can select X MB (in increments of 100MB.  The field that is written into the database is in bytes.
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
+* Show a list with last viewed users/accounts/... 
+* Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
 
 * ADD TESTS
 
@@ -27,6 +31,11 @@ Todo list
 	- restrict the correct pages to the correct credentials
 
 * Frontend: add login to the frontend, and show the information of the logged in user
+
+DONE
+----
+* creating users - auto-generate uid
+* creating users - gid should be a drop-down box (2000 - users(*), 2001 - system, 2002 - other)
 
 Nice to have
 -------------

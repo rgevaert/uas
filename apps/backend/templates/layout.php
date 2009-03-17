@@ -30,6 +30,9 @@
 <!-- end #header -->
 <div id="page">
 	<div id="content">
+        <?php if($sf_user->isAuthenticated()): ?>
+        <div> <?php echo link_to('Logout', 'session/logout') ?> </div>
+        <?php endif; ?>
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
