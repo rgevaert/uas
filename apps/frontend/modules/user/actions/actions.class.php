@@ -12,7 +12,8 @@ class userActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->user_list = UserPeer::doSelect(new Criteria());
+   // $this->user_list = UserPeer::doSelect(new Criteria());
+   $this->redirect('session/logout');
   }
 
   public function executeShow(sfWebRequest $request)

@@ -17,19 +17,23 @@ class sessionActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    //$this->forward('default', 'module');
     $this->redirect('session/login');
   }
   public function executeLogin(sfWebRequest $request)
    {
-    $username = $request->getParameter('username');
-	$password = $request->getParameter('password');
-if  ($username == 'admin' && $password == 'pa55w0rd'){
-	$this->getUser()->setAuthenticated(true);
-	$this->getUser()->setFlash('notice', 'Welcome admin');
-	$this->redirect('@user');
+       $login= $this->getRequestParameter('login');
+       $c = new Criteria();
+       $c->add(UserPeer::LOGIN, $login);
+       $user = UserPeer::doSelectOne($c);   
+      if  ($user){
+           if (true)
+          {    
+                $this->getUser()->setAuthenticated(true);
+	        $this->getUser()->setFlash('notice', 'Welcome'.$user->getLogin());
+                $this->redirect('user/show?id='.$user->getId());
+          }
+      }
    }
-}
     public function executeShow(sfWebRequest $request){
 		
 	}
