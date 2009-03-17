@@ -24,7 +24,15 @@ class sessionActions extends sfActions
     if($username){
         $this->getUser()->setFlash('error','User Name / Password Do not match');
     }
-
+    if(!$username AND !$password){
+        $this->getUser()->setFlash('error','You must provide User name and Password');
+    }
+    if(!$username){
+        $this->getUser()->setFlash('error','You must provide User name ');
+    }
+    if(!$password){
+        $this->getUser()->setFlash('error','You must provide Password');
+    }
 	if($username == 'admin' && $password == 'adminpass'){
 		// the username & password are correct
 		// log the user in...
@@ -33,6 +41,7 @@ class sessionActions extends sfActions
 
 		// redirect him away from this login page...
 		$this->getUser()->setFlash('notice', 'Welcome, admin');
+                $this->getUser()->setFlash('error','');
 		$this->redirect('@user');
 
 	} elseif($username == 'secretary' && $password == 'secret'){
