@@ -1,0 +1,13 @@
+default:
+    is_secure: on
+    
+edit:
+    is_secure: on
+    credentials: [[secretary, admin]]
+    
+delete:
+    is_secure: on
+    credentials: admin
+new:
+    is_secure: on
+    credentials: [[secretary,admin]]   
