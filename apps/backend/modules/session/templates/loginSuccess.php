@@ -9,8 +9,8 @@
    <?php endif; ?>
 
 <h2> Please Login here </h2>
-<form>
-<label for='username'> User Name </label><input type='text' name= 'username' /><br />
-<label for='password'> Password </label><input type='text' name = 'password' /><br />
-<input type='submit' value = 'Login' />
+<form method='user.php'>
+	Username: <input name="username" /><br />
+	Password: <input type = "password" name="password" /><br />
+	<input type="submit" value="login">
 </form>
