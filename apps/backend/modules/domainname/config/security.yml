@@ -10,4 +10,4 @@ delete:
     credentials: admin
 New:
     is_secure: on
-    credentials; [[secretary,admin]]    
+    credentials: [[secretary,admin]]    
