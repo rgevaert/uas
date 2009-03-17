@@ -22,4 +22,16 @@
     if($sf_user->hasCredential(array('admin','secretary'))){
 	echo "You are a secretary AND an admin ";
 }
+<?php
+    if($sf_user->hasCredential(array('sysadmin'))){
+	echo "You are a System Administration ";
+}
 ?>
+<?php
+    if($sf_user->hasCredential(array('admin','sysadmin'))){
+	echo "You are a System Administration AND an admin ";
+}
+<?php
+    if($sf_user->hasCredential(array('admin','sysadmin'), false)){
+	echo "You are a System Administrator AND an admin ";
+}

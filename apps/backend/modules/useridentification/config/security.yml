@@ -3,11 +3,11 @@ default:
     
 edit:
     is_secure: on
-    credentials: [[secretary, admin]]
+    credentials: admin
     
 delete:
     is_secure: on
     credentials: admin
-New:
+new:
     is_secure: on
-    credentials: [[secretary,admin]] 
+    credentials: admin
