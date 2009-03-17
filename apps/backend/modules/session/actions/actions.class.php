@@ -21,6 +21,10 @@ class sessionActions extends sfActions
 	$username = $request->getParameter('username');
 	$password = $request->getParameter('password');
 
+    if($username){
+        $this->getUser()->setFlash('error','User Name / Password Do not match');
+    }
+
 	if($username == 'admin' && $password == 'adminpass'){
 		// the username & password are correct
 		// log the user in...
@@ -38,6 +42,7 @@ class sessionActions extends sfActions
 		$this->getUser()->setFlash('notice', 'Welcome, secretary');
 		$this->redirect('@user');
 	}
+    
   }
   
 	public function executeLogout(sfWebRequest $request)
