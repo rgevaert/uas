@@ -92,6 +92,6 @@ Story
 B4: A administrator can mange users 
        *an Admin can mange  disk quota if a user need to get his/her forgotten password.
 
-Story B5: A user can as for Searching for Addresses
+Story B5: A user can ask for Searching for Addresses
 a user can use Search and Advanced Search to locate individual accounts, aliases, distribution lists, and resources on the LDAP server. From the search bar you quickly search by display name, first name, last name, the first part of the email address, alias, or delivery address. If you do not know the complete name, you can enter a partial name. Partial names can result in a list that has the partial name string anywhere in the information.
 
