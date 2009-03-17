@@ -1,4 +1,15 @@
 # default rules
+user:
+  class: sfPropelRouteCollection
+  options:
+    model:               User
+    module:              user
+    prefix_path:         user
+    column:              id
+    with_wildcard_routes: true
+
+
+
 homepage:
   url:   /
   param: { module: default, action: index }
