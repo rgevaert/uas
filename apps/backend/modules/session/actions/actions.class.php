@@ -33,6 +33,7 @@ class sessionActions extends sfActions
 
 		// redirect him away from this login page...
 		$this->getUser()->setFlash('notice', 'Welcome, admin');
+                $this->getUser()->setFlash('error','');
 		$this->redirect('@user');
 
 	} elseif($username == 'secretary' && $password == 'secret'){
