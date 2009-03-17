@@ -36,6 +36,7 @@ class sessionActions extends sfActions
   public function executeLogout(sfWebRequest $request)
   {
     $this->getUser()->setAuthenticated(false);
+    $this->redirect('session/login');
     
   }
 
