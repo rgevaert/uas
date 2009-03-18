@@ -20,33 +20,28 @@ class sessionActions extends sfActions
     $this->redirect('session/login');
   }
   public function executeLogin(sfWebRequest $request)
-   {
-       $login= $this->getRequestParameter('login');
-       $lm_password= $this->getRequestParameter('password');
-       $c = new Criteria();
-       $c->add(UserPeer::LOGIN, $login);
-       $c->add(UserPeer::LM_PASSWORD, $lm_password);
-       $user = UserPeer::doSelectOne($c);   
-      if  ($user){
-           if (true)
-          {    
-                $this->getUser()->setAuthenticated(true);
-	            $this->getUser()->setFlash('notice', 'Welcome'.$user->getLogin());
-                $this->redirect('user/show?id='.$user->getId());
-          }
+  {
+    $login= $this->getRequestParameter('login');
+    $lm_password= $this->getRequestParameter('password');
+    $c = new Criteria();
+    $c->add(UserPeer::LOGIN, $login);
+    $c->add(UserPeer::LM_PASSWORD, $lm_password);
+    $user = UserPeer::doSelectOne($c);   
+    if  ($user){
+        if (true)
+        {    
+            $this->getUser()->setAuthenticated(true);
+	        $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
+	        $this->redirect('user/show?id='.$user->getId());
+        }
       }
-    }
-    public function executeShow(sfWebRequest $request){
-		
-	}
-
-	public function executeLogout(sfWebRequest $request)
-	{
-		$this->getUser()->setAuthenticated(false);
-		$this->getUser()->setFlash('notice', 'You have been logged out!');
-		$this->redirect('@user');
-	}
-	  
+  }
+  public function executeLogout(sfWebRequest $request)
+  {
+    $this->getUser()->setAuthenticated(false);
+	$this->getUser()->setFlash('notice', 'You have been logged out!');
+	$this->redirect('@user');
+  }  
  }
 
 

@@ -22,7 +22,7 @@ generator:
       form:    ~
       edit:    
         title: Edit Samba Account
-        display: [user_id, hostname, created_at]
+        display: [user_id, hostname]
       new:     
         title: Add new Samba Account
-        display: [user_id, hostname, created_at]
+        display: [user_id, hostname]

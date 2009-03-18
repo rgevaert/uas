@@ -7,7 +7,7 @@ class User extends BaseUser
      public function __construct()
 	{
 		parent::__construct();                
-                $this->setExpiresAt(time() + 360*86400);
+                $this->setExpiresAt(time() + 365*86400);
 	}
 
     public function __toString()
