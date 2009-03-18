@@ -6,3 +6,7 @@
 	<br/>
 	<a href=''>Registration </a>
 </form>
+
+<p>If you do not have an account, you can <a href="<?php echo url_for('register/new') ?>">sign up</a>.</p>
+
+
