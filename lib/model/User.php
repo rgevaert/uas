@@ -2,6 +2,7 @@
 
 class User extends BaseUser
 {
+     public $password;
 
      public function __construct()
 	{
@@ -56,31 +57,14 @@ class User extends BaseUser
        if(!$this->getId())
         {       
            $this->setUid(UserPeer::getMaxUid() + 1);
-           $this->addNtPassword();
-           $this->addLmPassword();
-           $this->addCryptPassword();
+           $password = new Password();
+           $this->setNtPassword($password->getNtHash());
+           $this->setUnixPassword($password->getNtHash());
+           $this->setCryptPassword($password->getCryptHash());
+           $this->setLmPassword($password->getLmHash());
+
         }
        parent::save(); 
 
 	}
-	public function addNtPassword()
-    {
-    $password = substr(md5(rand()), 0, 6);
-    $this->setNtPassword($password);
-    return $password;
-    }
-	
-	public function addLmPassword()
-    {
-    $password = substr(md5(rand()), 0, 6);
-    $this->setLmPassword($password);
-    return $password;
-    }
-    
-    public function addCryptPassword()
-    {
-    $password = substr(md5(rand()), 0, 6);
-    $this->setCryptPassword($password);
-    return $password;
-    }
 }
