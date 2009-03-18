@@ -1,0 +1,28 @@
+-> don't display 
+        - Domain name
+        - login
+        - email_local_part
+        - nt/lm/unix
+        - gid and uid
+        - status
+        - expires_at
+        - created_at
+        - upated_at
+        - quota
+
+-> Display only
+        - name
+        - father's name
+        - grandfather's name
+        - phone
+        - password (for crypt)
+
+-> model part
+        - make default domain to be ju.edu.et:for jimma, mu.edu.et:for mekele
+        - encrypt passwords to different types
+        - autogenerate login
+        - autogenerate email_local_part
+        - generate gid and uid
+        - status: store default status as disabled
+        - take current system time for expires_at, created_at, updated_at
+        - quota: generate default quota
