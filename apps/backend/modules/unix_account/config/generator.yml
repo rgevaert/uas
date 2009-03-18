@@ -22,5 +22,9 @@ generator:
       filter:
           display: [user_id, hostname]
       form:    ~
-      edit:    ~
-      new:     ~
+      edit:    
+        title: Edit Samba Account
+        display: [user_id, hostname]
+      new:     
+        title: Add new Samba Account
+        display: [user_id, hostname]

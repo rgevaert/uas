@@ -10,9 +10,6 @@ Todo list
    --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen): e.g.: pwgen -1 -y -B
   --> implement function in PHP that does the above :)
 * creating users - pre-fill the expires-at field with 1 year to now, but the one year is configurable by config file.
-
-* domains -> click the user count to go to a pre-filtered list in the users
-
 * global -> new and edit should not have the created/updated fields
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
@@ -37,6 +34,7 @@ DONE
 * aliases "abc@domain.tld goes to def@otherdomain.tld"
 * Frontend: add login to the frontend, and show the information of the logged in user
 * samba -> remove "created at"
+* global -> new and edit should not have the created/updated fields
 
 Nice to have
 -------------
