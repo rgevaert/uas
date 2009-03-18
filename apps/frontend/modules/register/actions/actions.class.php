@@ -12,50 +12,27 @@ class registerActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->user_list = UserPeer::doSelect(new Criteria());
+    $this->redirect('register/new');
   }
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new UserForm();
+    $this->form = new RegisterUserForm();
+  }
+
+  public function executeConfirm(sfWebRequest $request)
+  {    
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
 
-    $this->form = new UserForm();
+    $this->form = new RegisterUserForm();
 
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
-  }
-
-  public function executeEdit(sfWebRequest $request)
-  {
-    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $this->form = new UserForm($user);
-  }
-
-  public function executeUpdate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $this->form = new UserForm($user);
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('edit');
-  }
-
-  public function executeDelete(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-
-    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
-    $user->delete();
-
-    $this->redirect('register/index');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -65,7 +42,7 @@ class registerActions extends sfActions
     {
       $user = $form->save();
 
-      $this->redirect('register/edit?id='.$user->getId());
+      $this->redirect('register/confirm');
     }
   }
 }
