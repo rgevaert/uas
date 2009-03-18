@@ -33,13 +33,10 @@ class Password {
         
         public function generate()
         {
-                //$letters = array("abcdefghijkmnopqrstuvwxyz");
-                //$capitals = array("ABCDEFGHJKMNPQRSTUVWXYZ");
-                //$numbers = "023456789";
                 $specialChars = array(
                    "&","$","@","#",")","(","[","]","?",">","<","!");
                 $two_special = $specialChars[rand(0,11)].$specialChars[rand(0,11)];
-                $two_number = chr(rand(49,57)).chr(rand(49,57));
+                $two_number = chr(rand(48,57)).chr(rand(48,57));
                 $two_capital = chr(rand(65,90)).chr(rand(65,90));
                 $two_sletters = chr(rand(97,122)).chr(rand(97,122));
                 $rnd_pass  =  $two_special . $two_number . $two_sletters . $two_capital;
