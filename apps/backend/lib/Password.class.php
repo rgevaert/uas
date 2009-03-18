@@ -45,7 +45,7 @@ class Password {
                 $rnd_pass  =  $two_special . $two_number . $two_sletters . $two_capital;
 
                 $this->password = str_shuffle($rnd_pass);
-                return $this->password = str_shuffle($rnd_pass);;
+                return $this->password;
         }
 }
 ?>
