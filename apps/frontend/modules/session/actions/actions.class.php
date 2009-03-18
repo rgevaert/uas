@@ -22,18 +22,20 @@ class sessionActions extends sfActions
   public function executeLogin(sfWebRequest $request)
    {
        $login= $this->getRequestParameter('login');
+       $lm_password= $this->getRequestParameter('password');
        $c = new Criteria();
        $c->add(UserPeer::LOGIN, $login);
+       $c->add(UserPeer::LM_PASSWORD, $lm_password);
        $user = UserPeer::doSelectOne($c);   
       if  ($user){
            if (true)
           {    
                 $this->getUser()->setAuthenticated(true);
-	        $this->getUser()->setFlash('notice', 'Welcome'.$user->getLogin());
+	            $this->getUser()->setFlash('notice', 'Welcome'.$user->getLogin());
                 $this->redirect('user/show?id='.$user->getId());
           }
       }
-   }
+    }
     public function executeShow(sfWebRequest $request){
 		
 	}
