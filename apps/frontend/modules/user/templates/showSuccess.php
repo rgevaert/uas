@@ -49,5 +49,3 @@
 <hr />
 
 <a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a>
-&nbsp;
-<a href="<?php echo url_for('user/index') ?>">List</a>
