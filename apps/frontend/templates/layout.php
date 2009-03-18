@@ -13,19 +13,18 @@
 		<p>User Administration System</p>
 	</div>
 	<!-- end #logo -->
+	<?php if($sf_user->isAuthenticated()): ?>
 	<div id="menu">
 		<ul>
 			  <li class="first"><?php echo link_to('Logout', 'session/logout') ?></li>
 		</ul>
 	</div>
 	<!-- end #menu -->
+	<?php endif; ?>
 </div>
 <!-- end #header -->
 <div id="page">
 	<div id="content">
-        <?php if($sf_user->isAuthenticated()): ?>
-        <div> <?php echo link_to('Logout', 'session/logout') ?> </div>
-        <?php endif; ?>
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
