@@ -5,7 +5,6 @@ Bugs
 
 Todo list
 ---------
-* Helper for email quata to provide the value in bytes, als the S after the value (validation message)
 * creating users - auto-generate a password and fill the needed fields
    --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen): e.g.: pwgen -1 -y -B
   --> implement function in PHP that does the above :)
@@ -35,6 +34,7 @@ DONE
 * Frontend: add login to the frontend, and show the information of the logged in user
 * samba -> remove "created at"
 * global -> new and edit should not have the created/updated fields
+* Helper for email quata to provide the value in bytes, als the S after the value (validation message)
 
 Nice to have
 -------------
