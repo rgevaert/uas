@@ -29,6 +29,17 @@
 </div>
 <!-- end #header -->
 <div id="page">
+	<div id="user_history">
+	    Recent viewed users:
+	    <ul>
+	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
+	        <li>
+	            <?php echo link_to($user->getFullName(), 'user', $user) ?>
+	        </li>
+	       <?php endforeach; ?>
+	    <ul/>
+	</div>
+	
 	<div id="content">
         <?php if($sf_user->isAuthenticated()): ?>
         <div> <?php echo link_to('Logout', 'session/logout') ?> </div>

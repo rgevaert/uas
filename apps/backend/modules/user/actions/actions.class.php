@@ -23,25 +23,21 @@ class userActions extends autoUserActions
         $user->ToggleStatus();
         $this->getUser()->setFlash('notice', 'Status is changed successfully.');
         $this->redirect('@user');  
-    }
-    
-    
+    } 
     public function executeBatchToggle_status(sfWebRequest $request)
     {
         $ids = $request->getParameter('ids'); 
         $users = UserPeer::retrieveByPks($ids);
-        
         foreach ($users as $user)
         {
             $user->ToggleStatus();        
         }
-       
        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
        $this->redirect('@user');
     }
-
 	public function executeListShow(sfWebRequest $request)
 	{
 		$this->user = $this->getRoute()->getObject();
+        $this->getUser()->addUserToHistory($this->user);
 	}
 }
