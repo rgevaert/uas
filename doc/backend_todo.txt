@@ -1,7 +1,7 @@
 Bugs
 ----
 
-* none
+* plenty but not documented
 
 Todo list
 ---------
@@ -10,15 +10,20 @@ Todo list
   --> implement function in PHP that does the above :)
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
-* Show a list with last viewed users/accounts/... 
 * Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
-
-* ADD TESTS
-
+* Create a script that creates the smbpasswd file
+* Reset password functionality needs to be implemented.
+* When a user registers
+  - the email local part needs to be generated.
+  - the password needs to be generated
+* After registration the user needs to be redirected to a page where he sees his account details.  Provide a print function
+* ADD unit TESTS
+* ADD functional TESTS
 * Add the restriction to the backend that you need to login (admin/pa55w0rd)
 * Add additional user credentials: admin, secretary, sysadmin
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
+
 Nice to have
 -------------
 
