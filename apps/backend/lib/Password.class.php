@@ -1,7 +1,8 @@
 <?php
 class Password {
 
-        public $password = "";        
+        private $password = "";        
+
         public function __construct($pass = "")
         {
                 if ($pass !== "")
@@ -12,6 +13,11 @@ class Password {
                         $this->password = self::generate();
                 }
         }
+
+		public function getPassword()
+		{
+			return $this->password;
+		}
 
         public function getCryptHash()
         {
@@ -31,7 +37,7 @@ class Password {
                 return 'UNIX'.$this->password;
         }
         
-        public function generate()
+        private function generate()
         {
                 $specialChars = array(
                    "&","$","@","#",")","(","[","]","?",">","<","!");
