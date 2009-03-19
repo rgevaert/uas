@@ -21,7 +21,8 @@ class registerActions extends sfActions
   }
 
   public function executeConfirm(sfWebRequest $request)
-  {    
+  {      
+        $this->user = UserPeer::retrieveByPk($request->getParameter('id'));  
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -42,7 +43,7 @@ class registerActions extends sfActions
     {
       $user = $form->save();
 
-      $this->redirect('register/confirm');
+      $this->redirect('register/confirm?id='.$user->getId());
     } 
   }
 }
