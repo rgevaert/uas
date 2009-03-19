@@ -166,10 +166,8 @@ a img {
 #footer {
 	clear: both;
 	width: 900px;
-	height: 50px;
 	margin: 0px auto 30px auto;
 	color: #FFFFFF;
-	background: #699C4D;
 }
 
 #footer p {
@@ -177,6 +175,7 @@ a img {
 	padding: 19px 0px 0px 0px;
 	text-align: center;
 	line-height: normal;
+	color: #000000;
 	font-size: smaller;
 }
 

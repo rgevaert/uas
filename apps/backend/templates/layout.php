@@ -31,13 +31,10 @@
 <div id="page">
 	<div id="user_history">
 	    Recent viewed users:
-	    <ul>
+	 
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
-	        <li>
-	            <?php echo link_to($user->getFullName(), 'user', $user) ?>
-	        </li>
-	       <?php endforeach; ?>
-	    <ul/>
+	    <?php echo link_to($user->getFullName(), 'user', $user) ?>
+	    <?php endforeach; ?>
 	</div>
 	
 	<div id="content">
@@ -48,6 +45,11 @@
 	</div>
 	<!-- end #content -->
 
+</div>
+<div id="footer">
+<p>
+Powered by <a href="http://www.symfony-project.org/"><img align="middle" src="/images/symfony_button.gif" alt="Symfony_button" /></a>&nbsp;-&nbsp;
+The development of this system was sponsored by <a target="_blank" href="http://www.vliruos.be/"><img align="middle" src="/images/vliruos.jpg" alt="VLIRUOS" /></a>
 </div>
 <!-- end #page -->
 
