@@ -1,0 +1,4 @@
+# default values
+all:
+  account_expire_days: 365
+  account_extend_days: 365
