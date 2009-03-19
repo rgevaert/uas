@@ -23,6 +23,7 @@ Todo list
 * Add additional user credentials: admin, secretary, sysadmin
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
+* In in the frontend name, fathers name and grand fathers name should not be editable
 
 Nice to have
 -------------
