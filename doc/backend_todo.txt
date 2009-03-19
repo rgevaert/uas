@@ -2,6 +2,8 @@ Bugs
 ----
 
 * the login in screen in the backend shows 'Recent viewed users: ' it should not show that
+* the links for the Recent viewed users do not work
+
 
 Todo list
 ---------
@@ -24,6 +26,7 @@ Todo list
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
 * In in the frontend name, fathers name and grand fathers name should not be editable
+* Move the logout link in the backend to a nicer place.
 
 Nice to have
 -------------
