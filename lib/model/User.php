@@ -64,6 +64,12 @@ class User extends BaseUser
            $this->setLmPassword($password->getLmHash());
 
         }
+		if(!$this->getDomainnameId()){
+			// get the default domainname
+			$domainname = DomainnamePeer::getDefaultDomain();
+			$this->setDomainnameId($domainname->getId());
+		}
+		
        parent::save(); 
 
 	}

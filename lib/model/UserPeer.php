@@ -12,6 +12,7 @@ class UserPeer extends BaseUserPeer
         '2001' => 'System',
         '2002' => 'Other',
         );
+
     static public function getMaxUid()
 	{
 		$connection = Propel::getConnection();
@@ -20,4 +21,5 @@ class UserPeer extends BaseUserPeer
 		$row = $result->fetch();
 		return $row['max'];
 	}
+
 }

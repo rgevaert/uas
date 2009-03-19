@@ -1,2 +1,3 @@
 # default values
-#all:
+all:
+    default_domain_name: ju.edu.et
