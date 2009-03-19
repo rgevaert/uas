@@ -43,6 +43,6 @@ class registerActions extends sfActions
       $user = $form->save();
 
       $this->redirect('register/confirm');
-    }
+    } 
   }
 }

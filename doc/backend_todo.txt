@@ -8,8 +8,6 @@ Todo list
 * creating users - auto-generate a password and fill the needed fields
    --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen): e.g.: pwgen -1 -y -B
   --> implement function in PHP that does the above :)
-* creating users - pre-fill the expires-at field with 1 year to now, but the one year is configurable by config file.
-* global -> new and edit should not have the created/updated fields
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 * Show a list with last viewed users/accounts/... 
@@ -21,18 +19,17 @@ Todo list
 * Add additional user credentials: admin, secretary, sysadmin
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
-
-
 Nice to have
 -------------
 
-* persons picture with the users (image upload)
-* links from a user to his unix account / ftp accounts / ...
-* a login for the backend, not everyone should be able to use this
-* a cooler layout/view
-* add a "server" table to the system
+*  persons picture with the users (image upload)
+*  links from a user to his unix account / ftp accounts / ...
+*  a login for the backend, not everyone should be able to use this
+*  a cooler layout/view
+*  add a "server" table to the system
 *  But the size is important.  Maybe we should show it in megabyte. and let the user insert in in megabyte.  Maybe we should provide the user with only a dropdown box where he can select X MB (in increments of 100MB.  The field that is written into the database is in bytes.
 
 Bernard
 -------
 Figure out why we can't set values in our actions in our admin-constructor (expiry date setting in actions.class.php - executeNew())
+Figure out why filter_is_empty isn't working as it should

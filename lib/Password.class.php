@@ -1,7 +1,7 @@
 <?php
 class Password {
 
-        private $password = "";        
+        private  $password = "";        
 
         public function __construct($pass = "")
         {

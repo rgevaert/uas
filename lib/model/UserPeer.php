@@ -12,6 +12,7 @@ class UserPeer extends BaseUserPeer
         '2001' => 'System',
         '2002' => 'Other',
         );
+
     static public function getMaxUid()
 	{
 		$connection = Propel::getConnection();
@@ -19,5 +20,17 @@ class UserPeer extends BaseUserPeer
 		$result = $connection->query($query);
 		$row = $result->fetch();
 		return $row['max'];
+	}
+
+	static public function check_if_login_exists($login = "")
+	{
+		$criteria = new Criteria();
+		$criteria->add(self::LOGIN, $login);
+		$count = self::doCount($criteria);
+		if($count == 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

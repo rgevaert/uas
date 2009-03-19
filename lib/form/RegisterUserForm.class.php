@@ -11,13 +11,15 @@
 class RegisterUserForm extends UserForm
 {
   public function configure_specific()
-  {
+  {	
     unset(
         $this['created_at'], $this['updated_at'], $this['expires_at'],
         $this['login'], 
         $this['nt_password'], $this['lm_password'], $this['crypt_password'], $this['unix_password'],
         $this['email_quota'], 
-        $this['gid'], $this['uid']
+        $this['gid'], $this['uid'],
+		$this['domainname_id'],
+		$this['status']
         );    
   }
 }
