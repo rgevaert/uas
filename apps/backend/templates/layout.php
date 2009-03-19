@@ -31,13 +31,10 @@
 <div id="page">
 	<div id="user_history">
 	    Recent viewed users:
-	    <ul>
+	 
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
-	        <li>
-	            <?php echo link_to($user->getFullName(), 'user', $user) ?>
-	        </li>
-	       <?php endforeach; ?>
-	    <ul/>
+	    <?php echo link_to($user->getFullName(), 'user', $user) ?>
+	    <?php endforeach; ?>
 	</div>
 	
 	<div id="content">

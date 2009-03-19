@@ -9,7 +9,7 @@ class myUser extends sfBasicSecurityUser
         {
             array_unshift($ids, $user->getId());
            
-            $this->setAttribute('user_history', array_slice($ids, 0, 3));
+            $this->setAttribute('user_history', array_slice($ids, 0, 5));
         }  
     }
     public function getUserHistory()
