@@ -5,16 +5,14 @@ require_once(dirname(__FILE__) . '/../bootstrap/propel.php');
 $t = new lime_test(3, new lime_output_color());
 
 
-create_user();
-$get_user = UserPeer::doSelectOne(new Criteria());
+$get_user = create_user();
 $t->is($get_user->getLogin(), "abebe");
 
-create_user();
-$get_user = UserPeer::doSelectOne(new Criteria());
+
+$get_user = create_user();
 $t->is($get_user->getLogin(), "abebekebede");
 
-create_user();
-$get_user = UserPeer::doSelectOne(new Criteria());
+$get_user = create_user();
 $t->is($get_user->getLogin(), "abebe1");
 
 function create_user()
@@ -29,6 +27,8 @@ function create_user()
        $user->setStatus("Disactivated");
        $user->setEmailLocalPart("abebe.kebede".rand(1,1000));        
        $user->save();
+       
+       return $user;
 }
 
 ?>
