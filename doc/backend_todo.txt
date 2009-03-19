@@ -22,20 +22,6 @@ Todo list
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
 
-
-
-DONE
-----
-* creating users - auto-generate uid
-* creating users - gid should be a drop-down box (2000 - users(*), 2001 - system, 2002 - other)
-* creating users - validate email quota field (/^\d[SC]$/)
-* creating users - take out the created/updated fields
-* aliases "abc@domain.tld goes to def@otherdomain.tld"
-* Frontend: add login to the frontend, and show the information of the logged in user
-* samba -> remove "created at"
-* global -> new and edit should not have the created/updated fields
-* Helper for email quata to provide the value in bytes, als the S after the value (validation message)
-
 Nice to have
 -------------
 
