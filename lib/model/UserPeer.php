@@ -22,4 +22,15 @@ class UserPeer extends BaseUserPeer
 		return $row['max'];
 	}
 
+	static public function check_if_login_exists($login = "")
+	{
+		$criteria = new Criteria();
+		$criteria->add(self::LOGIN, $login);
+		$count = self::doCount($criteria);
+		if($count == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

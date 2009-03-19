@@ -66,11 +66,47 @@ class User extends BaseUser
         }
 		if(!$this->getDomainnameId()){
 			// get the default domainname
-			$domainname = DomainnamePeer::getDefaultDomain();
+			$domainname = DomainnamePeer::getDefaultDomainname();
 			$this->setDomainnameId($domainname->getId());
 		}
+
+		if(!$this->getLogin()) $this->generateLogin();
 		
        parent::save(); 
 
 	}
+
+	protected function get_all_possible_logins($suffix = "")
+	{		
+		$a = array(
+			$this->getName() . $suffix,
+			$this->getName() . $this->getFathersname() . $suffix			
+			);
+			
+		return $a;
+	}
+
+	public function generateLogin()
+	{
+		$logins_to_try = $this->get_all_possible_logins();
+		$counter = 0;
+
+		$login_to_try = array_shift($logins_to_try);		
+		while(!UserPeer::check_if_login_exists($login_to_try)){
+			if(count($logins_to_try) == 0){
+				$counter++;
+				$logins_to_try = $this->get_all_possible_logins($counter);
+			}
+
+			$login_to_try = array_shift($logins_to_try);
+
+			// todo: make this better, maybe through a user->flash
+			if($counter == 5){
+				die('Too many attempts to find a login');
+			}
+		}
+
+		$this->setLogin($login_to_try);
+		return $login_to_try;
+	}	
 }
