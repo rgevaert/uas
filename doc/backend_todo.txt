@@ -1,7 +1,7 @@
 Bugs
 ----
 
-* plenty but not documented
+* the login in screen in the backend shows 'Recent viewed users: ' it should not show that
 
 Todo list
 ---------
