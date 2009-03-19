@@ -31,7 +31,6 @@ class sessionActions extends sfActions
         if (true)
         {    
             $this->getUser()->setAuthenticated(true);
-            $this->getUser()->setAttribute('user_id' , $user->getId());
 	    $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
 	    $this->redirect('user/show?id='.$user->getId());
         }
