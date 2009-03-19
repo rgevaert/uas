@@ -7,7 +7,7 @@ class User extends BaseUser
      public function __construct()
 	{
 		parent::__construct();                
-                $this->setExpiresAt(time() + 365*86400);
+                $this->setExpiresAt(time() + sfConfig::get('app_account_expire_days')*86400);
 	}
 
     public function __toString()
@@ -44,7 +44,7 @@ class User extends BaseUser
 
     public function displayExtendExpiresAt()
     {
-        $extend = time() + 360*86400;
+        $extend = time() + sfConfig::get('app_account_extend_days')*86400;
         $this->setExpiresAt($extend);        
         echo $extend;
         //return true;
