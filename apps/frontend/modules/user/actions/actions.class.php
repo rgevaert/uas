@@ -64,4 +64,25 @@ class userActions extends sfActions
       $this->redirect('user/edit?id='.$user->getId());
     }
   }
+  public function executeChangepassword(sfWebRequest $request)
+  {
+        $this->user = UserPeer::retrieveByPk($request->getParameter('id'));
+        
+        $new_password= $this->getRequestParameter('new_password');
+        $confirm_password= $this->getRequestParameter('confirm_password');
+
+        if($new_password == $confirm_password) 
+        {
+                $this->getUser()->setFlash('notice', 'Password Changed Successfuly');                
+
+                /*$criteria = new Criteria();
+                $criteria->add(UserPeer::LOGIN, $login);
+                $criteria->add(UserPeer::CRYPT_PASSWORD, $crypt_password);
+                $user = UserPeer::doSelectOne($criteria);   */
+        }
+        else
+        {
+                $this->getUser()->setFlash('error','Passwords must match');                
+        }  
+  }
 }
