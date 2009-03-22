@@ -1,0 +1,25 @@
+CREATE VIEW view_email_accounts AS
+SELECT CONCAT(u.email_local_part, '@', d.name) AS email,
+       CONCAT( '{crypt}',u.crypt_password) AS password,
+       CONCAT(d.name, '/', u.email_local_part, '/' ) AS home,
+       CONCAT(d.name, '/', u.email_local_part, '/Maildir/') AS maildir,
+       u.status,
+       u.email_quota
+FROM domainname AS d, user AS u WHERE u.domainname_id = d.id;
+
+CREATE VIEW view_email_aliases AS
+SELECT CONCAT(a.local_part, '@', d.name) AS email,
+       destination
+FROM email_alias a, domainname AS d WHERE a.domainname_id=d.id;
+
+CREATE VIEW view_ftp_accounts AS
+SELECT CONCAT(u.email_local_part, '@', d.name) AS ftp_login,
+       u.crypt_password AS password,
+       CONCAT(d.name, '/', u.email_local_part, '/' ) AS home,
+       u.status,
+       f.up_bandwidth,
+       f.down_bandwidth,
+       f.ip_access,
+       f.quota_size,
+       f.quota_files
+FROM ftp_account AS f, domainname AS d, user AS u WHERE u.domainname_id = d.id and u.id = f.user_id;
