@@ -29,14 +29,14 @@
 </div>
 <!-- end #header -->
 <div id="page">
+        <?php if ($sf_user->getUserHistory() != NULL): ?>
 	<div id="user_history">
 	    Recent viewed users:
-	 
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
 	    <?php echo link_to($user->getFullName(), 'user', $user) ?>
 	    <?php endforeach; ?>
 	</div>
-	
+	<?php endif; ?>
 	<div id="content">
         <?php if($sf_user->isAuthenticated()): ?>
         <div> <?php echo link_to('Logout', 'session/logout') ?> </div>
