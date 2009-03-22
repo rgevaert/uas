@@ -2,7 +2,7 @@
 // test/unit/uasTest.php
 require_once(dirname(__FILE__) . '/../bootstrap/propel.php');
 
-$t = new lime_test(3, new lime_output_color());
+$t = new lime_test(4, new lime_output_color());
 
 
 $get_user = create_user();
@@ -14,6 +14,9 @@ $t->is($get_user->getLogin(), "abebekebede");
 
 $get_user = create_user();
 $t->is($get_user->getLogin(), "abebe1");
+
+$get_user = create_user();
+$t->is(check_password($get_user->getCryptPassword()), true);
 
 function create_user()
 {
@@ -30,5 +33,13 @@ function create_user()
        
        return $user;
 }
-
+function check_password($var)
+{ 
+        if($var == crypt($_SESSION['generated_pass'])){
+           return true;
+        }
+        else{
+           return false;
+        }
+}
 ?>
