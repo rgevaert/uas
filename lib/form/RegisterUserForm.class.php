@@ -20,6 +20,7 @@ class RegisterUserForm extends UserForm
         $this['gid'], $this['uid'],
 		$this['domainname_id'],
 		$this['status']
-        );    
+        );  
+        $this->widgetSchema->setHelp('email_local_part','This will be your email address');
   }
 }
