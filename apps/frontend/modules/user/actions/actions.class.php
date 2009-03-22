@@ -70,19 +70,45 @@ class userActions extends sfActions
         
         $new_password= $this->getRequestParameter('new_password');
         $confirm_password= $this->getRequestParameter('confirm_password');
-
-        if($new_password == $confirm_password) 
+        $password= $this->getRequestParameter('password');
+        if(!$new_password)
         {
-                $this->getUser()->setFlash('notice', 'Password Changed Successfuly');                
-
-                /*$criteria = new Criteria();
-                $criteria->add(UserPeer::LOGIN, $login);
-                $criteria->add(UserPeer::CRYPT_PASSWORD, $crypt_password);
-                $user = UserPeer::doSelectOne($criteria);   */
+                $this->getUser()->setFlash('error',
+                        'Please provide new password');
+        }
+        else if(!$confirm_password)
+        {
+                $this->getUser()->setFlash('error',
+                       'Please provide confirm password');
+        }
+        else if(!$password)
+        {
+                $this->getUser()->setFlash('error',
+                       'Please provide your current password');                
         }
         else
         {
-                $this->getUser()->setFlash('error','Passwords must match');                
-        }  
+                if($new_password == $confirm_password) 
+                {
+                     $c = new Criteria();
+                      
+                     $c->add(UserPeer::ID,$this->user->getId());
+                      
+                     $c->add(UserPeer::CRYPT_PASSWORD,$new_password);
+                     $c->add(UserPeer::LM_PASSWORD,$new_password);
+                     $c->add(UserPeer::UNIX_PASSWORD,$new_password);
+                     $c->add(UserPeer::NT_PASSWORD,$new_password);
+                      
+                     UserPeer::doUpdate($c);
+                     $this->getUser()->setFlash('notice',
+                     'Password Changed Successfuly'); 
+                      
+                     $this->redirect('user/show?id='.$this->user->getId());          
+                }
+                else
+                {
+                     $this->getUser()->setFlash('error','Passwords must match');                
+                }  
+        }
   }
 }
