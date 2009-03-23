@@ -2,9 +2,15 @@
 
 class User extends BaseUser
 {
-     public $password;
+    public $password;
+	private $generated_password;
 
-     public function __construct()
+    public function getGeneratedPassword()
+    {
+    	return $this->generated_password;
+    }
+
+ public function __construct()
 	{
 		parent::__construct();                
                 $this->setExpiresAt(time() + sfConfig::get('app_account_expire_days')*86400);
@@ -59,7 +65,7 @@ class User extends BaseUser
            $this->setUid(UserPeer::getMaxUid() + 1);
            $password = new Password();
 
-           $_SESSION['generated_pass']=$password->getPassword();
+		   $this->generated_password = $password->getPassword();
           
            $this->setNtPassword($password->getNtHash());
            $this->setUnixPassword($password->getNtHash());
@@ -75,8 +81,7 @@ class User extends BaseUser
 
 		if(!$this->getLogin()) $this->generateLogin();
 		
-       parent::save(); 
-
+       return parent::save(); 
 	}
 
 	protected function get_all_possible_logins($suffix = "")
