@@ -27,6 +27,7 @@ Todo list
 	- restrict the correct pages to the correct credentials
 * In in the frontend name, fathers name and grand fathers name should not be editable
 * Move the logout link in the backend to a nicer place.
+* When we activate a user the email account home dir needs to be created!
 
 Nice to have
 -------------
