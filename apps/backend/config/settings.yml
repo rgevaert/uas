@@ -1,3 +1,8 @@
+all:
+  .settings:
+    charset: utf-8
+    i18n:    on
+    standard_helpers: [Partial, Cache, I18N]
 prod:
   .settings:
     no_script_name:         off

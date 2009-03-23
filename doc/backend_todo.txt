@@ -7,6 +7,34 @@ Bugs
 
 Todo list
 ---------
+
+Eyuel:
+* Add the details of the unix/ftp/samba accounts to the show of the user
+* Add "Add new Samba/FTP/Unix" to the show of the user
+* Remove the "Add" from the Samba/FTP/Unix lists
+
+Shimels:
+* Add all needed functionality to the User::Show action in the backend
+
+Yemane:
+* Frontend:
+	- after registration -> redirect to the user/show/1234 url
+	- make sure the login is done
+	- generate the email address, remove the email_local_part
+	- add listing of accounts on the show page
+	- if you try to register a new user - logout if still logged in
+	- validate the phone number
+	- provide a printable version of the detail page
+
+Habtom:
+* frontend: change password: use symfony forms
+* Models/frontend: change password: refactor! Move from controller to models
+* CHAP.php|Password.php|model/User.php - mix this correctly in 
+* Backend: add a Action on the Samba list to get a smbpasswd file (no layout, just one line per user)
+
+
+All:
+* clean up TODO list
 * creating users - auto-generate a password and fill the needed fields
    --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen): e.g.: pwgen -1 -y -B
   --> implement function in PHP that does the above :)
@@ -27,6 +55,7 @@ Todo list
 	- restrict the correct pages to the correct credentials
 * In in the frontend name, fathers name and grand fathers name should not be editable
 * Move the logout link in the backend to a nicer place.
+* When we activate a user the email account home dir needs to be created!
 
 Nice to have
 -------------

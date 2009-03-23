@@ -12,6 +12,7 @@ class myUser extends sfBasicSecurityUser
             $this->setAttribute('user_history', array_slice($ids, 0, 5));
         }  
     }
+    
     public function getUserHistory()
     {
         $ids = $this->getAttribute('user_history', array());
@@ -21,4 +22,16 @@ class myUser extends sfBasicSecurityUser
     {
         $this->getAttributeHolder()->remove('user_history');
     }
+    
+    public function isFirstRequest($boolean = null)
+    {
+        if (is_null($boolean))
+        {
+            return $this->getAttribute('first_request', true);
+        }
+        else
+        {
+            $this->setAttribute('first_request', $boolean);
+        }
+}
 }

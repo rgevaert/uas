@@ -11,6 +11,7 @@
 	<div id="logo">
 		<h1><a href="#">UAS</a></h1>
 		<p>User Administration System</p>
+		<?php include_component('language', 'language') ?>
 	</div>
 	<!-- end #logo -->
 	<div id="menu">
@@ -44,8 +45,28 @@
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
-
-</div>
+	
+	<div id="footer">
+        <div class="content">
+        <!-- footer content -->
+       
+       <ul>
+      <li>
+        <a href=""><?php echo __('About UAS') ?></a>
+      </li>
+      <li class="feed">
+        <?php echo link_to(__('Full feed'), '@user?sf_format=atom') ?>
+      </li>
+      <li>
+        <a href=""><?php echo __('UAS Documents') ?></a>
+      </li>
+      <li class="last">
+        <?php echo link_to(__('Become a Member'), '@user') ?>
+      </li>
+    </ul>
+    
+  </div>
+ </div>
 <div id="footer">
 <p>
 Powered by <a href="http://www.symfony-project.org/"><img align="middle" src="/images/symfony_button.gif" alt="Symfony_button" /></a>&nbsp;-&nbsp;

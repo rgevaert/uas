@@ -37,7 +37,22 @@ class userActions extends autoUserActions
     }
 	public function executeListShow(sfWebRequest $request)
 	{
-		$this->user = $this->getRoute()->getObject();
-        $this->getUser()->addUserToHistory($this->user);
-	}
+        if (!$request->getParameter('sf_culture'))
+        {
+        if ($this->getUser()->isFirstRequest())
+        {
+            $culture = $request->getPreferredCulture(array('en', 'ti'));
+            $this->getUser()->setCulture($culture);
+            $this->getUser()->isFirstRequest(false);
+        }
+        else
+        {
+            $culture = $this->getUser()->getCulture();
+        }
+        $this->redirect('@localized_homepage');
+        }
+        
+        $this->user = $this->getRoute()->getObject();
+        $this->getUser()->addUserToHistory($this->user);      
+    }
 }
