@@ -44,6 +44,30 @@
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
+	
+	<div id="footer">
+        <div class="content">
+        <!-- footer content -->
+       
+       <ul>
+      <li>
+        <a href=""><?php echo __('About UAS') ?></a>
+      </li>
+      <li class="feed">
+        <?php echo link_to(__('Full feed'), '@user?sf_format=atom') ?>
+      </li>
+      <li>
+        <a href=""><?php echo __('UAS API') ?></a>
+      </li>
+      <li class="last">
+        <?php echo link_to(__('Become an a Member'), '@user') ?>
+      </li>
+    </ul>
+    <?php include_component('language', 'language') ?>
+  </div>
+ </div>
+
+
 
 </div>
 <!-- end #page -->

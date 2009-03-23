@@ -1,3 +1,9 @@
+change_language:
+  url:   /change_language
+  param: 
+    module: language
+    action: changeLanguage
+
 ftp_account:
   class: sfPropelRouteCollection
   options:
@@ -6,7 +12,10 @@ ftp_account:
     prefix_path:         ftp_account
     column:              id
     with_wildcard_routes: true
-
+    prefix_path:          /:sf_culture/ftp_account
+    requirements:         
+      sf_culture:  (?:ti|en)
+    
 samba_account:
   class: sfPropelRouteCollection
   options:
@@ -15,7 +24,10 @@ samba_account:
     prefix_path:         samba_account
     column:              id
     with_wildcard_routes: true
-
+    prefix_path:          /:sf_culture/samba_account
+    requirements:         
+      sf_culture:  (?:ti|en)
+    
 unix_account:
   class: sfPropelRouteCollection
   options:
@@ -24,6 +36,9 @@ unix_account:
     prefix_path:         unix_account
     column:              id
     with_wildcard_routes: true
+    prefix_path:          /:sf_culture/unix_account
+    requirements:         
+      sf_culture:  (?:ti|en)
 
 email_alias:
   class: sfPropelRouteCollection
@@ -33,6 +48,9 @@ email_alias:
     prefix_path:         emailalias
     column:              id
     with_wildcard_routes: true
+    prefix_path:          /:sf_culture/email_alias    
+    requirements:         
+      sf_culture:  (?:ti|en)
 
 user_identification:
   class: sfPropelRouteCollection
@@ -42,6 +60,9 @@ user_identification:
     prefix_path:         useridentification
     column:              id
     with_wildcard_routes: true
+    prefix_path:          /:sf_culture/user_identification
+    requirements:         
+      sf_culture:  (?:ti|en)
 
 user:
   class: sfPropelRouteCollection
@@ -51,6 +72,9 @@ user:
     prefix_path:         user
     column:              id
     with_wildcard_routes: true
+    prefix_path:          /:sf_culture/user
+    requirements:         
+      sf_culture:  (?:ti|en)
 
 domainname:
   class: sfPropelRouteCollection
@@ -60,11 +84,16 @@ domainname:
     prefix_path:         domainname
     column:              id
     with_wildcard_routes: true
+    prefix_path:          /:sf_culture/domainname
+    requirements:         
+      sf_culture:  (?:ti|en)
 
 # default rules
-homepage:
-  url:   /
+localized_homepage:
+  url:   /:sf_culture
   param: { module: default, action: index }
+  requirements:
+    sf_culture: (?:ti|en)
 
 default_index:
   url:   /:module

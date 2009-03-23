@@ -5,7 +5,7 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 $browser = new sfTestFunctional(new sfBrowser());
 
 $browser->
-  get('/samba_account/index')->
+  get('/en/samba_account/index')->
 
   with('request')->begin()->
     isParameter('module', 'samba_account')->

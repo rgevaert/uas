@@ -16,5 +16,4 @@ $t->is(count($cap_letter_match[0]), 2);
 $t->is(count($small_letter_match[0]), 2);
 $t->is(count($number_match[0]), 2);
 $t->is(count($special_char_match[0]), 2);
-
 ?>
