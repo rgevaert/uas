@@ -7,6 +7,14 @@
   <?php include_partial('user/flashes') ?>
 
   <div id="sf_admin_header">
+	<p>Actions: <br /br>
+	<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a>
+<a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a>
+
+		<a href="">Extend</a>
+		<a href="">Print version</a>
+		
+	</p> 
   </div>
 
   <div id="sf_admin_content">
@@ -45,6 +53,7 @@
 		</tr>
 	</table>
   </div>
+
 
   <div id="sf_admin_footer">
   </div>
