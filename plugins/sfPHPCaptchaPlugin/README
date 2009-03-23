@@ -1,0 +1,71 @@
+PHPCaptcha symfony plugin
+=========================
+
+Using visual captchas in symfony forms. Audio support is possible.
+Development version.
+
+Installation
+------------
+
+  * Install the plugin
+  
+		$ symfony plugin:install -r <versionnumber> sfPHPCaptchaPlugin
+  
+  * Enable the plugin. Eg. in your ProjectConfiguration.class.php
+  
+		$this->enablePlugins(array('sfPHPCaptchaPlugin'));
+  
+  * Enable the module in your settings.yml
+  
+		enabled_modules:  [default,sfPHPCaptchaPlugin]
+
+  
+  * Clear your cache
+
+		$symfony cc
+  
+How to use
+----------
+
+  * Create a Form which extends the sfForm class and use the widget and the validator
+  
+		public function configure() {
+		  $this->setWidgets(array(
+		    'captcha' => new sfWidgetFormPHPCaptcha(),
+		  ));
+
+		  $this->setValidators(array(
+		    'captcha' => new sfValidatorPHPCaptcha()
+		  ));
+		}
+
+Configure plugin
+----------------
+
+  * Custom error message
+  
+		'captcha' => new sfValidatorPHPCaptcha(array(),array('invalid' => "Custom message")),
+  
+  * Change the image
+
+    You can use themes to change the image
+
+
+Audio support
+-------------
+
+  * For more information please visit http://www.ejeliot.com/pages/php-captcha
+  
+  Enable it in app.yml
+
+		all:
+		  phpcaptcha:
+		    useaudio: true
+
+
+Copyright
+---------
+
+Symfony plugin: Sven Wappler - http://www.wapplersystems.de
+
+PHP Captcha - Edward Eliot - http://www.ejeliot.com
