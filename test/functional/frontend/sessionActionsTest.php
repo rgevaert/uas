@@ -4,16 +4,14 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new sfTestFunctional(new sfBrowser());
 
-$browser->
-  get('/session/index')->
-
+$browser->info('1.1 - The login page: session Module')->                                      
+  get('/')->
+  info(' 2.1 - The login page has a clickable sign up link')->
+  click('sign up', array(), array('position' => 1))->
   with('request')->begin()->
-    isParameter('module', 'session')->
-    isParameter('action', 'index')->
-  end()->
-
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
+    isParameter('module', 'register')->
+    isParameter('action', 'new')->
   end()
 ;
+
+
