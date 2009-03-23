@@ -90,24 +90,38 @@ class userActions extends sfActions
         {
                 if($new_password == $confirm_password) 
                 {
-                     $c = new Criteria();
-                      
-                     $c->add(UserPeer::ID,$this->user->getId());
-                      
-                     $c->add(UserPeer::CRYPT_PASSWORD,$new_password);
-                     $c->add(UserPeer::LM_PASSWORD,$new_password);
-                     $c->add(UserPeer::UNIX_PASSWORD,$new_password);
-                     $c->add(UserPeer::NT_PASSWORD,$new_password);
-                      
-                     UserPeer::doUpdate($c);
-                     $this->getUser()->setFlash('notice',
-                     'Password Changed Successfuly'); 
-                      
-                     $this->redirect('user/show?id='.$this->user->getId());          
+                        $c_exists = new Criteria();
+                        $c_exists->add(UserPeer::CRYPT_PASSWORD,
+                               $password);                             
+                        if(UserPeer::doSelect($c_exists))
+                        {
+                             $c = new Criteria();
+                              
+                             $c->add(UserPeer::ID,$this->user->getId());
+                              
+                             $c->add(UserPeer::CRYPT_PASSWORD,$new_password);
+                             $c->add(UserPeer::LM_PASSWORD,$new_password);
+                             $c->add(UserPeer::UNIX_PASSWORD,$new_password);
+                             $c->add(UserPeer::NT_PASSWORD,$new_password);
+                              
+                             UserPeer::doUpdate($c);
+                             $this->getUser()->setFlash('notice',
+                             'Password Changed Successfuly'); 
+                             $this->redirect('user/show?id='.
+                                              $this->user->getId()); 
+                              
+                        }
+                        else
+                        {
+                             $this->getUser()->setFlash('error',
+                             'Password doesnot exist');                             
+                        }         
                 }
                 else
                 {
-                     $this->getUser()->setFlash('error','Passwords must match');                
+                     $this->getUser()->setFlash('error',
+                                                'Passwords must
+                                                 match');                
                 }  
         }
   }
