@@ -22,10 +22,10 @@ class sessionActions extends sfActions
   public function executeLogin(sfWebRequest $request)
   {
     $login= $this->getRequestParameter('login');
-    $lm_password= $this->getRequestParameter('password');
+    $crypt_password= $this->getRequestParameter('password');
     $c = new Criteria();
     $c->add(UserPeer::LOGIN, $login);
-    $c->add(UserPeer::LM_PASSWORD, $lm_password);
+    $c->add(UserPeer::CRYPT_PASSWORD, $crypt_password);
     $user = UserPeer::doSelectOne($c);   
     if  ($user){
         if (true)

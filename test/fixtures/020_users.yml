@@ -1,0 +1,49 @@
+User:
+  eyuel:
+    domainname_id:          ju
+    name:               Eyuel
+    fathers_name:       Gessese
+    grand_fathers_name: W
+    login:              eyuelg
+    gid:                2000
+    uid:                2000
+    alternate_email:    eyuel@yahoo.com
+    email_local_part:   eyuel.gessese
+    expires_at:         2010-12-31
+
+  shimels:
+    domainname_id:          ju
+    name:               Shimels
+    fathers_name:       Chala
+    grand_fathers_name: Z
+    login:              shimelsc
+    gid:                2000
+    uid:                2001
+    alternate_email:    shimels@yahoo.com
+    email_local_part:   shimels.chala
+    expires_at:         2010-12-31
+
+  habtom:
+    domainname_id:          mu
+    name:               Habtom
+    fathers_name:       K
+    grand_fathers_name: Z
+    login:              habtomk
+    gid:                2000
+    uid:                2003
+    alternate_email:    habtom@yahoo.com
+    email_local_part:   habtom.k
+    expires_at:         2010-12-31
+
+  yemane:
+    domainname_id:          mu
+    name:               Yemane
+    fathers_name:       S
+    grand_fathers_name: G
+    login:              yemanes
+    gid:                2000
+    uid:                2004
+    alternate_email:    yemane@yahoo.com
+    email_local_part:   yemane.s
+    expires_at:         2010-12-31
+

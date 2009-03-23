@@ -58,6 +58,9 @@ class User extends BaseUser
         {       
            $this->setUid(UserPeer::getMaxUid() + 1);
            $password = new Password();
+
+           $_SESSION['generated_pass']=$password->getPassword();
+          
            $this->setNtPassword($password->getNtHash());
            $this->setUnixPassword($password->getNtHash());
            $this->setCryptPassword($password->getCryptHash());

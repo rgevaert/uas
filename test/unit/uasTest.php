@@ -1,7 +1,7 @@
 <?php
 // test/unit/uasTest.php
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
-require_once dirname(__FILE__).'/../../apps/backend/lib/Password.class.php';
+require_once dirname(__FILE__).'/../../lib/Password.class.php';
 $t = new lime_test(5, new lime_output_color());
 
 $pass = new Password();

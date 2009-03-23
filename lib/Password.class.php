@@ -21,20 +21,20 @@ class Password {
 
         public function getCryptHash()
         {
-                return 'crypted'.$this->password;
+                return $this->password;
         }
 
         public function getLmHash()
         {
-                return 'LM'.$this->password;
+                return $this->password;
         }
         public  function getNtHash()
         {
-                return 'NT'.$this->password;
+                return $this->password;
         }
         public function getUnixHash()
         {
-                return 'UNIX'.$this->password;
+                return $this->password;
         }
         
         private function generate()

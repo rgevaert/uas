@@ -27,11 +27,15 @@
 <div id="page">
 	<div id="content">
         <h3><?php if ($sf_user->hasFlash('notice')): ?>
-        <div class="flash_notice"><?php echo $sf_user->getFlash('notice')
-        ?></div>
+        <div class="flash_notice"><?php echo $sf_user->getFlash('notice');
+                                             $sf_user->setFlash('notice', '');
+                                   ?>
+        </div>
         <?php endif; ?>
         <?php if ($sf_user->hasFlash('error')): ?>
-          <div class="flash_error"><?php echo $sf_user->getFlash('error') ?>
+          <div class="flash_error"><?php echo $sf_user->getFlash('error');
+                                              $sf_user->setFlash('error', '');  
+                                   ?>
           </div>
         <?php endif; ?>
         </h3>
@@ -41,8 +45,12 @@
 	<!-- end #content -->
 
 </div>
+<div id="footer">
+<p>
+Powered by <a href="http://www.symfony-project.org/"><img align="middle" src="/images/symfony_button.gif" alt="Symfony_button" /></a>&nbsp;-&nbsp;
+The development of this system was sponsored by <a target="_blank" href="http://www.vliruos.be/"><img align="middle" src="/images/vliruos.jpg" alt="VLIRUOS" /></a>
+</div>
 <!-- end #page -->
-
 </body>
 </html>
 

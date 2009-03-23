@@ -1,3 +1,4 @@
+
 <table>
   <thead>
     <tr>
@@ -48,4 +49,5 @@
 
 <hr />
 
-<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a>
+<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a> |
+<a href="<?php echo url_for('user/changepassword?id='.$user->getId()) ?>">Change Password</a>

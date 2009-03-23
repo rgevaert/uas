@@ -10,7 +10,7 @@
       <tr>
         <td colspan="2">
           <?php echo $form->renderHiddenFields() ?>
-          &nbsp;<a href="<?php echo url_for('user/index') ?>">Cancel</a>
+          &nbsp;<a href="<?php echo url_for('user/show?id='.$form->getObject()->getId()); ?>">Cancel</a>
           <input type="submit" value="Save" />
         </td>
       </tr>
