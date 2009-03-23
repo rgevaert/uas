@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td><label>System generated password:</label></td>
-                        <td><?php echo $_SESSION['generated_pass']; ?>
+                        <td><?php echo $sf_user->getFlash('generated_pass'); ?>
 </td>
 		</tr>
         </table>

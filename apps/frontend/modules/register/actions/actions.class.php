@@ -43,6 +43,10 @@ class registerActions extends sfActions
     {
       $user = $form->save();
 
+	  if($user->getGeneratedPassword()){
+		  $this->getUser()->setFlash('generated_pass', $user->getGeneratedPassword());        
+	  }
+
       $this->redirect('register/confirm?id='.$user->getId());
     } 
   }
