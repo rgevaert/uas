@@ -71,6 +71,8 @@
 
 </div>
 <div id="footer">
+<p>
+Powered by <a href="http://www.symfony-project.org/"><img align="middle" src="/images/symfony_button.gif" alt="Symfony_button" /></a>&nbsp;-&nbsp;
 The development of this system was sponsored by <a target="_blank" href="http://www.vliruos.be/"><img align="middle" src="/images/vliruos.jpg" alt="VLIRUOS" /></a>
 </div>
 <!-- end #page -->
