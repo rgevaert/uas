@@ -10,9 +10,10 @@
 	<p>Actions: <br /br>
 	<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a>
 <a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a>
+ <a href="" onclick="window.print();return false;">print version</a>  
+
 
 		<a href="">Extend</a>
-		<a href="">Print version</a>
 		
 	</p> 
   </div>
@@ -53,7 +54,6 @@
 		</tr>
 	</table>
   </div>
-
 
   <div id="sf_admin_footer">
   </div>
