@@ -46,8 +46,10 @@ class registerActions extends sfActions
 	  if($user->getGeneratedPassword()){
 		  $this->getUser()->setFlash('generated_pass', $user->getGeneratedPassword());        
 	  }
-
-      $this->redirect('register/confirm?id='.$user->getId());
+      $this->getUser()->setAuthenticated(true);
+      $this->getUser()->setAttribute('user_id' , $user->getId());     
+	  $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
+      $this->redirect('user/show?id='.$user->getId());
     } 
   }
 }
