@@ -53,8 +53,35 @@
 			<td><?php echo $user->getGid() . ":" . $user->getUid(); ?></td>
 		</tr>
 	</table>
+        <?php if($ftp_account){ ?>
+        <div> <h3> FTP Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Upload Bandwidth</label></td>
+			<td><?php echo $ftp_account->getUpBandwidth(); ?></td>
+		</tr>
+		<tr>
+			<td><label>Download Bandwidth</label></td>
+			<td><?php echo $ftp_account->getDownBandwidth(); ?></td>
+		</tr>
+		<tr>
+			<td><label>IP Access</label></td>
+			<td><?php echo $ftp_account->getIpAccess();  ?></td>
+		</tr>
+		<tr>
+			<td><label>Quota Size</label></td>
+			<td><?php echo $ftp_account->getQuotaSize();  ?></td>
+		</tr>
+		<tr>
+			<td><label>Quota Files</label></td>
+			<td><?php echo $ftp_account->getQuotaFiles();  ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a>
+        <?php } ?>
   </div>
-
   <div id="sf_admin_footer">
   </div>
 </div>
