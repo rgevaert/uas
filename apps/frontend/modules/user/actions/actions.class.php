@@ -14,6 +14,8 @@ class userActions extends sfActions
   {
     $current_id = $this->getUser()->getAttribute('user_id');
     $this->redirect('user/edit?id='.$current_id);
+    
+
   }
   public function executeShow(sfWebRequest $request)
   {
@@ -66,17 +68,21 @@ class userActions extends sfActions
   }
   public function executeChangepassword(sfWebRequest $request)
   {
+       // $this->forward404Unless($request->isMethod('post'));
+   
+
         $this->user = UserPeer::retrieveByPk($request->getParameter('id'));
+        $this->form = new ChangePasswordForm();
         
         $new_password= $this->getRequestParameter('new_password');
-        $confirm_password= $this->getRequestParameter('confirm_password');
+        $confirm_new_password= $this->getRequestParameter('confirm_new_password');
         $password= $this->getRequestParameter('password');
         if(!$new_password)
         {
                 $this->getUser()->setFlash('error',
                         'Please provide new password');
         }
-        else if(!$confirm_password)
+        else if(!$confirm_new_password)
         {
                 $this->getUser()->setFlash('error',
                        'Please provide confirm password');
@@ -88,7 +94,7 @@ class userActions extends sfActions
         }
         else
         {
-                if($new_password == $confirm_password) 
+                if($new_password == $confirm_new_password) 
                 {
                         $c_exists = new Criteria();
                         $c_exists->add(UserPeer::CRYPT_PASSWORD,
