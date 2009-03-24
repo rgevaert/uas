@@ -16,11 +16,11 @@ class RegisterUserForm extends UserForm
         $this['created_at'], $this['updated_at'], $this['expires_at'],
         $this['login'], 
         $this['nt_password'], $this['lm_password'], $this['crypt_password'], $this['unix_password'],
-        $this['email_quota'], 
+        $this['email_quota'], $this['email_local_part'],
         $this['gid'], $this['uid'],
 		$this['domainname_id'],
 		$this['status']
-        );  
-        $this->widgetSchema->setHelp('email_local_part','This will be your email address');
+        ); 
+
   }
 }

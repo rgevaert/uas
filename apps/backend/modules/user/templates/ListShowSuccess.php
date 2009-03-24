@@ -7,12 +7,23 @@
   <?php include_partial('user/flashes') ?>
 
   <div id="sf_admin_header">
-	<p>Actions: <br /br>
-	<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a>
-<a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a>
- <a href="" onclick="window.print();return false;">print version</a>  
+	<p><b>Actions</b> > > 
+	<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a> | 
+ <a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a> | 
+ <a href="" onclick="window.print();return false;">print version</a>  | 
 
+ <?php if(!$ftp_account){ ?>
+     <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a> |
+ <?php } ?>
 
+ <?php if(!$samba_account){ ?>
+     <a href="<?php echo url_for('samba_account/new'); ?>">Create Samba Account</a> |
+ <?php } ?>
+
+ <?php if(!$unix_account){ ?>
+     <a href="<?php echo url_for('unix_account/new'); ?>">Create Unix Account</a> |
+ <?php } ?>
+   
 		<a href="">Extend</a>
 		
 	</p> 
@@ -78,8 +89,6 @@
 			<td><?php echo $ftp_account->getQuotaFiles();  ?></td>
 		</tr>
         </table>
-        <?php }else{ ?>
-        <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a> | 
         <?php } ?>
 
 
@@ -92,24 +101,24 @@
 			<td><?php echo $samba_account->getHostname(); ?></td>
 		</tr>
         </table>
-        <?php }else{ ?>
-        <a href="<?php echo url_for('samba_account/new'); ?>">Create a Samba Account Account</a>
         <?php } ?>
 
 
 
 
         <?php if($unix_account){ ?>
-        <div> <br /> <h3> Samba Account </h3> </div>
+        <div> <br /> <h3> Unix Account </h3> </div>
        
 	<table>
 		<tr>
 			<td><label>Unix Host Namme</label></td>
 			<td><?php echo $unix_account->getHostname(); ?></td>
 		</tr>
+		<tr>
+			<td><label>Unix Quota size</label></td>
+			<td><?php echo $unix_account->getQuota(); ?></td>
+		</tr>
         </table>
-        <?php }else{ ?>
-        <a href="<?php echo url_for('unix_account/new'); ?>">Create Unix Account Account</a>
         <?php } ?>
 
 
