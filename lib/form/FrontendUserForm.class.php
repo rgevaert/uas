@@ -12,6 +12,8 @@ class FrontendUserForm extends UserForm
 {
   public function configure_specific()
   {
+   parent::configure_specific();
+
     unset(
         $this['created_at'], $this['updated_at'], $this['expires_at'],
         $this['login'], 
@@ -19,6 +21,6 @@ class FrontendUserForm extends UserForm
         $this['email_local_part'], $this['email_quota'],  $this['domainname_id'], 
         $this['gid'], $this['uid'],
         $this['status']
-        );    
+        );
   }
 }
