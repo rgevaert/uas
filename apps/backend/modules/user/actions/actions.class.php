@@ -35,9 +35,9 @@ class userActions extends autoUserActions
        $this->getUser()->setFlash('notice', 'Status is changed successfully.');
        $this->redirect('@user');
     }
-	public function executeListShow(sfWebRequest $request)
-	{
-        if (!$request->getParameter('sf_culture'))
+    public function executeListShow(sfWebRequest $request)
+{
+       if (!$request->getParameter('sf_culture'))
         {
         if ($this->getUser()->isFirstRequest())
         {
@@ -53,7 +53,17 @@ class userActions extends autoUserActions
         }
         
         $this->user = $this->getRoute()->getObject();
-        $this->getUser()->addUserToHistory($this->user);      
+        $this->getUser()->addUserToHistory($this->user); 
+
+        $ftp = $this->user->getFtpAccounts();
+        $this->ftp_account = array_pop($ftp);
+
+        $samba = $this->user->getSambaAccounts();
+        $this->samba_account = array_pop($samba);
+
+        $unix = $this->user->getUnixAccounts();
+        $this->unix_account = array_pop($unix);
+    
     }
 
   public function executeDelete(sfWebRequest $request)

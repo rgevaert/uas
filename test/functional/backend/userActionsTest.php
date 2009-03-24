@@ -16,6 +16,18 @@ $browser->
     isStatusCode(200)->
     checkElement('body', '!/This is a temporary page/')->
   end()
+;*/
+
+$browser->info('1 - The homepage')->
+  get('/')->
+  with('request')->begin()->
+    isParameter('module', 'user')->
+    isParameter('action', 'index')->
+  end()->
+  with('response')->begin()->
+    info(' 1.1 - Expired jobs are not listed')->
+    checkElement('.jobs td.position:contains("expired")', false)->
+  end()
 ;
 
 $browser->setHttpHeader('ACCEPT_LANGUAGE', 'ti_ET,ti,en;q=0.7');
@@ -42,5 +54,3 @@ $browser->
   isRedirected()->followRedirect()->
   with('user')->isCulture('ti')
 ;
-
-

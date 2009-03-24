@@ -53,8 +53,67 @@
 			<td><?php echo $user->getGid() . ":" . $user->getUid(); ?></td>
 		</tr>
 	</table>
-  </div>
+        <?php if($ftp_account){ ?>
+        <div> <h3> FTP Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Upload Bandwidth</label></td>
+			<td><?php echo $ftp_account->getUpBandwidth(); ?></td>
+		</tr>
+		<tr>
+			<td><label>Download Bandwidth</label></td>
+			<td><?php echo $ftp_account->getDownBandwidth(); ?></td>
+		</tr>
+		<tr>
+			<td><label>IP Access</label></td>
+			<td><?php echo $ftp_account->getIpAccess();  ?></td>
+		</tr>
+		<tr>
+			<td><label>Quota Size</label></td>
+			<td><?php echo $ftp_account->getQuotaSize();  ?></td>
+		</tr>
+		<tr>
+			<td><label>Quota Files</label></td>
+			<td><?php echo $ftp_account->getQuotaFiles();  ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a> | 
+        <?php } ?>
 
+
+        <?php if($samba_account){ ?>
+        <div> <br /> <h3> Samba Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Host Namme</label></td>
+			<td><?php echo $samba_account->getHostname(); ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('samba_account/new'); ?>">Create a Samba Account Account</a>
+        <?php } ?>
+
+
+
+
+        <?php if($unix_account){ ?>
+        <div> <br /> <h3> Samba Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Unix Host Namme</label></td>
+			<td><?php echo $unix_account->getHostname(); ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('unix_account/new'); ?>">Create Unix Account Account</a>
+        <?php } ?>
+
+
+  </div>
   <div id="sf_admin_footer">
   </div>
 </div>
