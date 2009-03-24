@@ -44,6 +44,9 @@
 			<td><?php echo $user->getGid() . ":" . $user->getUid(); ?></td>
 		</tr>
 	</table>
+<?php
+        echo $form_ftp;
+?>
   </div>
 
   <div id="sf_admin_footer">

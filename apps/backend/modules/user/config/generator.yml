@@ -21,6 +21,7 @@ generator:
           label: Grand Fathers Name
         login:
           label: Login Name
+
       list:
         object_actions:
             show : ~
@@ -47,7 +48,7 @@ generator:
 
       new:     
         title: Add mail user
-        display: [domainname_id, name, fathers_name, grand_fathers_name, login, phone, gid, uid, status, alternate_email, email_local_part, email_quota, expires_at]
+        display: [domainname_id, name, fathers_name, grand_fathers_name, login, phone, gid, uid, status, alternate_email, email_local_part, email_quota, expires_at, ftpaccount]
         fields:
           email_quota:
                help: Provide the quota in bytes and put S at the end of the numbers like, 500000S
