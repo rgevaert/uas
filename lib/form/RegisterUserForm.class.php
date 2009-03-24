@@ -11,7 +11,8 @@
 class RegisterUserForm extends UserForm
 {
   public function configure_specific()
-  {	
+  {
+    parent::configure_specific();
     unset(
         $this['created_at'], $this['updated_at'], $this['expires_at'],
         $this['login'], 
@@ -21,6 +22,5 @@ class RegisterUserForm extends UserForm
 		$this['domainname_id'],
 		$this['status']
         ); 
-
   }
 }

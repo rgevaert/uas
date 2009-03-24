@@ -14,13 +14,24 @@ generator:
       actions: ~
       fields:  
         user_id: 
-           label: User
+          label: User
         up_bandwidth:
-           label: Up Bw
+           label: Upload bandwidth
+           help: 0 is unlimited upload band width(KB)
         down_bandwidth:
            label: Down BW
       list:
         actions: {}    
+            label: Download bandwidth
+            help: 0 is unlimited download band width.(KB)
+        quota_size:
+             label: Quota size
+             help: 0 is unlimited quota size.
+        quota_files:
+                label: Number of quota files
+                help: 0 is unlimited quota files.
+
+      list:    
         title: University Ftp Account
         display: [user_fullname, up_bandwidth, down_bandwidth]
       filter:  
@@ -30,31 +41,6 @@ generator:
         title: Edit FTP Account
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]  
         fields:
-           up_bandwidth:
-                label: Upload Bandwidth
-                help: Number between 50000 and 100000 (number is in Kb)
-           down_bandwidth:
-                label: Download Bandwidth
-                help: Number between 50000 and 100000 (number is in Kb)
-           quota_size:
-                label: Quota Size
-                help: Number between 5000 and 10000 (number is in Kb)
-           quota_files:
-                label: Number of Quota files
-                help: Number between 5 and 100      
       new:     
-        title: Add FTP Account
+        title: Add FTP account
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]
-        fields:
-           up_bandwidth:
-                label: Upload Bandwidth
-                help: Number between 50000 and 100000 (number is in Kb)
-           down_bandwidth:
-                label: Download Bandwidth
-                help: Number between 50000 and 100000 (number is in Kb)
-           quota_size:
-                label: Quota Size
-                help: Number between 5000 and 10000 (number is in Kb)
-           quota_files:
-                label: Number of Quota files
-                help: Number between 5 and 100

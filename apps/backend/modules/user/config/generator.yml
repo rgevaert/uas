@@ -22,6 +22,7 @@ generator:
         login:
           label: Login Name
       list:
+        max_per_page: 5
         object_actions:
             show : ~
             toggle_status : ~
@@ -30,6 +31,7 @@ generator:
         batch_actions:
              _delete: ~
              toggle_status : ~
+             
         display: [login, full_name, status, expires_at, lm_password]
       filter:  
          display: [domainname_id, name, fathers_name, grand_fathers_name, login, status, email_local_part, email_quota]
