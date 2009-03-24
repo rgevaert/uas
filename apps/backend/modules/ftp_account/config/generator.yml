@@ -19,7 +19,8 @@ generator:
            label: Up Bw
         down_bandwidth:
            label: Down BW
-      list:    
+      list:
+        actions: {}    
         title: University Ftp Account
         display: [user_fullname, up_bandwidth, down_bandwidth]
       filter:  
