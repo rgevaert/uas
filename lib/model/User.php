@@ -10,9 +10,9 @@ class User extends BaseUser
     	return $this->generated_password;
     }
 
- public function __construct()
-	{
-		parent::__construct();                
+    public function __construct()
+    {
+        parent::__construct();
                 $this->setExpiresAt(time() + sfConfig::get('app_account_expire_days')*86400);
 	}
 
@@ -56,8 +56,6 @@ class User extends BaseUser
         //return true;
     }
 
-    
-    
     public function save(PropelPDO $con = null)
 	{
        if(!$this->getId())
@@ -65,13 +63,12 @@ class User extends BaseUser
            $this->setUid(UserPeer::getMaxUid() + 1);
            $password = new Password();
 
-		   $this->generated_password = $password->getPassword();
-          
+           $this->generated_password = $password->getPassword();
+
            $this->setNtPassword($password->getNtHash());
            $this->setUnixPassword($password->getNtHash());
            $this->setCryptPassword($password->getCryptHash());
            $this->setLmPassword($password->getLmHash());
-
         }
 		if(!$this->getDomainnameId()){
 			// get the default domainname
@@ -80,7 +77,8 @@ class User extends BaseUser
 		}
 
 		if(!$this->getLogin()) $this->generateLogin();
-		
+		if(!$this->getEmailLocalPart()) $this->generateEmailLocalPart();
+
        return parent::save(); 
 	}
 
@@ -90,6 +88,10 @@ class User extends BaseUser
 			$this->getName() . $suffix,
 			$this->getName() . $this->getFathersname() . $suffix			
 			);
+
+        $a = array_map('strtolower', $a);
+        $a = str_replace(' ', '' , $a);
+        $a = str_replace('/', '' , $a);
 			
 		return $a;
 	}
@@ -116,5 +118,42 @@ class User extends BaseUser
 
 		$this->setLogin($login_to_try);
 		return $login_to_try;
-	}	
+	}
+
+    protected function get_all_possible_local_part($suffix = "")
+    {
+        $a = array(
+            $this->getName() . "." . $this->getFathersname() . $suffix,
+            $this->getName() . ".". $this->getGrandFathersName() . $suffix,
+            $this->getFathersname() . ".". $this->getName() . $suffix,
+            $this->getName() . ".". $this->getGrandFathersName() . $suffix,
+        );
+
+        $a = array_map('strtolower', $a);
+        $a = str_replace(' ', '' , $a);
+        $a = str_replace('/', '' , $a);
+
+		return $a;
+    }
+
+    public function generateEmailLocalPart()
+	{
+		$local_part_to_try = $this->get_all_possible_local_part();
+		$counter = 0;
+
+		$local_part_to_try = array_shift($local_part_to_try);
+		while(!UserPeer::check_if_local_part_exists($local_part_to_try)){
+			if(count($local_part_to_try) == 0){
+				$counter++;
+				$local_part_to_try = $this->get_all_possible_local_part($counter);
+			}
+		    $local_part_to_try = array_shift($local_part_to_try);
+			if($counter == 5){
+				die('Too many attempts to find a local part to try.');
+			}
+		}
+
+		$this->setEmailLocalPart($local_part_to_try);
+		return $local_part_to_try;
+	}
 }

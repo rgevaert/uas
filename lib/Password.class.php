@@ -1,6 +1,8 @@
 <?php
-class Password {
 
+
+class Password 
+{
         private  $password = "";        
 
         public function __construct($pass = "")
@@ -21,20 +23,24 @@ class Password {
 
         public function getCryptHash()
         {
-                return $this->password;
+            return crypt($this->password,'salt');
         }
 
         public function getLmHash()
         {
-                return $this->password;
+            $chap = new Crypt_CHAP_MSv1();
+            $chap->password = $this->password;
+            return bin2hex($chap->lmPasswordHash()); 
         }
         public  function getNtHash()
         {
-                return $this->password;
+            $chap = new Crypt_CHAP_MSv1();
+            $chap->password = $this->password;
+            return bin2hex($chap->ntPasswordHash());
         }
         public function getUnixHash()
         {
-                return $this->password;
+            return crypt($this->password);
         }
         
         private function generate()
