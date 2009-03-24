@@ -38,25 +38,7 @@ class UserForm extends BaseUserForm
         'multiple' => false,
     ));	   
 
-	$this->validatorSchema['alternate_email'] = new sfValidatorEmail();
-        $this->widgetSchema->setHelp('email_local_part','This will be your email local part');
-
-        // create a new subcategory form for a new subcategory model object
-        $ftp_form = new FtpAccountForm();
-
-        // Unset some values
-        unset($ftp_form['created_at']);
-        unset($ftp_form['updated_at']);
-        //unset($ftp_form['user_id']);
-
-        // embed the subcategory form in the main category form
-        $this->embedForm('ftpaccount', $ftp_form);
-
-          // set a custom label for the embedded form
-        $this->widgetSchema['ftpaccount']->setLabel('New Ftp account');
-        //parent::bind($taintedValues, $taintedFiles);
-        //}
-
+	$this->validatorSchema['alternate_email'] = new sfValidatorEmail();	
   }
   
   public function configure()
