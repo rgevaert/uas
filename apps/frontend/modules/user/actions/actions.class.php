@@ -78,18 +78,26 @@ class userActions extends sfActions
           {
             $pass_parameters = $request->getParameter('changepassword');
             $password = new Password($pass_parameters['new_password']);
-            
-            $this->user->setNtPassword($password->getNtHash());
-            $this->user->setLmPassword($password->getLmHash());
-            $this->user->setCryptPassword($password->getCryptHash());
-            $this->user->setUnixPassword($password->getUnixHash());
-                        
-            $this->user->save();
-            
-            $this->getUser()->setFlash('notice', "You have changed your password successfully");
+            $current_password = new Password($pass_parameters['password']);
+             
+            $c_exists = new Criteria();
+            $c_exists->add(UserPeer::CRYPT_PASSWORD, $current_password->getCryptHash());
+            if(UserPeer::doSelect($c_exists))        
+            {           
+                $this->user->setNtPassword($password->getNtHash());
+                $this->user->setLmPassword($password->getLmHash());
+                $this->user->setCryptPassword($password->getCryptHash());
+                $this->user->setUnixPassword($password->getUnixHash());                      
+                $this->user->save();           
+                $this->getUser()->setFlash('notice', "You have changed your password successfully");
+             }
+            else
+            {
+                $this->getUser()->setFlash('notice', "Please type your existing password correctly");
+                $this->redirect('user/changepassword');
+            }
             $this->redirect('user/show?id='.$current_id);
-          }
-      
+           }
        }
   }
 }
