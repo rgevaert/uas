@@ -62,7 +62,7 @@ class userActions extends autoUserActions
         $this->samba_account = array_pop($samba);
 
         $unix = $this->user->getUnixAccounts();
-        $this->ftp_account = array_pop($unix);
+        $this->unix_account = array_pop($unix);
     
     }
 

@@ -96,6 +96,23 @@
         <a href="<?php echo url_for('samba_account/new'); ?>">Create a Samba Account Account</a>
         <?php } ?>
 
+
+
+
+        <?php if($unix_account){ ?>
+        <div> <br /> <h3> Samba Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Unix Host Namme</label></td>
+			<td><?php echo $unix_account->getHostname(); ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('unix_account/new'); ?>">Create Unix Account Account</a>
+        <?php } ?>
+
+
   </div>
   <div id="sf_admin_footer">
   </div>
