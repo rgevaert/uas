@@ -97,7 +97,7 @@
        
 	<table>
 		<tr>
-			<td><label>Host Namme</label></td>
+			<td><label>Host Name</label></td>
 			<td><?php echo $samba_account->getHostname(); ?></td>
 		</tr>
         </table>
@@ -111,7 +111,7 @@
        
 	<table>
 		<tr>
-			<td><label>Unix Host Namme</label></td>
+			<td><label>Unix Host Name</label></td>
 			<td><?php echo $unix_account->getHostname(); ?></td>
 		</tr>
 		<tr>
