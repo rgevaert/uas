@@ -33,4 +33,16 @@ class UserPeer extends BaseUserPeer
 			return false;
 		}
 	}
+
+    static public function check_if_local_part_exists($local_part = "")
+    {
+      	$criteria = new Criteria();
+    	$criteria->add(self::EMAIL_LOCAL_PART, $local_part);
+    	$count = self::doCount($criteria);
+    	if($count == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

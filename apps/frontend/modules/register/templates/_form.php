@@ -56,13 +56,6 @@
           <?php echo $form['alternate_email'] ?>
         </td>
       </tr>
-      <tr>
-        <th><?php echo $form['email_local_part']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['email_local_part']->renderError() ?>
-          <?php echo $form['email_local_part'] ?>
-        </td>
-      </tr>
     </tbody>
   </table>
 </form>

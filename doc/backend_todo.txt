@@ -18,16 +18,12 @@ Shimels:
 
 Yemane:
 * Frontend:
-	- after registration -> redirect to the user/show/1234 url
-	- make sure the login is done
-	- generate the email address, remove the email_local_part
+	- validate the phone number
 	- add listing of accounts on the show page
 	- if you try to register a new user - logout if still logged in
-	- validate the phone number
 	- provide a printable version of the detail page
 
 Habtom:
-* frontend: change password: use symfony forms
 * Models/frontend: change password: refactor! Move from controller to models
 * CHAP.php|Password.php|model/User.php - mix this correctly in 
 * Backend: add a Action on the Samba list to get a smbpasswd file (no layout, just one line per user)

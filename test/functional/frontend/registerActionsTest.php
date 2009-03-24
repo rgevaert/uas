@@ -17,3 +17,15 @@ $browser->
     checkElement('body', '!/This is a temporary page/')->
   end()
 ;
+
+$browser = new sfTestFunctional(new sfBrowser());
+
+$browser->info('1.1 - The login page: session Module')->                                      
+  get('/')->
+  info(' 2.1 - The login page has a clickable sign up link')->
+  click('Reset')->
+  with('request')->begin()->
+    isParameter('module', 'register')->
+    isParameter('action', 'index')->
+  end()
+;
