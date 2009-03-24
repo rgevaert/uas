@@ -56,13 +56,14 @@ class userActions extends autoUserActions
         $this->getUser()->addUserToHistory($this->user); 
 
         $ftp = $this->user->getFtpAccounts();
-        $this->ftp_account = array_pop($ftp);
+        $this->ftp_account = array_shift($ftp);
+        $this->ftp_form = new FtpAccountForm();
 
         $samba = $this->user->getSambaAccounts();
-        $this->samba_account = array_pop($samba);
+        $this->samba_account = array_shift($samba);
 
         $unix = $this->user->getUnixAccounts();
-        $this->unix_account = array_pop($unix);
+        $this->unix_account = array_shift($unix);
     
     }
 
