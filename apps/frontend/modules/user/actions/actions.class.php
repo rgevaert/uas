@@ -86,7 +86,7 @@ class userActions extends sfActions
                         
             $this->user->save();
             
-            $this->getUser()->setFlash('notice', "You have changed your password successfully to". ' ' . $password->getPassword());
+            $this->getUser()->setFlash('notice', "You have changed your password successfully");
             $this->redirect('user/show?id='.$current_id);
           }
       
