@@ -18,8 +18,8 @@ Shimels:
 
 Yemane:
 * Frontend:
-	- validate the phone number
 	- add listing of accounts on the show page
+            -REMARK=> It is done by Eyuel at the backend but it needs Refractory 
 	- if you try to register a new user - logout if still logged in
 	- provide a printable version of the detail page
 
