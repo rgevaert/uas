@@ -18,27 +18,6 @@
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
-        <th><?php echo $form['name']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['name']->renderError() ?>
-          <?php echo $form['name'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['fathers_name']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['fathers_name']->renderError() ?>
-          <?php echo $form['fathers_name'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['grand_fathers_name']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['grand_fathers_name']->renderError() ?>
-          <?php echo $form['grand_fathers_name'] ?>
-        </td>
-      </tr>
-      <tr>
         <th><?php echo $form['phone']->renderLabel() ?></th>
         <td>
           <?php echo $form['phone']->renderError() ?>
