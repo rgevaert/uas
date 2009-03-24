@@ -55,4 +55,17 @@ class userActions extends autoUserActions
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user);      
     }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object  does not exist (%s).', $request->getParameter('id')));
+    $user->delete();
+
+    $this->redirect('user/index');
+  }
+
+    
 }
+
+
