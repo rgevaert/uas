@@ -27,7 +27,6 @@ Yemane:
 	- provide a printable version of the detail page
 
 Habtom:
-* frontend: change password: use symfony forms
 * Models/frontend: change password: refactor! Move from controller to models
 * CHAP.php|Password.php|model/User.php - mix this correctly in 
 * Backend: add a Action on the Samba list to get a smbpasswd file (no layout, just one line per user)
