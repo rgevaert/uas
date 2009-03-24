@@ -12,6 +12,17 @@ class UserForm extends BaseUserForm
 {
   public function configure_specific()
   {
+    $this->validatorSchema['name'] = new sfValidatorRegex(array(
+        'pattern'=>'/^[a-zA-Z\s]{2,}$/'), array(
+        'invalid' => 'Name is invalid, Enter Any character in the range a-z or A-Z, spaces and minimum two characters'
+    ));
+    $this->validatorSchema['fathers_name'] = new sfValidatorRegex(array(
+        'pattern'=>'/^[a-zA-Z\s]{2,}$/'), array(
+        'invalid' => 'Father name is invalid, Enter Any character in the range a-z or A-Z, spaces and minimum two characters'
+    ));
+    $this->validatorSchema['grand_fathers_name'] = new sfValidatorRegex(array
+	      ('pattern'=>'/^[a-zA-Z\s]{2,}$/', 'required' => false), array('invalid' => 'Grand Father name is invalid, Enter Any character in the range a-z or A-Z, spaces and minimum two characters'
+    ));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices' => UserPeer::$status_types,
         'expanded' => true,

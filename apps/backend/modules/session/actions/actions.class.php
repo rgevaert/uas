@@ -63,6 +63,8 @@ class sessionActions extends sfActions
     $this->getUser()->setAuthenticated(false);
     $this->getUser()->clearCredentials();
 
+    $this->getUser()->resetUserHistory();
+
     $this->getUser()->setFlash('notice', 'You have been logged out!');
     $this->redirect('session/login');
   }

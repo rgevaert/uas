@@ -10,9 +10,9 @@ Todo list
 ---------
 
 Eyuel:
-* Add the details of the unix/ftp/samba accounts to the show of the user
-* Add "Add new Samba/FTP/Unix" to the show of the user
-* Remove the "Add" from the Samba/FTP/Unix lists
+* Add the details of the unix/ftp/samba accounts to the show of the user [DONE]
+* Add "Add new Samba/FTP/Unix" to the show of the user [DONE]
+* Remove the "Add" from the Samba/FTP/Unix lists [DONE]
 
 Shimels:
 * Add all needed functionality to the User::Show action in the backend

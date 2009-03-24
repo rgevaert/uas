@@ -15,6 +15,7 @@ class FrontendUserForm extends UserForm
    parent::configure_specific();
 
     unset(
+        $this['name'], $this['fathers_name'], $this['grand_fathers_name'],
         $this['created_at'], $this['updated_at'], $this['expires_at'],
         $this['login'], 
         $this['nt_password'], $this['lm_password'], $this['crypt_password'], $this['unix_password'],
