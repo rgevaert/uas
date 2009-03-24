@@ -15,7 +15,8 @@ generator:
       fields: 
          updated_at:
            label: Update At
-      list:   
+      list:  
+        max_per_page: 5 
         display: [ user_id, hostname, updated_at]
       filter:  
         display: [ user_id, hostname]

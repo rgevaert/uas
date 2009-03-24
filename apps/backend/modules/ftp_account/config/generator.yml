@@ -28,7 +28,8 @@ generator:
                 label: Number of quota files
                 help: 0 is unlimited quota files.
 
-      list:    
+      list:  
+        max_per_page: 5  
         title: University Ftp Account
         display: [user_fullname, up_bandwidth, down_bandwidth]
       filter:  

@@ -16,6 +16,7 @@ generator:
           user_id:
               label: User
       list:
+        max_per_page: 5
         title: Unix accounts
         display: [=user_login, hostname, quota]
         batch_actions: {} 
