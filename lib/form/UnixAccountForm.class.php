@@ -12,5 +12,7 @@ class UnixAccountForm extends BaseUnixAccountForm
 {
   public function configure()
   {
+  $this->validatorSchema['hostname'] = new sfValidatorRegex(array
+	     ('pattern'=>('/\A([\da-z-]+\.){1,}[a-z]+\z/')));
   }
 }
