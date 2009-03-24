@@ -30,7 +30,7 @@
 </div>
 <!-- end #header -->
 <div id="page">
-        <?php if ($sf_user->getUserHistory() != NULL): ?>
+        <?php if ($sf_user->isAuthenticated()): ?>
 	<div id="user_history">
 	    Recent viewed users:
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>

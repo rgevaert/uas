@@ -19,6 +19,9 @@ generator:
            label: Upload bandwidth
            help: 0 is unlimited upload band width(KB)
         down_bandwidth:
+           label: Down BW
+      list:
+        actions: {}    
             label: Download bandwidth
             help: 0 is unlimited download band width.(KB)
         quota_size:
