@@ -12,7 +12,7 @@ class SambaAccountForm extends BaseSambaAccountForm
   public function configure()
   {
   $this->validatorSchema['hostname'] = new sfValidatorRegex(array
-	     ('pattern'=>('/\A([^@!@#$%^\s]+)((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/')));
+	     ('pattern'=>('/^(?:[-a-z0-9]+\.)+[a-z]{2,}$/')));
   }
 }
 
