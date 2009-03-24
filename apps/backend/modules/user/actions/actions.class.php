@@ -55,8 +55,14 @@ class userActions extends autoUserActions
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
 
-        $a = $this->user->getFtpAccounts();
-        $this->ftp_account = array_pop($a);
+        $ftp = $this->user->getFtpAccounts();
+        $this->ftp_account = array_pop($ftp);
+
+        $samba = $this->user->getSambaAccounts();
+        $this->samba_account = array_pop($samba);
+
+        $unix = $this->user->getUnixAccounts();
+        $this->ftp_account = array_pop($unix);
     
     }
 

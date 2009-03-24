@@ -79,8 +79,23 @@
 		</tr>
         </table>
         <?php }else{ ?>
-        <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a>
+        <a href="<?php echo url_for('ftp_account/new'); ?>">Create FTP Account</a> | 
         <?php } ?>
+
+
+        <?php if($samba_account){ ?>
+        <div> <br /> <h3> Samba Account </h3> </div>
+       
+	<table>
+		<tr>
+			<td><label>Host Namme</label></td>
+			<td><?php echo $samba_account->getHostname(); ?></td>
+		</tr>
+        </table>
+        <?php }else{ ?>
+        <a href="<?php echo url_for('samba_account/new'); ?>">Create a Samba Account Account</a>
+        <?php } ?>
+
   </div>
   <div id="sf_admin_footer">
   </div>
