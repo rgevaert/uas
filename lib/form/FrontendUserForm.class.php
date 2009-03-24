@@ -17,7 +17,8 @@ class FrontendUserForm extends UserForm
         $this['login'], 
         $this['nt_password'], $this['lm_password'], $this['crypt_password'], $this['unix_password'],
         $this['email_local_part'], $this['email_quota'],  $this['domainname_id'], 
-        $this['gid'], $this['uid']
+        $this['gid'], $this['uid'],
+        $this['status']
         );    
   }
 }

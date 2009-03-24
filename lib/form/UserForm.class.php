@@ -39,6 +39,10 @@ class UserForm extends BaseUserForm
     ));	   
 
 	$this->validatorSchema['alternate_email'] = new sfValidatorEmail();	
+    
+   $this->validatorSchema['phone'] = new sfValidatorRegex(array
+	     ('pattern'=>'/\+[0-9]{6,}/',
+           'required' => false));
   }
   
   public function configure()
