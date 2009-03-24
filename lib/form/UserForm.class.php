@@ -43,6 +43,8 @@ class UserForm extends BaseUserForm
    $this->validatorSchema['phone'] = new sfValidatorRegex(array
 	     ('pattern'=>'/\+[0-9]{6,}/',
            'required' => false));
+
+        $this->widgetSchema->setHelp('email_local_part','This will be your email local part');
   }
   
   public function configure()
