@@ -4,6 +4,7 @@ Bugs
 * the links for the Recent viewed users do not work (H)
 * When the login is not successful there is a password and login in the url. 
 * Delete in the show doesn't work
+* Generation of login names has a bug!!  Register a user with name Rudy G, and then an other user with name Rudy F
 
 Todo list
 ---------
