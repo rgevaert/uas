@@ -1,26 +1,20 @@
 Bugs
 ----
 
-* the login in screen in the backend shows 'Recent viewed users: ' it should not show that
-* the links for the Recent viewed users do not work
-* When the login is not successful there is a password and login in the url.
-* !!! Check the user when changing the password Frontend/actions/changePassword
-
+* the links for the Recent viewed users do not work (H)
+* When the login is not successful there is a password and login in the url. 
+* Delete in the show doesn't work
 
 Todo list
 ---------
 
 Eyuel:
-* Add the details of the unix/ftp/samba accounts to the show of the user [DONE]
-* Add "Add new Samba/FTP/Unix" to the show of the user [DONE]
-* Remove the "Add" from the Samba/FTP/Unix lists [DONE]
 
 Shimels:
 * Add all needed functionality to the User::Show action in the backend
 
 Yemane:
 * Frontend:
-	- validate the phone number
 	- add listing of accounts on the show page
 	- if you try to register a new user - logout if still logged in
 	- provide a printable version of the detail page
@@ -32,25 +26,16 @@ Habtom:
 
 All:
 * clean up TODO list
-* creating users - auto-generate a password and fill the needed fields
-   --> to auto generate a password use the unix command 'pwgen' (apt-get install pwgen): e.g.: pwgen -1 -y -B
-  --> implement function in PHP that does the above :)
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 * Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
 * Create a script that creates the smbpasswd file
-* Reset password functionality needs to be implemented.
-* When a user registers
-  - the email local part needs to be generated.
-  - the password needs to be generated
-* After registration the user needs to be redirected to a page where he sees his account details.  Provide a print function
+* After registration the user needs to be redirected to a page with a print function
 * ADD unit TESTS
 * ADD functional TESTS
-* Add the restriction to the backend that you need to login (admin/pa55w0rd)
 * Add additional user credentials: admin, secretary, sysadmin
 	- get the credentials from the login (admin / sysadmin / secretary)
 	- restrict the correct pages to the correct credentials
-* In in the frontend name, fathers name and grand fathers name should not be editable
 * Move the logout link in the backend to a nicer place.
 * When we activate a user the email account home dir needs to be created!
 * The backend login/pass should be in a config file, not in the coding
@@ -67,15 +52,16 @@ All:
   * 2 capitals
   * 2 special chars
   * 2 letters
+  * Password strenght in general
 * Backend, on show user page we need to show the login name too!!
+* Print CSS stylesheet (backend)
+* Default pages (front and backend), add needed links... (general)
+
 
 Nice to have
 -------------
 
 *  persons picture with the users (image upload)
-*  links from a user to his unix account / ftp accounts / ...
-*  a login for the backend, not everyone should be able to use this
-*  a cooler layout/view
 *  add a "server" table to the system
 *  But the size is important.  Maybe we should show it in megabyte. and let the user insert in in megabyte.  Maybe we should provide the user with only a dropdown box where he can select X MB (in increments of 100MB.  The field that is written into the database is in bytes.
 
