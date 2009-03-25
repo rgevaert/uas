@@ -21,40 +21,36 @@ class sessionActions extends sfActions
     $username = $request->getParameter('username');
     $password = $request->getParameter('password');
 
-    if(!$username AND !$password){
-        $this->getUser()->setFlash('error','You must provide User name and Password');
+    if(!$username OR $password){
+        $this->getUser()->setFlash('error','You must provide Username / Password');
     }
-    if(!$username AND $password){
-        $this->getUser()->setFlash('error','You must provide User name ');
-    }
-    if(!$password AND $username){
-        $this->getUser()->setFlash('error','You must provide Password');
-    }
+
         
-    if($username == 'admin' && $password == 'adminpass'){
-      // the username & password are correct
-      // log the user in...
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('admin');
+    if($username == sfConfig::get('app_admin'))
+    {
+       $password_obj = new Password($password);
+       $c = new Criteria();
+       $c->add(UserPeer::LOGIN, $username);
+       $c->add(UserPeer::CRYPT_PASSWORD, $password_obj->getCryptHash());
+       $user = UserPeer::doSelect($c);  
+       if($user)
+       {
+                // the username & password are correct
+                // log the user in...
+                $this->getUser()->setAuthenticated(true);
+                $this->getUser()->addCredential('admin');
 
-      // redirect him away from this login page...
-      $this->getUser()->setFlash('notice', 'Welcome, admin');
-      $this->redirect('@user');
+                // redirect him away from this login page...
+                $this->getUser()->setFlash('notice', 'Welcome, admin');
+                $this->redirect('@user');
+       }
 
-    } elseif($username == 'secretary' && $password == 'secret'){
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('secretary');
-
-      $this->getUser()->setFlash('notice', 'Welcome, secretary');
-      $this->redirect('@user');
-    }
-    elseif($username == 'sysadmin' && $password == 'sysadmin'){
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('sysadmin');
-
-      $this->getUser()->setFlash('notice', 'Welcome, System Administrator');
-      $this->redirect('@user');
-    }
+     }
+     else
+     {
+        $this->getUser()->setFlash('eror', 'You are not an administrator');
+        //$this->redirect('session/login');         
+     }
     
   }
   
