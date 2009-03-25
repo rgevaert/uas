@@ -12,7 +12,7 @@ Todo list
 
 Habtom + Yemane
 ---------------
-* smbpasswd listing
+* smbpasswd listing half finished
 * uasValidatorCheckPassword
 * default routing
 * refactoring
