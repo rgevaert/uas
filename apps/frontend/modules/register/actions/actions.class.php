@@ -31,9 +31,15 @@ class registerActions extends sfActions
 
     $this->form = new RegisterUserForm();
 
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
+    if($this->processForm($request, $this->form)){
+    	$this->getUser()->setAuthenticated(true);
+    	$this->getUser()->setAttribute('user_id' , $user->getId());     
+		$this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
+    	$this->redirect('user/show?id='.$user->getId());
+	} else {
+		$this->getUser()->setFlash('notice', 'Error in form');
+	    $this->setTemplate('new'); // don't render createSuccess.php, but newSuccess.php
+	}
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -46,10 +52,9 @@ class registerActions extends sfActions
 	  if($user->getGeneratedPassword()){
 		  $this->getUser()->setFlash('generated_pass', $user->getGeneratedPassword());        
 	  }
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->setAttribute('user_id' , $user->getId());     
-	  $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
-      $this->redirect('user/show?id='.$user->getId());
-    } 
+	  return true;
+    } else {
+	  return false;
+	}
   }
 }
