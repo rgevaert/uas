@@ -24,7 +24,9 @@
      <a href="<?php echo url_for('unix_account/new'); ?>">Create Unix Account</a> |
  <?php } ?>
    
-		<a href="">Extend</a>
+     <a href="<?php echo url_for('user/resetpassword?id='.$user->getId()); ?>">Reset Password</a> |
+
+     <a href="">Extend</a>
 		
 	</p> 
   </div>
@@ -63,6 +65,12 @@
 			<td><label>Gid:Uid</label></td>
 			<td><?php echo $user->getGid() . ":" . $user->getUid(); ?></td>
 		</tr>
+                <?php if($sf_user->hasFlash('generated_pass')): ?>
+		<tr>
+			<td><label>Auto Generated Password</label></td>
+			<td><?php echo $sf_user->getFlash('generated_pass'); ?></td>
+		</tr>
+                <?php endif; ?>
 	</table>
         <?php if($ftp_account){ ?>
         <div> <h3> FTP Account </h3> </div>

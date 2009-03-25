@@ -3,6 +3,7 @@ Bugs
 
 * the login in screen in the backend shows 'Recent viewed users: ' it should not show that
 * the links for the Recent viewed users do not work
+* When the login is not successful there is a password and login in the url.
 
 
 Todo list
@@ -25,7 +26,6 @@ Yemane:
 
 Habtom:
 * Models/frontend: change password: refactor! Move from controller to models
-* CHAP.php|Password.php|model/User.php - mix this correctly in 
 * Backend: add a Action on the Samba list to get a smbpasswd file (no layout, just one line per user)
 
 
