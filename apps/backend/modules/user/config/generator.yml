@@ -26,7 +26,6 @@ generator:
         object_actions:
             show : ~
             toggle_status : ~
-            _edit: ~
             _delete: ~
         batch_actions:
              _delete: ~
@@ -52,5 +51,4 @@ generator:
         fields:
           email_quota:
                help: Provide the quota in bytes and put S at the end of the numbers like, 500000S
-      show: ~
 
