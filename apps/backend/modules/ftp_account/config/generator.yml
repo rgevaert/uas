@@ -19,9 +19,6 @@ generator:
            label: Upload bandwidth
            help: 0 is unlimited upload band width(KB)
         down_bandwidth:
-           label: Down BW
-      list:
-        actions: {}    
             label: Download bandwidth
             help: 0 is unlimited download band width.(KB)
         quota_size:
@@ -30,8 +27,7 @@ generator:
         quota_files:
                 label: Number of quota files
                 help: 0 is unlimited quota files.
-
-      list:  
+      list:
         max_per_page: 5  
         title: University Ftp Account
         display: [user_fullname, up_bandwidth, down_bandwidth]
@@ -39,7 +35,7 @@ generator:
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]
       form:    ~
       edit:    
-        title: Edit FTP Account
+        title: Edit FTP account
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]  
         fields:
       new:     
