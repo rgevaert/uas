@@ -34,7 +34,8 @@
 	<div id="user_history">
 	    Recent viewed users:
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
-	    <?php echo link_to($user->getFullName(), 'user', $user) ?>
+	    [nok: <?php echo link_to($user->getFullName(), 'user/ListShow', array ( 'query_string' => 'id='.$user->getId())) ?>]
+	    [ok: <a href="<?php echo url_for('user/ListShow?id='.$user->getId()) ?>"><?php echo $user->getFullName() ?></a>]
 	    <?php endforeach; ?>
 	</div>
 	<?php endif; ?>
@@ -45,28 +46,7 @@
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
-	
-	<div id="footer">
-        <div class="content">
-        <!-- footer content -->
-       
-       <ul>
-      <li>
-        <a href=""><?php echo __('About UAS') ?></a>
-      </li>
-      <li class="feed">
-        <?php echo link_to(__('Full feed'), '@user?sf_format=atom') ?>
-      </li>
-      <li>
-        <a href=""><?php echo __('UAS Documents') ?></a>
-      </li>
-      <li class="last">
-        <?php echo link_to(__('Become a Member'), '@user') ?>
-      </li>
-    </ul>
-    
-  </div>
- </div>
+</div>
 <div id="footer">
 <p>
 Powered by <a href="http://www.symfony-project.org/"><img align="middle" src="/images/symfony_button.gif" alt="Symfony_button" /></a>&nbsp;-&nbsp;
