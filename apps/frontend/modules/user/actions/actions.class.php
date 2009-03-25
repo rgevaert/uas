@@ -65,6 +65,14 @@ class userActions extends sfActions
 			$this->redirect('user/edit?id='.$user->getId());
 		}
 	}
+
+	public function executeShowchangepassword(sfWebRequest $request)
+	{
+		$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
+		$this->form = new ChangePasswordForm();
+		$this->setTemplate('changepassword');
+	}
+
 	public function executeChangepassword(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod('post'));    
