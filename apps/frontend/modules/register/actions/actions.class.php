@@ -32,14 +32,19 @@ class registerActions extends sfActions
     $this->form = new RegisterUserForm();
 
     if($this->processForm($request, $this->form)){
-    	$this->getUser()->setAuthenticated(true);
-    	$this->getUser()->setAttribute('user_id' , $user->getId());     
-		$this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
-    	$this->redirect('user/show?id='.$user->getId());
-	} else {
-		$this->getUser()->setFlash('notice', 'Error in form');
-	    $this->setTemplate('new'); // don't render createSuccess.php, but newSuccess.php
+    
+        if($this->user->getGeneratedPassword()){
+            $this->getUser()->setFlash('generated_pass', $this->user->getGeneratedPassword());        
+            $this->getUser()->setAuthenticated(true);
+            $this->getUser()->setAttribute('user_id' , $this->user->getId());     
+            $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $this->user);
+            $this->redirect('user/show?id='.$this->user->getId());
+	    } else {
+		    $this->getUser()->setFlash('notice', 'Error in form');
+	        $this->setTemplate('new'); // don't render createSuccess.php, but newSuccess.php
+    	}
 	}
+	$this->setTemplate('new');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -47,11 +52,7 @@ class registerActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $user = $form->save();
-
-	  if($user->getGeneratedPassword()){
-		  $this->getUser()->setFlash('generated_pass', $user->getGeneratedPassword());        
-	  }
+      $this->user = $form->save();
 	  return true;
     } else {
 	  return false;
