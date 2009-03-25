@@ -12,7 +12,7 @@ user:
 
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: user, action: index }
 
 default_index:
   url:   /:module

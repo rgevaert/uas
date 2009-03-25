@@ -30,7 +30,7 @@ generator:
       list:
         max_per_page: 5  
         title: University Ftp Account
-        display: [user_fullname, up_bandwidth, down_bandwidth]
+        display: [user_fullname]
       filter:  
         display: [user_id, up_bandwidth, down_bandwidth, ip_access, quota_size, quota_files]
       form:    ~

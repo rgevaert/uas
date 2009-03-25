@@ -1,2 +1,7 @@
 # default values
-#all:
+all:
+  .array:
+    admin: [bernardgess, mulatu, teddy, eyuelg, rudy]
+    secretary: []
+    sysadmin: []
+

@@ -19,42 +19,38 @@ class sessionActions extends sfActions
   public function executeLogin(sfWebRequest $request)
   {
     $username = $request->getParameter('username');
-    $password = $request->getParameter('password');
+    $user_password = $request->getParameter('password');
 
-    if(!$username AND !$password){
-        $this->getUser()->setFlash('error','You must provide User name and Password');
+    if(!$username OR !$user_password)
+    {
+        $this->getUser()->setFlash('error','You must provide Username / Password');
     }
-    if(!$username AND $password){
-        $this->getUser()->setFlash('error','You must provide User name ');
-    }
-    if(!$password AND $username){
-        $this->getUser()->setFlash('error','You must provide Password');
-    }
-        
-    if($username == 'admin' && $password == 'adminpass'){
-      // the username & password are correct
-      // log the user in...
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('admin');
 
-      // redirect him away from this login page...
-      $this->getUser()->setFlash('notice', 'Welcome, admin');
-      $this->redirect('@user');
+    $user_login = sfConfig::get('app_admin');
+    if(in_array($username, $user_login))
+    {
+       // Getting the user object
+       $c = new Criteria();
+       $c->add(UserPeer::LOGIN, $username);
+       $this->user = UserPeer::doSelectOne($c);
+       $password = new Password($user_password);  
+       if($this->user->checkPassword($password))
+       {
+             // log the user in...
+             $this->getUser()->setAuthenticated(true);
+             $this->getUser()->addCredential('admin');
 
-    } elseif($username == 'secretary' && $password == 'secret'){
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('secretary');
+             // redirect him away from this login page...
+             $this->getUser()->setFlash('notice', 'Welcome, admin');
+             $this->redirect('@user');
+       }
 
-      $this->getUser()->setFlash('notice', 'Welcome, secretary');
-      $this->redirect('@user');
-    }
-    elseif($username == 'sysadmin' && $password == 'sysadmin'){
-      $this->getUser()->setAuthenticated(true);
-      $this->getUser()->addCredential('sysadmin');
-
-      $this->getUser()->setFlash('notice', 'Welcome, System Administrator');
-      $this->redirect('@user');
-    }
+     }
+     else
+     {
+        $this->getUser()->setFlash('eror', 'You are not an administrator');
+        //$this->redirect('session/login');         
+     }
     
   }
   
@@ -67,6 +63,11 @@ class sessionActions extends sfActions
 
     $this->getUser()->setFlash('notice', 'You have been logged out!');
     $this->redirect('session/login');
+  }
+
+  private function get_login_from_config(sfWebRequest $request)
+  {
+  
   }
 
 }

@@ -57,4 +57,5 @@
 <hr />
 
 <a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a> |
-<a href="<?php echo url_for('user/changepassword?id='.$user->getId()) ?>">Change Password</a>
+<?php echo link_to('Change password','user/showchangepassword', array('query_string' => 'id='.$user->getId(), 'post' => true))?> |
+

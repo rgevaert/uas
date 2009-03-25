@@ -26,23 +26,22 @@ generator:
         object_actions:
             show : ~
             toggle_status : ~
-            _edit: ~
             _delete: ~
         batch_actions:
              _delete: ~
              toggle_status : ~
              
-        display: [login, full_name, status, expires_at, lm_password]
+        display: [login, full_name, status, expires_at]
       filter:  
          display: [domainname_id, name, fathers_name, grand_fathers_name, login, status, email_local_part, email_quota]
-      form: ~  
+      form:
+         class: BackendUserForm
       edit:    
         title: Editing user "%%name%% %%fathers_name%% %%grand_fathers_name%%"
         display:
-            "NONE": [login, name, fathers_name, grand_fathers_name, status, expires_at]
-            "Email": [email_local_part, domainname_id, email_quota]
+            "NONE": [name, fathers_name, grand_fathers_name, status, expires_at]
+            "Email": [email_quota]
             "Contact": [phone, alternate_email]
-            "Varia": [uid, gid]
         fields:
           email_quota:
                help: Provide the quota in bytes and put S at the end of the numbers like, 500000S
@@ -52,5 +51,4 @@ generator:
         fields:
           email_quota:
                help: Provide the quota in bytes and put S at the end of the numbers like, 500000S
-      show: ~
 
