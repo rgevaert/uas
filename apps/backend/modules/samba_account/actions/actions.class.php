@@ -13,4 +13,8 @@ require_once dirname(__FILE__).'/../lib/samba_accountGeneratorHelper.class.php';
  */
 class samba_accountActions extends autoSamba_accountActions
 {
+    public function executeListLsmbPassword(sfWebRequest $request)
+    {
+       $this->samba_account_list = SambaAccountPeer::doSelect(new Criteria()); 
+    }
 }

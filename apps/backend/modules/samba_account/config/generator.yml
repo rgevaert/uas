@@ -12,13 +12,14 @@ generator:
 
     config:
       actions: ~
-      fields: 
+      fields:
          updated_at:
            label: Update At
-      list:  
+      list:
         max_per_page: 5 
-        actions: {}   
         display: [ user_id, hostname, updated_at]
+        actions:
+           lsmbPassword: { label: List Samba Password }
       filter:  
         display: [ user_id, hostname]
       form:    ~
@@ -28,3 +29,4 @@ generator:
       new:     
         title: Add new Samba Account
         display: [user_id, hostname]
+      show:  ~
