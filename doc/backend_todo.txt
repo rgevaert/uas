@@ -52,6 +52,11 @@ All:
 * In in the frontend name, fathers name and grand fathers name should not be editable
 * Move the logout link in the backend to a nicer place.
 * When we activate a user the email account home dir needs to be created!
+* When a user sents a new password in the frontend we must do some checks: e.g.
+  * 2 numbers
+  * 2 capitals
+  * 2 special chars
+  * 2 letters
 
 Nice to have
 -------------
