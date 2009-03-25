@@ -12,9 +12,16 @@
 		<h1><a href="#">UAS</a></h1>
 		<p>User Administration System</p>
 		<?php include_component('language', 'language') ?>
-	    <?php if($sf_user->isAuthenticated()): ?>
-            <p><?php echo link_to('Logout', 'session/logout') ?></p>
-        <?php endif; ?>
+          <p>
+           <?php if($sf_user->isAuthenticated()): ?>
+               <?php echo link_to('Logout | ', 'session/logout') ?>  
+           <?php endif; ?>
+
+           <?php echo link_to('En', 'session/en') ?> | 
+           <?php echo link_to('Tig', 'session/tig') ?>
+          </p>
+
+      
 	</div>
 	<!-- end #logo -->
 	<?php if($sf_user->isAuthenticated()): ?>

@@ -72,7 +72,7 @@ user:
     prefix_path:         user
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/user
+    prefix_path:          /user/:sf_culture
     requirements:         
       sf_culture:  (?:ti|en)
 

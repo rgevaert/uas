@@ -3,7 +3,7 @@
 /**
  * session actions.
  *
- * @package    jobeet
+ * @package    uas
  * @subpackage session
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
@@ -38,7 +38,7 @@ class sessionActions extends sfActions
             $user_login_admin = sfConfig::get('app_admin');
             if(in_array($username, $user_login_admin))
             {       
-                $user_is_authorized = true;
+                $this->user_is_authorized = true;
                 $welcome = "Welcome Administrator";
                 $credential = "admin";
                 $redirect = '@user';
@@ -49,11 +49,11 @@ class sessionActions extends sfActions
                 $user_is_authorized = true;
                 $welcome = "Welcome secretary";
                 $credential = "secretary";
-                $redirect = 'user/new';
+                $redirect = '@user';
             }
 
 
-            if($user_is_authorized)
+            if($this->user_is_authorized)
             {
                  $password = new Password($user_password);  
                  if($this->user->checkPassword($password))
@@ -103,5 +103,19 @@ class sessionActions extends sfActions
   {
   
   }
+
+
+  public function executeTig(sfWebRequest $request)
+  {
+     $this->getUser()->setCulture('ti');
+     $this->redirect('user'); 
+  }
+
+  public function executeEn(sfWebRequest $request)
+  {
+     $this->getUser()->setCulture('en');
+     $this->redirect('user'); 
+  }
+
 
 }
