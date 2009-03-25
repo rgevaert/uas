@@ -18,8 +18,6 @@ Habtom + Yemane
 
 Shimels + Eyuel
 ---------------
-* Check bernards work on the controllers (changePassword)
-* Change the backend login system to read the logins from app.yml
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
 
 http://localhost:8888/backend_dev.php/session/changelanguage/ti
