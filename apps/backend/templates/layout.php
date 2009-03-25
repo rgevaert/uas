@@ -12,8 +12,12 @@
 		<h1><a href="#">UAS</a></h1>
 		<p>User Administration System</p>
 		<?php include_component('language', 'language') ?>
+	    <?php if($sf_user->isAuthenticated()): ?>
+            <p><?php echo link_to('Logout', 'session/logout') ?></p>
+        <?php endif; ?>
 	</div>
 	<!-- end #logo -->
+	<?php if($sf_user->isAuthenticated()): ?>
 	<div id="menu">
 		<ul>
 			  <li class="first"><?php echo link_to('Users', '@user') ?></li>
@@ -26,6 +30,7 @@
 
 		</ul>
 	</div>
+	<?php endif; ?>
 	<!-- end #menu -->
 </div>
 <!-- end #header -->
@@ -40,9 +45,6 @@
 	</div>
 	<?php endif; ?>
 	<div id="content">
-        <?php if($sf_user->isAuthenticated()): ?>
-        <div> <?php echo link_to('Logout', 'session/logout') ?> </div>
-        <?php endif; ?>
         <?php echo $sf_content ?>
 	</div>
 	<!-- end #content -->
