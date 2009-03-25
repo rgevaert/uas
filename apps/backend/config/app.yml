@@ -2,6 +2,6 @@
 all:
   .array:
     admin: [bernardgess, mulatu, teddy, eyuelg, rudy]
-    secretary: []
+    secretary: [mulatu]
     sysadmin: []
 

@@ -26,33 +26,67 @@ class sessionActions extends sfActions
         $this->getUser()->setFlash('error','You must provide Username / Password');
     }
 
-    $user_login = sfConfig::get('app_admin');
-    if(in_array($username, $user_login))
-    {
        // Getting the user object
        $c = new Criteria();
        $c->add(UserPeer::LOGIN, $username);
-       $this->user = UserPeer::doSelectOne($c);
-       $password = new Password($user_password);  
-       if($this->user->checkPassword($password))
+       $this->user = UserPeer::doSelectOne($c);    
+
+       // Check the user in db
+       if($this->user)
        {
-             // log the user in...
-             $this->getUser()->setAuthenticated(true);
-             $this->getUser()->addCredential('admin');
+            // check the user in app.yml
+            $user_login_admin = sfConfig::get('app_admin');
+            if(in_array($username, $user_login_admin))
+            {       
+                $user_is_authorized = true;
+                $welcome = "Welcome Administrator";
+                $credential = "admin";
+                $redirect = '@user';
+            }
+            $user_login_sec = sfConfig::get('app_secretary');
+            if(in_array($username, $user_login_sec))
+            {
+                $user_is_authorized = true;
+                $welcome = "Welcome secretary";
+                $credential = "secretary";
+                $redirect = 'user/new';
+            }
 
-             // redirect him away from this login page...
-             $this->getUser()->setFlash('notice', 'Welcome, admin');
-             $this->redirect('@user');
+
+            if($user_is_authorized)
+            {
+                 $password = new Password($user_password);  
+                 if($this->user->checkPassword($password))
+                 {
+                     // log the user in...
+                     $this->getUser()->setAuthenticated(true);
+                     $this->getUser()->addCredential($credential);
+                     // redirect him away from this login page...
+                     $this->getUser()->setFlash('notice', $welcome);
+                     $this->redirect($redirect);                        
+                 }
+                 else
+                 {
+                      // Password Does't match
+                      $this->getUser()->setFlash('error',
+                      'Password Doest match');
+                 }
+             }
+             else
+             {
+                 // You are not Authorized
+                 $this->getUser()->setFlash('error',
+                 'You are not Authorized');
+             }
        }
-
-     }
-     else
-     {
-        $this->getUser()->setFlash('eror', 'You are not an administrator');
-        //$this->redirect('session/login');         
-     }
-    
+       else
+       {
+             // User doesnot exist in db
+             $this->getUser()->setFlash('error',
+            'User doesnot exist in db');
+       }
   }
+
   
   public function executeLogout(sfWebRequest $request)
   {
