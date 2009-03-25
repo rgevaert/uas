@@ -1,9 +1,7 @@
 # default values
 all:
-  count: 
-      no_of_admins: 4
-  admin:
-      1: bernardgess
-      2: eyuelg
-      3: mulatu
-      4: teddy
+  .array:
+    admin: [bernardgess, mulatu, teddy, eyuelg]
+    secretary: []
+    sysadmin: []
+

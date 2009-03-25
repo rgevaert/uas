@@ -25,19 +25,9 @@ class sessionActions extends sfActions
     {
         $this->getUser()->setFlash('error','You must provide Username / Password');
     }
-    
-    $user_login = sfConfig::get('app_admin_1');
-    $count = sfConfig::get('app_count_no_of_admins');
-    for($i = 1;$i<= $count; $i++)
-    {
-        $app_username = sfConfig::get('app_admin_'.$i);
-        if($username == $app_username)
-        {
-            $user_can_login = true; 
-        }
-    }
 
-    if($user_can_login)
+    $user_login = sfConfig::get('app_admin');
+    if(in_array($username, $user_login))
     {
        $password_obj = new Password($password);
        $c = new Criteria();
@@ -46,17 +36,13 @@ class sessionActions extends sfActions
        $user = UserPeer::doSelect($c);  
        if($user)
        {
-                
-                $count = '';
-                $user_can_login = false;                
+             // log the user in...
+             $this->getUser()->setAuthenticated(true);
+             $this->getUser()->addCredential('admin');
 
-                // log the user in...
-                $this->getUser()->setAuthenticated(true);
-                $this->getUser()->addCredential('admin');
-
-                // redirect him away from this login page...
-                $this->getUser()->setFlash('notice', 'Welcome, admin');
-                $this->redirect('@user');
+             // redirect him away from this login page...
+             $this->getUser()->setFlash('notice', 'Welcome, admin');
+             $this->redirect('@user');
        }
 
      }
