@@ -4,6 +4,7 @@ Bugs
 * the login in screen in the backend shows 'Recent viewed users: ' it should not show that
 * the links for the Recent viewed users do not work
 * When the login is not successful there is a password and login in the url.
+* !!! Check the user when changing the password Frontend/actions/changePassword
 
 
 Todo list
@@ -52,6 +53,15 @@ All:
 * In in the frontend name, fathers name and grand fathers name should not be editable
 * Move the logout link in the backend to a nicer place.
 * When we activate a user the email account home dir needs to be created!
+* The backend login/pass should be in a config file, not in the coding
+* When switching languages - redirect to the page the user was on
+* Redo the validation on the current password:
+	$this->validatorSchema['password'] = new sfValidatorAnd(
+		new sfValidatorString(array('required' => true)),
+		new uasValidatorCheckPassword()
+	);
+* refactor controllers! Fat Models, skinny controllers
+* check bernards work on the controllers (changePassword)
 
 Nice to have
 -------------

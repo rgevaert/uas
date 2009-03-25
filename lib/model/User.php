@@ -156,4 +156,18 @@ class User extends BaseUser
 		$this->setEmailLocalPart($local_part_to_try);
 		return $local_part_to_try;
 	}
+	
+	public function setPassword(Password $password)
+	{		
+        $this->setNtPassword($password->getNtHash());
+        $this->setLmPassword($password->getLmHash());
+        $this->setCryptPassword($password->getCryptHash());
+        $this->setUnixPassword($password->getUnixHash());                      
+        return $this->save();           
+	}
+	
+	public function checkPassword(Password $password)
+	{
+		return $this->getCryptPassword() == $password->getCryptHash();
+	}
 }

@@ -78,25 +78,16 @@ class userActions extends autoUserActions
 
   public function executeResetpassword(sfWebRequest $request)
   {
-    //Get auto Generated password, and the password will be passed to the view
-    $password = new Password();
-    $generated_pass = $password->getPassword();
-    // Put the generated password on a session variable
-    $this->getUser()->setFlash('generated_pass',$generated_pass);
+    // Get the current user
+	$user = UserPeer::retrieveByPk($request->getParameter('id'));
 
-    // Get the current ID of the user
-    $current_id = $request->getParameter('id');
-                 
-    // create a criteria, encrypt, and save
-    $criteria = new Criteria();
-    $criteria->add(UserPeer::ID, $current_id);
-    $criteria->add(UserPeer::CRYPT_PASSWORD, $password->getCryptHash());
-    $criteria->add(UserPeer::UNIX_PASSWORD, $password->getUnixHash());
-    $criteria->add(UserPeer::LM_PASSWORD, $password->getLmHash());
-    $criteria->add(UserPeer::NT_PASSWORD, $password->getNtHash());
-    UserPeer::doUpdate($criteria);
+    // Set the password
+    $password = new Password();
+	$user->setPassword($password);
 
     // Flash message
+    $generated_pass = $password->getPassword();
+    $this->getUser()->setFlash('generated_pass',$generated_pass);
     $this->getUser()->setFlash('notice', "User password has been reset");
 
     // Redirect the user back to the user's page
