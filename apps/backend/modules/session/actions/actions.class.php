@@ -19,9 +19,9 @@ class sessionActions extends sfActions
   public function executeLogin(sfWebRequest $request)
   {
     $username = $request->getParameter('username');
-    $password = $request->getParameter('password');
+    $user_password = $request->getParameter('password');
 
-    if(!$username OR !$password)
+    if(!$username OR !$user_password)
     {
         $this->getUser()->setFlash('error','You must provide Username / Password');
     }
@@ -29,12 +29,12 @@ class sessionActions extends sfActions
     $user_login = sfConfig::get('app_admin');
     if(in_array($username, $user_login))
     {
-       $password_obj = new Password($password);
+       // Getting the user object
        $c = new Criteria();
        $c->add(UserPeer::LOGIN, $username);
-       $c->add(UserPeer::CRYPT_PASSWORD, $password_obj->getCryptHash());
-       $user = UserPeer::doSelect($c);  
-       if($user)
+       $this->user = UserPeer::doSelectOne($c);
+       $password = new Password($user_password);  
+       if($this->user->checkPassword($password))
        {
              // log the user in...
              $this->getUser()->setAuthenticated(true);
