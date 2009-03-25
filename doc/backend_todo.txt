@@ -57,6 +57,7 @@ All:
   * 2 capitals
   * 2 special chars
   * 2 letters
+* Backend, on show user page we need to show the login name too!!
 
 Nice to have
 -------------
