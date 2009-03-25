@@ -50,6 +50,10 @@
 			<td><?php echo $user->getGrandFathersName(); ?></td>
 		</tr>
 		<tr>
+			<td><label>Login</label></td>
+			<td><?php echo $user->getLogin(); ?></td>
+		</tr>
+		<tr>
 			<td><label>Email address</label></td>
 			<td><?php echo $user->getEmailLocalPart() . "@" . $user->getDomainname()->getName(); ?></td>
 		</tr>
@@ -60,10 +64,6 @@
 		<tr>
 			<td><label>Phone</label></td>
 			<td><?php echo $user->getPhone(); ?></td>
-		</tr>
-		<tr>
-			<td><label>Gid:Uid</label></td>
-			<td><?php echo $user->getGid() . ":" . $user->getUid(); ?></td>
 		</tr>
                 <?php if($sf_user->hasFlash('generated_pass')): ?>
 		<tr>
