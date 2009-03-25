@@ -62,6 +62,12 @@ All:
 	);
 * refactor controllers! Fat Models, skinny controllers
 * check bernards work on the controllers (changePassword)
+* When a user sends a new password in the frontend we must do some checks: e.g.
+  * 2 numbers
+  * 2 capitals
+  * 2 special chars
+  * 2 letters
+* Backend, on show user page we need to show the login name too!!
 
 Nice to have
 -------------
