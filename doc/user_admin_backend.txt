@@ -1,0 +1,6 @@
+Steps
+-----
+
+1) Add a variable to app.yml containing a list of admin user logins
+2) Add other variables for secretary, sysadmin...
+3) Migrate this to the database / sfGuardPlugin ...
