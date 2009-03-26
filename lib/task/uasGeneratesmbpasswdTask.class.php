@@ -47,15 +47,12 @@ EOF;
 
 
 	foreach($hostnames as $hostname){
-//		echo "Smbpasswd file for $hostname: ";
 
 		$fh = fopen($path . '/' . $hostname . '.smbpasswd', 'w');
 		foreach(SambaAccountPeer::getActiveAccounts($hostname) as $samba_account){
-//			echo ".";
 			fwrite($fh, $samba_account->getSmbpasswdLine() . "\n");
 		}
 		fclose($fh);
-//		echo " done \n";
   	}
   }
 }

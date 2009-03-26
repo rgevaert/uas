@@ -10,6 +10,7 @@ User:
     uid:                <?php echo 2000 + $i . "\n" ?>
     alternate_email:    <?php echo $i ."@somewhere.com\n" ?>
     email_local_part:   <?php echo "email" . $i ."\n" ?>
+    status:             <?php echo ($i % 2) ? "activated\n" : "preregistered\n" ?>
     expires_at:         2010-12-31
 
 <?php endfor; ?>
