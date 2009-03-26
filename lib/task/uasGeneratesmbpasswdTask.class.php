@@ -8,6 +8,9 @@ class uasGeneratesmbpasswdTask extends sfBaseTask
     $this->addArguments(array(
       new sfCommandArgument('hostname', sfCommandArgument::REQUIRED, 'Hostname'),
     ));
+    $this->addArguments(array(
+      new sfCommandArgument('path', sfCommandArgument::OPTIONAL, 'Path where we put smbpasswd files'),
+    ));
 
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
@@ -34,16 +37,19 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
 	$hostname = $arguments['hostname'];
-
+    $path = $arguments['path'] ? $arguments['path'] : '/tmp';
+    
 	if($hostname == 'all'){
 	  	$hostnames = SambaAccountPeer::getHostnames();		
 	} else {
 		$hostnames[] = $hostname;
 	}
 
+
 	foreach($hostnames as $hostname){
 //		echo "Smbpasswd file for $hostname: ";
-		$fh = fopen('/tmp/' . $hostname . '.smbpasswd', 'w');
+
+		$fh = fopen($path . '/' . $hostname . '.smbpasswd', 'w');
 		foreach(SambaAccountPeer::getActiveAccounts($hostname) as $samba_account){
 //			echo ".";
 			fwrite($fh, $samba_account->getSmbpasswdLine() . "\n");

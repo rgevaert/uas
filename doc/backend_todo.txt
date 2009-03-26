@@ -14,7 +14,6 @@ Todo list
 
 Habtom + Yemane
 ---------------
-* Samba task get directory for files from config file!
 * LCT calculation
 * default routing
 
