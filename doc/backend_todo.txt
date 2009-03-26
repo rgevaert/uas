@@ -29,6 +29,14 @@ http://localhost:8888/backend_dev.php/session/changelanguage/en
 
 All:
 
+* LCT calculation: 
+Last Change Time
+           This field consists of the time the account was last modified. It consists of the characters ´LCT-´
+           (standing for "Last Change Time") followed by a numeric encoding of the UNIX time in seconds since the
+           epoch (1970) that the last change was made.
+ -> numeric encoding = hex encoding of the timestamp
+
+* Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend
 * Frontend:
 	- add listing of accounts on the show page
@@ -70,7 +78,9 @@ All:
 
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
 
+* split out the layouts - logged in and not logged in (backend AND frontend)
 
+* http://www.plentyofcode.com/2008/04/7-days-tutorial-of-symfony-11.html
 
 Nice to have
 -------------

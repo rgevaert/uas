@@ -1,0 +1,55 @@
+<?php
+
+class uasGeneratesmbpasswdTask extends sfBaseTask
+{
+  protected function configure()
+  {
+    // // add your own arguments here
+    $this->addArguments(array(
+      new sfCommandArgument('hostname', sfCommandArgument::REQUIRED, 'Hostname'),
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      // add your own options here
+    ));
+
+    $this->namespace        = 'uas';
+    $this->name             = 'generate-smbpasswd';
+    $this->briefDescription = 'Generating the smbpasswd file';
+    $this->detailedDescription = <<<EOF
+The [uas:generate-smbpasswd|INFO] task does things.
+Call it with:
+
+  [php symfony uas:generate-smbpasswd|INFO]
+EOF;
+  }
+
+  protected function execute($arguments = array(), $options = array())
+  {
+    // initialize the database connection
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
+
+	$hostname = $arguments['hostname'];
+
+	if($hostname == 'all'){
+	  	$hostnames = SambaAccountPeer::getHostnames();		
+	} else {
+		$hostnames[] = $hostname;
+	}
+
+	foreach($hostnames as $hostname){
+//		echo "Smbpasswd file for $hostname: ";
+		$fh = fopen('/tmp/' . $hostname . '.smbpasswd', 'w');
+		foreach(SambaAccountPeer::getActiveAccounts($hostname) as $samba_account){
+//			echo ".";
+			fwrite($fh, $samba_account->getSmbpasswdLine() . "\n");
+		}
+		fclose($fh);
+//		echo " done \n";
+  	}
+  }
+}
