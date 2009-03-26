@@ -7,18 +7,27 @@ Bugs
 * Generation of login names has a bug!!  Register a user with name Rudy G, and then an other user with name Rudy F
 * Password reset in backend doesn't work anymore!!
 
+
+
 Todo list
 ---------
 
 Habtom + Yemane
 ---------------
-* smbpasswd listing half finished
-* uasValidatorCheckPassword
+* smbpasswd listing half finished -> remove from web interface
+* Samba task get directory for files from config file!
+* LCT calculation
 * default routing
-* refactoring
 
 Shimels + Eyuel
 ---------------
+* uasValidatorCheckPassword -> improve with strength meter
+  When a user sends a new password in the frontend we must do some checks: e.g.
+  * 2 numbers
+  * 2 capitals
+  * 2 special chars
+  * 2 letters
+  * Password strenght in general
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
 
 http://localhost:8888/backend_dev.php/session/changelanguage/ti
@@ -35,7 +44,7 @@ Last Change Time
            (standing for "Last Change Time") followed by a numeric encoding of the UNIX time in seconds since the
            epoch (1970) that the last change was made.
  -> numeric encoding = hex encoding of the timestamp
-* Samba task get directory for files from config file!
+
 
 * Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend
@@ -49,7 +58,6 @@ Last Change Time
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 * Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
-* Create a script that creates the smbpasswd file
 * After registration the user needs to be redirected to a page with a print function
 * ADD unit TESTS
 * ADD functional TESTS
@@ -67,19 +75,11 @@ Last Change Time
 	);
 * refactor controllers! Fat Models, skinny controllers
 * check bernards work on the controllers (changePassword)
-* When a user sends a new password in the frontend we must do some checks: e.g.
-  * 2 numbers
-  * 2 capitals
-  * 2 special chars
-  * 2 letters
-  * Password strenght in general
-* Print CSS stylesheet (backend)
+
 * Default pages (front and backend), add needed links... (general)
 
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
-
 * split out the layouts - logged in and not logged in (backend AND frontend)
-
 * http://www.plentyofcode.com/2008/04/7-days-tutorial-of-symfony-11.html
 
 Nice to have
