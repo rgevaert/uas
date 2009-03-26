@@ -29,6 +29,7 @@ http://localhost:8888/backend_dev.php/session/changelanguage/en
 
 All:
 
+* Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend
 * Frontend:
 	- add listing of accounts on the show page
