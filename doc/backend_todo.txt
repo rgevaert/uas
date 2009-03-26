@@ -14,9 +14,6 @@ Todo list
 
 Habtom + Yemane
 ---------------
-* smbpasswd listing half finished -> remove from web interface
-* Samba task get directory for files from config file!
-* LCT calculation
 * default routing
 
 Shimels + Eyuel
@@ -37,14 +34,6 @@ http://localhost:8888/backend_dev.php/session/changelanguage/en
 
 
 All:
-
-* LCT calculation: 
-Last Change Time
-           This field consists of the time the account was last modified. It consists of the characters ´LCT-´
-           (standing for "Last Change Time") followed by a numeric encoding of the UNIX time in seconds since the
-           epoch (1970) that the last change was made.
- -> numeric encoding = hex encoding of the timestamp
-
 
 * Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend
