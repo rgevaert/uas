@@ -34,15 +34,8 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
     // add your code here
-	$c = new Criteria();
-	$all_samba_accounts = SambaAccountPeer::doSelect($c);
-		
-	foreach($all_samba_accounts as $samba_account){
-		if($samba_account->getUser()->getStatus() != 'activated') continue;
-		echo $samba_account->getUser()->getLogin() . ':';
-		echo $samba_account->getUser()->getUid() . ':';
-		echo $samba_account->getUser()->getLmPassword();
-		echo "\n";
+	foreach(SambaAccountPeer::getActiveAccounts() as $samba_account){
+		echo $samba_account->getSmbpasswdLine() . "\n";
 	}
   }
 }
