@@ -69,7 +69,9 @@ All:
 
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
 
+* split out the layouts - logged in and not logged in (backend AND frontend)
 
+* http://www.plentyofcode.com/2008/04/7-days-tutorial-of-symfony-11.html
 
 Nice to have
 -------------
