@@ -19,24 +19,41 @@ class sessionActions extends sfActions
   {
     $this->redirect('session/login');
   }
-  public function executeLogin(sfWebRequest $request)
-  {
+
+/*
     $login= $this->getRequestParameter('login');
     $password= new Password($this->getRequestParameter('password'));
-    $c = new Criteria();
-    $c->add(UserPeer::LOGIN, $login);
+  
     $c->add(UserPeer::CRYPT_PASSWORD, $password->getCryptHash());
-    $user = UserPeer::doSelectOne($c);   
-    if  ($user){
-        if (true)
-        {    
-            $this->getUser()->setAuthenticated(true);
-            $this->getUser()->setAttribute('user_id' , $user->getId());
-	    $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
-	    $this->redirect('user/show?id='.$user->getId());
-        }
-      }
+ 
+*/
+
+	public function executeDologin(sfWebRequest $request)
+	{
+		$form = new LoginForm();
+		$form->bind($this->getRequestParameter('credentials'));
+
+		if($form->isValid()){
+			$login = $request->getParameter('credentials[login]');
+			$user = UserPeer::getUserFromLogin($login);
+			
+			// set the session correctly
+	        $this->getUser()->setAuthenticated(true);
+	        $this->getUser()->setAttribute('user_id' , $user->getId());
+		    $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $user->getLogin());
+		    $this->redirect('user/show?id='.$user->getId());
+		} else {
+			// give the form again
+			$this->form = $form;
+			$this->setTemplate('login');
+		}
+	}
+
+  public function executeLogin(sfWebRequest $request)
+  {
+	$this->form = new LoginForm();	
   }
+
   public function executeLogout(sfWebRequest $request)
   {
     $this->getUser()->setAuthenticated(false);

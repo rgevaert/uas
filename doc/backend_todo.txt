@@ -35,6 +35,7 @@ Last Change Time
            (standing for "Last Change Time") followed by a numeric encoding of the UNIX time in seconds since the
            epoch (1970) that the last change was made.
  -> numeric encoding = hex encoding of the timestamp
+* Samba task get directory for files from config file!
 
 * Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend

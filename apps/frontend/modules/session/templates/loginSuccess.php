@@ -1,7 +1,8 @@
 <h1>Please login</h1>
-<form>
-	Username: <input name="login" /><br/>
-	Password: <input type="password" name="password" /><br/>
+<form action="<?= url_for('session/dologin'); ?>" method="post">
+
+	<?= $form ?>
+
 	<input type="submit" value="login"><br/>
 	<br/>
 </form>

@@ -45,4 +45,11 @@ class UserPeer extends BaseUserPeer
             return false;
         }
     }
+
+	static public function getUserFromLogin($login)
+	{
+		$c = new Criteria();
+	    $c->add(self::LOGIN, $login);
+	    return self::doSelectOne($c);	   
+	}
 }
