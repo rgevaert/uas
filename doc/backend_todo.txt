@@ -14,7 +14,6 @@ Todo list
 
 Habtom + Yemane
 ---------------
-* smbpasswd listing half finished -> remove from web interface
 * Samba task get directory for files from config file!
 * LCT calculation
 * default routing
