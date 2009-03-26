@@ -3,7 +3,7 @@
 /**
  * session actions.
  *
- * @package    jobeet
+ * @package    uas
  * @subpackage session
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
@@ -21,39 +21,33 @@ class sessionActions extends sfActions
     $username = $request->getParameter('username');
     $user_password = $request->getParameter('password');
 
+    //Should be with a validator
     if(!$username OR !$user_password)
     {
         $this->getUser()->setFlash('error','You must provide Username / Password');
     }
 
-    $user_login = sfConfig::get('app_admin');
-    if(in_array($username, $user_login))
+    // Getting the user object
+    $c = new Criteria();
+    $c->add(UserPeer::LOGIN, $username);
+    $user = UserPeer::doSelectOne($c);    
+
+    // Check the user in db
+    if($user)
     {
-       // Getting the user object
-       $c = new Criteria();
-       $c->add(UserPeer::LOGIN, $username);
-       $this->user = UserPeer::doSelectOne($c);
-       $password = new Password($user_password);  
-       if($this->user->checkPassword($password))
-       {
-             // log the user in...
-             $this->getUser()->setAuthenticated(true);
-             $this->getUser()->addCredential('admin');
+        $password = new Password($user_password);  
 
-             // redirect him away from this login page...
-             $this->getUser()->setFlash('notice', 'Welcome, admin');
-             $this->redirect('@user');
-       }
-
-     }
-     else
-     {
-        $this->getUser()->setFlash('eror', 'You are not an administrator');
-        //$this->redirect('session/login');         
-     }
-    
+        if($user->checkPassword($password) && $user->getCredential())
+        {
+            $this->getUser()->addCredential($user->getCredential());
+            $this->getUser()->setAuthenticated(true);
+            $this->getUser()->setFlash('notice', "Welcome " . $user->getCredential());
+            $this->redirect('@user');            
+        }
+    }
+    $this->getUser()->setFlash('error','You are not authorized.');
   }
-  
+ 
   public function executeLogout(sfWebRequest $request)
   {
     $this->getUser()->setAuthenticated(false);
@@ -69,5 +63,19 @@ class sessionActions extends sfActions
   {
   
   }
+
+
+  public function executeTig(sfWebRequest $request)
+  {
+     $this->getUser()->setCulture('ti');
+     $this->redirect('user'); 
+  }
+
+  public function executeEn(sfWebRequest $request)
+  {
+     $this->getUser()->setCulture('en');
+     $this->redirect('user'); 
+  }
+
 
 }
