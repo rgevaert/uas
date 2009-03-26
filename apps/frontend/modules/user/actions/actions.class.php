@@ -66,38 +66,41 @@ class userActions extends sfActions
 		}
 	}
 
-	public function executeShowchangepassword(sfWebRequest $request)
-	{
-		$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
-		$this->form = new ChangePasswordForm();
-		$this->setTemplate('changepassword');
-	}
+	// public function executeShowchangepassword(sfWebRequest $request)
+	// {
+		// 	$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
+		// 	$this->form = new ChangePasswordForm();
+		// 	$this->setTemplate('changepassword');
+		// }
 
-	public function executeChangepassword(sfWebRequest $request)
-	{
-		$this->forward404Unless($request->isMethod('post'));    
-
-		$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
-
-		$this->form = new ChangePasswordForm();
-		$this->form->bind($request->getParameter('changepassword'));
-		if ($this->form->isValid())
+		public function executeChangepassword(sfWebRequest $request)
 		{
-			$pass_parameters = $request->getParameter('changepassword');
-			$password = new Password($pass_parameters['new_password']);
-			$current_password = new Password($pass_parameters['password']);
+			$this->form = new ChangePasswordForm();
+			$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
+			if($request->isMethod('post')){ // if the form is submitted
 
-			if($this->user->checkPassword($current_password))
-			{           
-				$this->user->setPassword($password);
-				$this->getUser()->setFlash('notice', "You have changed your password successfully");
+				$this->form->bind($request->getParameter('changepassword'));
+				if ($this->form->isValid())
+				{
+					$pass_parameters = $request->getParameter('changepassword');
+					$password = new Password($pass_parameters['new_password']);
+					$current_password = new Password($pass_parameters['password']);
+
+					if($this->user->checkPassword($current_password))
+					{           
+						$this->user->setPassword($password);
+						$this->getUser()->setFlash('notice', "You have changed your password successfully");
+					}
+					else
+					{
+						$this->getUser()->setFlash('notice', "Please type your existing password correctly");
+						$this->redirect('user/changepassword');
+					}
+					$this->redirect('user/show?id='.$this->user->getId());
+				}
+			} else { // not a post, just a get
+				//		$this->setTemplate('changepassword');
 			}
-			else
-			{
-				$this->getUser()->setFlash('notice', "Please type your existing password correctly");
-				$this->redirect('user/changepassword');
-			}
-			$this->redirect('user/show?id='.$this->user->getId());
+
 		}
 	}
-}

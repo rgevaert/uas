@@ -1,7 +1,7 @@
 # default values
 all:
   .array:
-    admin: [bernardgess, mulatu, teddy, eyuelg, rudy, symfony]
+    admin: [bernardgess, mulatu, teddy, eyuelg, rudy, symfony, rahwa]
     secretary: [mulatu]
     sysadmin: [j)9G(4lK]
 

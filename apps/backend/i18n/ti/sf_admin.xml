@@ -7,119 +7,119 @@
       <!-- Actions -->
       <trans-unit>
         <source>New</source>
-        <target>Nieuw</target>
+        <target>ሓድሽ</target>
       </trans-unit>
       <trans-unit>
         <source>Edit</source>
-        <target>Kayer</target>
+        <target>ይተኣርም</target>
       </trans-unit>
       <trans-unit>
         <source>Delete</source>
-        <target>Verwijder</target>
+        <target>ይደምሰስ</target>
       </trans-unit>
       <trans-unit>
         <source>List</source>
-        <target>Lijst</target>
+        <target>ይዘርዘር</target>
       </trans-unit>
       <trans-unit>
         <source>Save</source>
-        <target>Opslaan</target>
+        <target>ይቀመጥ</target>
       </trans-unit>
       <trans-unit>
         <source>Save and add</source>
-        <target>Opslaan en Doorgaan</target>
+        <target>ይቀመጥን ይወሰኽን</target>
       </trans-unit>
       <trans-unit>
         <source>Cancel</source>
-        <target>Annuleren</target>
+        <target>ይገደፍ</target>
       </trans-unit>
       <trans-unit>
         <source>Choose an action</source>
-        <target>Kies een optie</target>
+        <target>ተግባር ይመረፅ</target>
       </trans-unit>
       <trans-unit>
         <source>go</source>
-        <target>ok</target>
+        <target>ንኺድ</target>
       </trans-unit>
 
       <!-- Filters -->
       <trans-unit>
         <source>Reset</source>
-        <target>Herstellen</target>
+        <target>ከም ብሓድሽ</target>
       </trans-unit>
       <trans-unit>
         <source>Filter</source>
-        <target>Filteren</target>
+        <target>ይፃረ</target>
       </trans-unit>
 
       <!-- List -->
       <trans-unit>
         <source>No result</source>
-        <target>Geen resultaat</target>
+        <target>ውፅኢት ኣልቦ</target>
       </trans-unit>
       <trans-unit>
         <source>Actions</source>
-        <target>Acties</target>
+        <target>ተግባራት</target>
       </trans-unit>
       <trans-unit>
         <source>(page %%page%%/%%nb_pages%%)</source>
-        <target>(pagina %%page%%/%%nb_pages%%)</target>
+        <target>(ገፅ %%ገፅ%%/%%nb_ገፃት%%)</target>
       </trans-unit>
       <trans-unit>
         <source>asc</source>
-        <target>opl</target>
+        <target>ቅመስ</target>
       </trans-unit>
       <trans-unit>
         <source>desc</source>
-        <target>afl</target>
+        <target>ግመስ</target>
       </trans-unit>
       <trans-unit>
         <source>[0] no result|[1] 1 result|(1,+Inf] %1% results</source> 
-        <target>[0] geen resultaat|[1] 1 resultaat|(1,+Inf] %1% resultaten</target>
+        <target>[0] ውፅኢት ኣልቦ|[1] 1 ውፅኢት |(1,+Inf] %1% ውፅኢታት</target>
       </trans-unit>
 
       <!-- Pagination -->
       <trans-unit>
         <source>First page</source>
-        <target>Eerste pagina</target>
+        <target>ፈላማይ ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Previous page</source>
-        <target>Vorige pagina</target>
+        <target>ቅዱም ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Next page</source>
-        <target>Volgende pagina</target>
+        <target>ቀፃላይ ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Last page</source>
-        <target>Laatste pagina</target>
+        <target>መወዳአታ ገፅ</target>
       </trans-unit>
 
       <!-- Form -->
       <trans-unit>
         <source>The item was created successfully.</source>
-        <target>Het item is succesvol aangemaakt.</target>
+        <target>ዝተደልየ ብትኽክል ተሰሪሑ ኣሎ።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was updated successfully.</source>
-        <target>Het item is succesvol gewijzigd.</target>
+        <target>ዝተደልየ ብትኽክል ተሓዲሱ ኣሎ።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was created successfully. You can add another one below.</source>
-        <target>Het items is succesvol aangemaakt. Hieronder kan je nog een item toevoegen.</target>
+        <target>ዝተደልየ ብትኽክል ተሰሪሑ ኢዩ። ካልአ ኣብ ታሕቲ ምውሳኽ ይከኣል ኢዩ።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was updated successfully. You can add another one below.</source>
-        <target>Het item is succesvol gewijzigd. Hieronder kan je nog een item toevoegen.</target>
+        <target>ዝተደልየ ብትኽክል  ተሓዲሱ ኢዩ። ካልአ ኣብ ታሕቲ ምውሳኽ ይከኣል ኢዩ።</target>
       </trans-unit>
       <trans-unit>
         <source>The item has not been saved due to some errors.</source>
-        <target>Het item is niet opgeslagen vanwege fouten.</target>
+        <target>ብሰንኪ ጌጋ ዝተደልየ ብትኽክል ኣይትነበረን።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was deleted successfully.</source>
-        <target>Het item is succesvol verwijderd</target>
+        <target>ዝተደልየ ብትኽክል ተደምሲሱ ኣሎ።</target>
       </trans-unit>
     </body>
   </file>
