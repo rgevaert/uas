@@ -39,10 +39,6 @@ class userActions extends autoUserActions
 	{      
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
-
-        $this->ftp_accounts = $this->user->getFtpAccounts();
-        $this->samba_accounts = $this->user->getSambaAccounts();
-        $this->unix_accounts = $this->user->getUnixAccounts();    
     }
 
   public function executeDelete(sfWebRequest $request)

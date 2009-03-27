@@ -69,7 +69,7 @@
 					<th>Quota Files</th>
 				</tr>
 
-				<?php foreach($ftp_accounts as $ftp_account): ?>
+				<?php foreach($user->getFtpAccounts() as $ftp_account): ?>
 					<tr>
 						<td><?php echo $ftp_account->getUpBandwidth(); ?></td>
 						<td><?php echo $ftp_account->getDownBandwidth(); ?></td>
@@ -86,7 +86,7 @@
 				<tr>
 					<th>Hostname</th>
 				</tr>
-				<?php foreach($samba_accounts as $samba_account){ ?>
+				<?php foreach($user->getSambaAccounts() as $samba_account){ ?>
 
 					<tr>
 						<td><?php echo $samba_account->getHostname(); ?></td>
@@ -101,7 +101,7 @@
 						<th>Unix Host Name</th>
 						<th>Unix Quota size</th>
 					</tr>
-					<?php foreach($unix_accounts as $unix_account): ?>
+					<?php foreach($user->getUnixAccounts() as $unix_account): ?>
 						<tr>
 							<td><?php echo $unix_account->getHostname(); ?></td>
 							<td><?php echo $unix_account->getQuota(); ?></td>
