@@ -126,7 +126,7 @@ class User extends BaseUser
             $this->getName() . "." . $this->getFathersname() . $suffix,
             $this->getName() . ".". $this->getGrandFathersName() . $suffix,
             $this->getFathersname() . ".". $this->getName() . $suffix,
-            $this->getName() . ".". $this->getGrandFathersName() . $suffix,
+            $this->getFathersname() . ".". $this->getGrandFathersName() . $suffix,
         );
 
         $a = array_map('strtolower', $a);
@@ -138,19 +138,20 @@ class User extends BaseUser
 
     public function generateEmailLocalPart()
 	{
-		$local_part_to_try = $this->get_all_possible_local_part();
+		$local_parts_to_try = $this->get_all_possible_local_part();
 		$counter = 0;
 
-		$local_part_to_try = array_shift($local_part_to_try);
-		while(!UserPeer::check_if_local_part_exists($local_part_to_try)){
-			if(count($local_part_to_try) == 0){
-				$counter++;
-				$local_part_to_try = $this->get_all_possible_local_part($counter);
-			}
-		    $local_part_to_try = array_shift($local_part_to_try);
-			if($counter == 5){
-				die('Too many attempts to find a local part to try.');
-			}
+		$local_part_to_try = array_shift($local_parts_to_try);
+		while(!UserPeer::check_if_local_part_exists($local_part_to_try))
+		    {
+			    if(count($local_parts_to_try) == 0){
+				    $counter++;
+				    $local_parts_to_try = $this->get_all_possible_local_part($counter);
+			    }
+		        $local_part_to_try = array_shift($local_parts_to_try);
+			    if($counter == 3){
+				    die('Too many attempts to find a local part to try.');
+			    }
 		}
 
 		$this->setEmailLocalPart($local_part_to_try);
