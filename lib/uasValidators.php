@@ -12,7 +12,7 @@ class uasValidatorLoginExists extends sfValidatorBase
 
     if (!$user)
     {
-      throw new sfException('No such user');
+		throw new sfValidatorError($this, 'No such user');
     }
 
     return $value;
@@ -34,10 +34,35 @@ class uasValidatorPasswordIsCorrect extends sfValidatorBase
 
     if (!$user->checkPassword(new Password($value)))
     {
-      throw new sfException('The password is not correct');
+		throw new sfValidatorError($this, 'invalid');
     }
 
     return $value;
+  }
+
+}
+class uasValidatorPasswordIsStrong extends sfValidatorBase
+{
+  protected function configure($options = array(), $messages = array())
+  {
+    parent::configure($options, $messages);
+  }
+
+  protected function doClean($value)
+  {
+	
+	$password = $value;
+    
+    if( preg_match_all('/[a-z]/', $password, $junk) > 1 &&
+        preg_match_all('/[0-9]/', $password, $junk) > 1 &&
+        preg_match_all('/[&\$@#\)\(\[\]\?><!]/', $password, $junk) > 1 &&
+        preg_match_all('/[A-Z]/', $password, $junk) > 1  &&
+        strlen($password) > 7 )
+    {
+        return $value;
+    } else {
+		throw new sfValidatorError($this, 'invalid');
+	}
   }
 }
 
