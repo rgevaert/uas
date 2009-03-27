@@ -8,6 +8,7 @@ class SambaAccount extends BaseSambaAccount
 			$this->getUser()->getUid() . ":" .
 			$this->getUser()->getLmPassword() . ":" .
 			$this->getUser()->getNtPassword() . ":" .
-			"[U            ]::";
+			"[U          ]:" .
+			"LCT-" . dechex(strtotime($this->getUser()->getUpdatedAt()));
 	}
 }

@@ -18,8 +18,7 @@ generator:
       list:
         max_per_page: 5 
         display: [ user_id, hostname, updated_at]
-        actions:
-           lsmbPassword: { label: List Samba Password }
+        actions: ~
       filter:  
         display: [ user_id, hostname]
       form:    ~
