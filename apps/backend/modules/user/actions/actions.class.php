@@ -36,7 +36,7 @@ class userActions extends autoUserActions
        $this->redirect('@user');
     }
     public function executeListShow(sfWebRequest $request)
-    {       
+{      
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
 
@@ -76,7 +76,7 @@ class userActions extends autoUserActions
     $this->getUser()->setFlash('notice', "User password has been reset");
 
     // Redirect the user back to the user's page
-    $this->redirect('user/ListShow?id='.$current_id);
+    $this->redirect('user/ListShow?id='.$user->getId());
   }
   
 }
