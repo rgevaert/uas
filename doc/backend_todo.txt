@@ -9,7 +9,6 @@ Todo list
 
 Habtom + Yemane
 ---------------
-* default routing
 
 Shimels + Eyuel
 ---------------

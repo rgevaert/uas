@@ -36,19 +36,13 @@ class userActions extends autoUserActions
        $this->redirect('@user');
     }
     public function executeListShow(sfWebRequest $request)
-{      
+	{      
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
 
-        $ftps = $this->user->getFtpAccounts();
-        $this->ftp_account = array_shift($ftps);
-
-        $sambas = $this->user->getSambaAccounts();
-        $this->samba_accounts = $sambas;
-
-        $unixs = $this->user->getUnixAccounts();
-        $this->unix_account = array_shift($unixs);
-    
+        $this->ftp_accounts = $this->user->getFtpAccounts();
+        $this->samba_accounts = $this->user->getSambaAccounts();
+        $this->unix_accounts = $this->user->getUnixAccounts();    
     }
 
   public function executeDelete(sfWebRequest $request)
