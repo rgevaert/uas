@@ -1,21 +1,15 @@
 <?php
 class uasValidatorLoginExists extends sfValidatorBase
 {
-  protected function configure($options = array(), $messages = array())
+  protected function doClean($login) // $value = 'bernard'
   {
-    parent::configure($options, $messages);
-  }
-
-  protected function doClean($value) // $value = 'bernard'
-  {
-	$user = UserPeer::getUserFromLogin($value);
+	$user = UserPeer::getUserFromLogin($login);
 
     if (!$user)
     {
 		throw new sfValidatorError($this, 'No such user');
     }
-
-    return $value;
+    return $login;
   }
 }
 
@@ -27,39 +21,31 @@ class uasValidatorPasswordIsCorrect extends sfValidatorBase
     parent::configure($options, $messages);
   }
 
-  protected function doClean($value) // $value = 'bernard'
+  protected function doClean($password) // $value = 'bernard'
   {
 	$login = $_POST['credentials']['login'];
 	$user = UserPeer::getUserFromLogin($login);
 
-    if (!$user->checkPassword(new Password($value)))
+    if (!$user->checkPassword(new Password($password)))
     {
 		throw new sfValidatorError($this, 'invalid');
     }
-
-    return $value;
+    return $password;
   }
-
 }
+
 class uasValidatorPasswordIsStrong extends sfValidatorBase
 {
-  protected function configure($options = array(), $messages = array())
+  protected function doClean($password)
   {
-    parent::configure($options, $messages);
-  }
-
-  protected function doClean($value)
-  {
-	
-	$password = $value;
-    
+	    
     if( preg_match_all('/[a-z]/', $password, $junk) > 1 &&
         preg_match_all('/[0-9]/', $password, $junk) > 1 &&
         preg_match_all('/[&\$@#\)\(\[\]\?><!]/', $password, $junk) > 1 &&
         preg_match_all('/[A-Z]/', $password, $junk) > 1  &&
         strlen($password) > 7 )
     {
-        return $value;
+        return $password;
     } else {
 		throw new sfValidatorError($this, 'invalid');
 	}
