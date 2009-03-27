@@ -39,6 +39,12 @@ class BackendUserForm extends UserForm
 				new FtpAccountForm($ftp_account));  // form
 			}		
 
+			if(count($user->getFtpAccounts()) == 0){
+				$new_ftpaccount_form = new FtpAccountForm();
+				$new_ftpaccount_form->setDefault('user_id', $user->getId());
+				$this->embedForm('new_ftp_account', $new_ftpaccount_form);
+			}
+			
 		}	
 	}
 
