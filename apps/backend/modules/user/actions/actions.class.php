@@ -71,7 +71,37 @@ class userActions extends autoUserActions
     // Redirect the user back to the user's page
     $this->redirect('user/ListShow?id='.$user->getId());
   }
-  
+
+
+  public function executeListExtend(sfWebRequest $request)
+  {
+        $id = $request->getParameter('id'); 
+        $user = UserPeer::retrieveByPk($id);
+       
+        $user->displayExtendExpiresAt();
+        $this->getUser()->setFlash('notice', 'Account expriry time has been extended successfully.');
+        $this->redirect('user/ListShow?id='.$id);    
+  }
+
+  public function executeListDelete(sfWebRequest $request)
+  {
+        /*$id = $request->getParameter('id'); 
+        $user = UserPeer::retrieveByPk($id);
+       
+        $user->listDelete();
+        $this->getUser()->setFlash('notice', 'User Account has been Deleted from Database');
+        $this->redirect('@user');*/
+    $request->checkCSRFProtection();
+
+    $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
+
+    $this->getRoute()->getObject()->delete();
+
+    $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
+
+    $this->redirect('@user');   
+  }
+
 	public function executeEdit(sfWebRequest $request)
 	{
 		$user = $this->getRoute()->getObject();
