@@ -71,6 +71,12 @@ domainname:
 
 # default rules
 
+default_homepage:
+    url: /
+    param: 
+        module: user
+        action: index
+
 default_index:
   url:   /:module
   param: { action: index }
