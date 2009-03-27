@@ -58,6 +58,10 @@ class UserForm extends BaseUserForm
 
     $this->widgetSchema->setHelp('email_local_part','This will be your email local part');
 
+	if($this->isNew()){
+		$this->getObject()->setExpiresAt(time() + 3 * 30 * 86400);
+	}
+
   }
   
   public function configure()
