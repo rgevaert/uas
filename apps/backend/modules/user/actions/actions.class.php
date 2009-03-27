@@ -55,15 +55,14 @@ class userActions extends autoUserActions
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
 
-        $ftp = $this->user->getFtpAccounts();
-        $this->ftp_account = array_shift($ftp);
-        $this->ftp_form = new FtpAccountForm();
+        $ftps = $this->user->getFtpAccounts();
+        $this->ftp_account = array_shift($ftps);
 
-        $samba = $this->user->getSambaAccounts();
-        $this->samba_account = array_shift($samba);
+        $sambas = $this->user->getSambaAccounts();
+        $this->samba_accounts = $sambas;
 
-        $unix = $this->user->getUnixAccounts();
-        $this->unix_account = array_shift($unix);
+        $unixs = $this->user->getUnixAccounts();
+        $this->unix_account = array_shift($unixs);
     
     }
 
@@ -94,6 +93,14 @@ class userActions extends autoUserActions
     $this->redirect('user/ListShow?id='.$current_id);
   }
   
+	public function executeEdit(sfWebRequest $request)
+	{
+		$user = $this->getRoute()->getObject();
+		
+		$this->samba_form = new EmbeddedSambaAccountForm();
+		$this->samba_form->setDefault('user_id', $user->getId());
+		return parent::executeEdit($request);
+	}
 }
 
 
