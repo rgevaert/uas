@@ -51,8 +51,8 @@ class User extends BaseUser
     public function displayExtendExpiresAt()
     {
         $extend = time() + sfConfig::get('app_account_extend_days')*86400;
-        $this->setExpiresAt($extend);        
-        echo $extend;
+        $this->setExpiresAt($extend);
+        $this->save();                
         //return true;
     }
 
@@ -177,4 +177,17 @@ class User extends BaseUser
         if(in_array($this->login,sfConfig::get('app_secretary'))) return 'secretary' ;
         return null;
 	}
+
+    public function listDelete()
+    {
+        $criteria =  new Criteria();
+        $criteria->add(UserPeer::ID, $this->getId());
+        $criteria->add(FtpAccountPeer::USER_ID, $this->getId());
+        $criteria->add(SambaAccountPeer::USER_ID, $this->getId());
+        $criteria->add(UnixAccountPeer::USER_ID, $this->getId());
+        $criteria->add(UserIdentificationPeer::USER_ID, $this->getId());
+        UserPeer::doDelete($criteria);                
+        //return true;
+    }
+
 }

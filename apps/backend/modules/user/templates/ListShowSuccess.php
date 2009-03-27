@@ -9,7 +9,7 @@
   <div id="sf_admin_header">
 	<p><b>Actions</b> > > 
 	<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a> | 
- <a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a> | 
+ <a href="<?php echo url_for('user/listDelete?id='.$user->getId()) ?>">Delete</a> | 
  <a href="" onclick="window.print();return false;">print version</a>  | 
 
  <?php if(!$ftp_account){ ?>
@@ -26,7 +26,7 @@
    
      <a href="<?php echo url_for('user/resetpassword?id='.$user->getId()); ?>">Reset Password</a> |
 
-     <a href="">Extend</a>
+     <a href="<?php echo url_for('user/listExtend?id='.$user->getId()); ?>">Extend</a>
 		
 	</p> 
   </div>
@@ -71,6 +71,10 @@
 			<td><?php echo $sf_user->getFlash('generated_pass'); ?></td>
 		</tr>
                 <?php endif; ?>
+		<tr>
+			<td><label>Expires At</label></td>
+			<td><?php echo $user->getExpiresAt(); ?></td>
+		</tr>
 	</table>
         <?php if($ftp_account){ ?>
         <div> <h3> FTP Account </h3> </div>
