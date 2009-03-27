@@ -51,6 +51,7 @@ class sessionActions extends sfActions
 
   public function executeLogin(sfWebRequest $request)
   {
+	$this->getUser()->setAuthenticated(false);
 	$this->form = new LoginForm();	
   }
 

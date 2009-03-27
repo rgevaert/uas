@@ -11,12 +11,10 @@
 	<div id="logo">
 		<h1><a href="#">UAS</a></h1>
 		<p>User Administration System</p>
-		<?php include_component('language', 'language') ?>
           <p>
            <?php if($sf_user->isAuthenticated()): ?>
                <?php echo link_to('Logout | ', 'session/logout') ?>  
            <?php endif; ?>
-
            <?php echo link_to('En', 'session/en') ?> | 
            <?php echo link_to('Tig', 'session/tig') ?>
           </p>
@@ -46,8 +44,7 @@
 	<div id="user_history">
 	    Recent viewed users:
 	    <?php foreach ($sf_user->getUserHistory() as $user): ?>
-	    [nok: <?php echo link_to($user->getFullName(), 'user/ListShow', array ( 'query_string' => 'id='.$user->getId())) ?>]
-	    [ok: <a href="<?php echo url_for('user/ListShow?id='.$user->getId()) ?>"><?php echo $user->getFullName() ?></a>]
+	    <a href="<?php echo url_for('user/ListShow?id='.$user->getId()) ?>"><?php echo $user->getFullName() ?></a>
 	    <?php endforeach; ?>
 	</div>
 	<?php endif; ?>
