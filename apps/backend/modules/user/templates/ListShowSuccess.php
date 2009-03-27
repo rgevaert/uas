@@ -68,7 +68,7 @@
                 <?php if($sf_user->hasFlash('generated_pass')): ?>
 		<tr>
 			<td><label>Auto Generated Password</label></td>
-			<td><?php echo $sf_user->getFlash('generated_pass'); ?></td>
+			<td><?php echo htmlentities($sf_user->getFlash('generated_pass')); ?></td>
 		</tr>
                 <?php endif; ?>
 	</table>

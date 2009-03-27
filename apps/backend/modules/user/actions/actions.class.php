@@ -36,22 +36,7 @@ class userActions extends autoUserActions
        $this->redirect('@user');
     }
     public function executeListShow(sfWebRequest $request)
-{
-       if (!$request->getParameter('sf_culture'))
-        {
-        if ($this->getUser()->isFirstRequest())
-        {
-            $culture = $request->getPreferredCulture(array('en', 'ti'));
-            $this->getUser()->setCulture($culture);
-            $this->getUser()->isFirstRequest(false);
-        }
-        else
-        {
-            $culture = $this->getUser()->getCulture();
-        }
-        $this->redirect('@localized_homepage');
-        }
-        
+{      
         $this->user = $this->getRoute()->getObject();
         $this->getUser()->addUserToHistory($this->user); 
 
@@ -90,7 +75,7 @@ class userActions extends autoUserActions
     $this->getUser()->setFlash('notice', "User password has been reset");
 
     // Redirect the user back to the user's page
-    $this->redirect('user/ListShow?id='.$current_id);
+    $this->redirect('user/ListShow?id='.$user->getId());
   }
   
 	public function executeEdit(sfWebRequest $request)

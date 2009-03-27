@@ -12,9 +12,6 @@ ftp_account:
     prefix_path:         ftp_account
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/ftp_account
-    requirements:         
-      sf_culture:  (?:ti|en)
     
 samba_account:
   class: sfPropelRouteCollection
@@ -24,9 +21,6 @@ samba_account:
     prefix_path:         samba_account
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/samba_account
-    requirements:         
-      sf_culture:  (?:ti|en)
     
 unix_account:
   class: sfPropelRouteCollection
@@ -36,9 +30,6 @@ unix_account:
     prefix_path:         unix_account
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/unix_account
-    requirements:         
-      sf_culture:  (?:ti|en)
 
 email_alias:
   class: sfPropelRouteCollection
@@ -48,9 +39,6 @@ email_alias:
     prefix_path:         emailalias
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/email_alias    
-    requirements:         
-      sf_culture:  (?:ti|en)
 
 user_identification:
   class: sfPropelRouteCollection
@@ -60,9 +48,6 @@ user_identification:
     prefix_path:         useridentification
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/user_identification
-    requirements:         
-      sf_culture:  (?:ti|en)
 
 user:
   class: sfPropelRouteCollection
@@ -72,9 +57,7 @@ user:
     prefix_path:         user
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /user/:sf_culture
-    requirements:         
-      sf_culture:  (?:ti|en)
+
 
 domainname:
   class: sfPropelRouteCollection
@@ -84,16 +67,9 @@ domainname:
     prefix_path:         domainname
     column:              id
     with_wildcard_routes: true
-    prefix_path:          /:sf_culture/domainname
-    requirements:         
-      sf_culture:  (?:ti|en)
+
 
 # default rules
-localized_homepage:
-  url:   /:sf_culture
-  param: { module: default, action: index }
-  requirements:
-    sf_culture: (?:ti|en)
 
 default_index:
   url:   /:module
