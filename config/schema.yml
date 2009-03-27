@@ -54,7 +54,7 @@ propel:
 
   samba_account:
     id:           ~
-    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true }
+    user_id:      { type: integer, foreignTable: user, foreignReference: id, required: true, onDelete: cascade }
     hostname:     { type: varchar(255), required: true, index: true }
     created_at:   ~
     updated_at:   ~

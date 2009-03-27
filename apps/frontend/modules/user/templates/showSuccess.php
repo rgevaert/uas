@@ -47,7 +47,7 @@
     <tr>
 <?php if($sf_user->hasFlash('generated_pass')):?>
   <th><label>Password:</label></th>
-      <td><?php echo $sf_user->getFlash('generated_pass'); ?>
+      <td><?php echo htmlentities($sf_user->getFlash('generated_pass')); ?>
 </td>
 	</tr>
 <?php endif;?>
