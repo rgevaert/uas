@@ -26,14 +26,13 @@ generator:
         object_actions:
             show : ~
             toggle_status : ~
-            _delete: ~
         batch_actions:
              _delete: ~
              toggle_status : ~
              
         display: [login, full_name, status, expires_at]
       filter:  
-         display: [domainname_id, name, fathers_name, grand_fathers_name, login, status, email_local_part, email_quota]
+         display: [domainname_id, name, fathers_name, grand_fathers_name, login, status, email_local_part]
       form:
          class: BackendUserForm
       edit:    

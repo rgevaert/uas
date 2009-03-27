@@ -2,6 +2,8 @@
 <?php include_partial('user/assets') ?>
 
 <div id="sf_admin_container">
+
+
 	<h1><?php echo __('User ' . $user->getFullName(), array(), 'messages') ?></h1>
 
 	<?php include_partial('user/flashes') ?>
@@ -9,7 +11,7 @@
 	<div id="sf_admin_header">
 		<p><b>Actions</b> > > 
 			<a href="<?php echo url_for('user/edit?id='.$user->getId()) ?>">Edit</a> | 
-			<a href="<?php echo url_for('user/delete?id='.$user->getId()) ?>">Delete</a> | 
+			 <a href="<?php echo url_for('user/listDelete?id='.$user->getId()) ?>">Delete</a> | 
 			<a href="" onclick="window.print();return false;">print version</a>  | 
 			<a href="<?php echo url_for('user/resetpassword?id='.$user->getId()); ?>">Reset Password</a> |
 			<a href="">Extend</a>
@@ -114,3 +116,4 @@
 		<div id="sf_admin_footer">
 		</div>
 	</div>
+
