@@ -1,13 +1,8 @@
 Bugs
 ----
-
-* the links for the Recent viewed users do not work (R)
-* When the login is not successful there is a password and login in the url. 
-* Delete in the show doesn't work
-* Generation of login names has a bug!!  Register a user with name Rudy G, and then an other user with name Rudy F
+* Delete in the show doesn't work (E+S)
+* Generation of email local part/login names has a bug!!  Register a user with name Rudy G, and then an other user with name Rudy F (H+Y)
 * Password reset in backend doesn't work anymore!!
-
-
 
 Todo list
 ---------
@@ -18,13 +13,7 @@ Habtom + Yemane
 
 Shimels + Eyuel
 ---------------
-* uasValidatorCheckPassword -> improve with strength meter
-  When a user sends a new password in the frontend we must do some checks: e.g.
-  * 2 numbers
-  * 2 capitals
-  * 2 special chars
-  * 2 letters
-  * Password strenght in general
+* uasValidatorCheckPassword -> rules in the help message!!!
 * redirect when changing language: http://trac.symfony-project.org/wiki/HowToHandlei18nDbFieldsWithAdminGenerator
 
 http://localhost:8888/backend_dev.php/session/changelanguage/ti
@@ -35,19 +24,16 @@ http://localhost:8888/backend_dev.php/session/changelanguage/en
 
 All:
 
-* Login form should be a symfony form
 * Add all needed functionality to the User::Show action in the backend
 * Frontend:
 	- add listing of accounts on the show page
 	- if you try to register a new user - logout if still logged in
 	- provide a printable version of the detail page
 * Models/frontend: change password: refactor! Move from controller to models
-* Backend: add a Action on the Samba list to get a smbpasswd file (no layout, just one line per user)
 * clean up TODO list
 * remove the "is empty" from the filter fields where it isn't needed
 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 * Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
-* After registration the user needs to be redirected to a page with a print function
 * ADD unit TESTS
 * ADD functional TESTS
 * Add additional user credentials: admin, secretary, sysadmin
@@ -55,7 +41,6 @@ All:
 	- restrict the correct pages to the correct credentials
 * Move the logout link in the backend to a nicer place.
 * When we activate a user the email account home dir needs to be created!
-* The backend login/pass should be in a config file, not in the coding
 * When switching languages - redirect to the page the user was on
 * Redo the validation on the current password:
 	$this->validatorSchema['password'] = new sfValidatorAnd(
@@ -63,7 +48,6 @@ All:
 		new uasValidatorCheckPassword()
 	);
 * refactor controllers! Fat Models, skinny controllers
-* check bernards work on the controllers (changePassword)
 
 * Default pages (front and backend), add needed links... (general)
 
