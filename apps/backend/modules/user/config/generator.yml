@@ -38,10 +38,6 @@ generator:
          class: BackendUserForm
       edit:    
         title: Editing user "%%name%% %%fathers_name%% %%grand_fathers_name%%"
-        display:
-            "NONE": [name, fathers_name, grand_fathers_name, status, expires_at]
-            "Email": [email_quota]
-            "Contact": [phone, alternate_email]
         fields:
           email_quota:
                help: Provide the quota in bytes and put S at the end of the numbers like, 500000S

@@ -100,16 +100,18 @@
         <?php } ?>
 
 
-        <?php if($samba_account){ ?>
         <div> <br /> <h3> Samba Account </h3> </div>
+		<table>
+			<tr>
+				<th>Hostname</th>
+			</tr>
+        <?php foreach($samba_accounts as $samba_account){ ?>
        
-	<table>
 		<tr>
-			<td><label>Host Name</label></td>
 			<td><?php echo $samba_account->getHostname(); ?></td>
 		</tr>
-        </table>
         <?php } ?>
+    </table>
 
 
 
