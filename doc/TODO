@@ -4,31 +4,30 @@ Bugs
 Todo list
 ---------
 
+Front end
+2 * If you try to register a new user - logout if still logged in
+2 * Translation!
 5 * uasValidatorCheckPassword -> rules in the help message!
-3 * when changing the language, redirect to the referer.
 
-1 * embedded form for identifications!
+Back end
+1 * When we activate a user the email account home dir needs to be created!
 1 * Add Unix accounts in the edit of a user
 1 * Create embedded forms for ftp and unix (see samba as reference)
-  * Frontend:
-
+2 * Translation!
+3 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
+3 * Redo the validation on the current password: --> changePasswordForm.php line 20
+3 * when changing the language, redirect to the referer.
 3	- add listing of accounts on the show page (<?php var_dump($user->getSambaAccounts()) ?>)
-2	- if you try to register a new user - logout if still logged in
-		$this->getUser->setAuthenticated(false); in the correct action...
+        	$this->getUser->setAuthenticated(false); in the correct action...
 4	- provide a printable version of the detail page
 5 * remove the "is empty" from the filter fields where it isn't needed
-3 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 5 * restrict the correct pages to the correct credentials as you see fit
 5 * Redo the complete header and flash message placements
-2 * Translation!
-3 * Redo the validation on the current password: --> changePasswordForm.php line 20
-
+5 * Validator check up:
 	$this->validatorSchema['password'] = new sfValidatorAnd(
 		new sfValidatorString(array('required' => true)),
 		new uasValidatorCheckPassword()
 	);
-4 * split out the layouts - logged in and not logged in (backend AND frontend)
-3 * When we activate a user the email account home dir needs to be created!
 
 Nice to have
 -------------
