@@ -1,0 +1,26 @@
+
+
+1) Dump old database:
+mysqldump useradminstration > useradminstration.sql
+
+2) copy the sql file to you development machine
+
+3) Import useradminstration.sql 
+mysqladmin create useradministration
+mysql useradministration < useradminstration.sql
+
+3) Insert the old data into the new tables:
+mysql uas
+
+mysql> insert into domainname select id,name from useradministration.domains;
+
+mysql> insert into email_alias select id,local_part, domain_id as domainname_id, destination, now(), ts_update as updated_at from useradministration.email_aliases;
+
+mysql> insert into user select users.id as id , domains.id as domainname_id, users.first_name as name, users.last_name as fathers_name, '' as grand_fathers_name, users.login, users.tel as phone, nt_password, lm_password, crypt_password, unix_password, users.id+2000 as uid, users.id+2000 as gid, status, '' as alternate_email,  local_part as email_local_part,  quota as email_quota, ts_exp as expires_at, ts_create as created_at , users.ts_update as updated_at from useradministration.domains, useradministration.users, useradministration.email_accounts where domains.id= email_accounts.domain_id and users.id = email_accounts.user_id\G
+
+mysql> update user set status='activated' where status='1';
+
+mysql> update user set status='disactivated' where status='0';
+
+mysql> insert into ftp_account select id, user_id, ul_bandwidth as up_bandwidth, dl_bandwidth as down_bandwidth, ipaccess as ip_access, quota_size, quota_files, NOW() as created_at, NOW() as updated_at from useradministration.ftp_accounts
+
