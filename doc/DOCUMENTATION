@@ -1,0 +1,46 @@
+1. Links
+2. Securing your application:
+3. Setting up unit testing
+
+1. Links
+--------
+http://www.plentyofcode.com/2008/04/7-days-tutorial-of-symfony-11.html
+
+2. Securing your application
+----------------------------
+Generating my module "session"
+- this gives me my actions.class.php in session
+
+	./symfony generate:module backend session
+
+Setting my settings.yml file 
+- changing the .actions parameters for login 
+	
+  .actions:
+    login_module:           session
+    login_action:           index
+
+Start setting your security.yml files correctly
+	- Attention!!! -> security.yml for session-module
+	- Set the other security.yml files as wanted/needed
+
+Define the needed actions:
+	executeLogin (setAuthenticated(true))
+	executeLogout (setAuthenticated(false))
+	executeIndex (redirect ?? )
+
+
+3. Setting up unit testing
+--------------------------
+
+1) Create uas_test database (use your own pass and login)
+
+mysqladmin -uroot -proot create uas_test
+
+2) Configure your project to use a uas_test for tests:
+
+symfony configure:database --env=test "mysql:host=localhost;dbname=uas_test" root <your_root_db_password>
+
+3) Insert test data:
+
+symfony propel:insert-sql --env=test
