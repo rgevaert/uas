@@ -1,3 +1,16 @@
 Welcome to the UAS project.
 
 This project was funded by VLIR UOS (http://www.vliruos.be)
+
+This file will contain extra notes on setting up the project:
+-------------------------------------------------------------
+
+1) configure your computer to download necessary packages:
+php5-mcrypt
+...
+
+2) configure apache to look in /home/<username>/<somepath>/uas/frontend
+
+3) ...
+
+Eyuel please add this rest :)
