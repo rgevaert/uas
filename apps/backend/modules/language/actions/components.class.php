@@ -6,7 +6,7 @@ class languageComponents extends sfComponents
   {
     $this->form = new sfFormLanguage(
       $this->getUser(),
-      array('languages' => array('en', 'ti'))
+      array('languages' => array('en', 'ti','am'))
     );
   }
 }

@@ -77,5 +77,10 @@ class sessionActions extends sfActions
      $this->redirect('user'); 
   }
 
+  public function executeAm(sfWebRequest $request)
+  {
+     $this->getUser()->setCulture('am');
+     $this->redirect('user'); 
+  }
 
 }

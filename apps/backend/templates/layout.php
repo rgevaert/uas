@@ -16,7 +16,8 @@
                <?php echo link_to('Logout | ', 'session/logout') ?>  
            <?php endif; ?>
            <?php echo link_to('En', 'session/en') ?> | 
-           <?php echo link_to('Tig', 'session/tig') ?>
+           <?php echo link_to('Tig', 'session/tig') ?> | 
+           <?php echo link_to('Am', 'session/am') ?>
           </p>
 
       
