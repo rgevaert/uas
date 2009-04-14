@@ -23,7 +23,7 @@ class Password
 
         public function getCryptHash()
         {
-            return crypt($this->password,'salt');
+            return crypt($this->password,sfConfig::get('app_crypt_salt'));
         }
 
         public function getLmHash()
@@ -46,7 +46,7 @@ class Password
         private function generate()
         {
                 $specialChars = array(
-                   "&","$","@","#",")","(","[","]","?",">","<","!");
+                   "&","$","@","#",")","(","[","]","?","=","%","!");
                 $two_special = $specialChars[rand(0,11)].$specialChars[rand(0,11)];
                 $two_number = chr(rand(48,57)).chr(rand(48,57));
                 $two_capital = chr(rand(65,90)).chr(rand(65,90));
