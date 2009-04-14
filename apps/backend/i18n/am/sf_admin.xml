@@ -7,19 +7,19 @@
       <!-- Actions -->
       <trans-unit>
         <source>New</source>
-        <target>adis</target>
+        <target>አዲስ </target>
       </trans-unit>
       <trans-unit>
         <source>Edit</source>
-        <target>Mastekakel</target>
+        <target>ይስትካከ</target>
       </trans-unit>
       <trans-unit>
         <source>Delete</source>
-        <target>Atfa</target>
+        <target>ይጥፋ</target>
       </trans-unit>
       <trans-unit>
         <source>List</source>
-        <target>Yezerzer</target>
+        <target>ይዘርዘ</target>
       </trans-unit>
       <trans-unit>
         <source>Save</source>
@@ -27,35 +27,35 @@
       </trans-unit>
       <trans-unit>
         <source>Save and add</source>
-        <target>Techemiro yekemet</target>
+        <target>ይቀመጥ እና ለላ ይጨመር </target>
       </trans-unit>
       <trans-unit>
         <source>Cancel</source>
-        <target>Yetfa</target>
+        <target>ይጥፋ</target>
       </trans-unit>
       <trans-unit>
         <source>Choose an action</source>
-        <target>ተግባር Yemeret</target>
+        <target>ተግባር ምረጥ</target>
       </trans-unit>
       <trans-unit>
         <source>go</source>
-        <target>hid</target>
+        <target>ሂድ  </target>
       </trans-unit>
 
       <!-- Filters -->
       <trans-unit>
         <source>Reset</source>
-        <target>wededuro mels</target>
+        <target>ወደነበረበት ይመለሥ</target>
       </trans-unit>
       <trans-unit>
         <source>Filter</source>
-        <target>leyeteh awtaw</target>
+        <target>ለይተህ አውጣ</target>
       </trans-unit>
 
       <!-- List -->
       <trans-unit>
         <source>No result</source>
-        <target>ውፅኢት ኣልቦ</target>
+        <target>ውጠት የለም </target>
       </trans-unit>
       <trans-unit>
         <source>Actions</source>
@@ -67,47 +67,47 @@
       </trans-unit>
       <trans-unit>
         <source>asc</source>
-        <target>ቅመስ</target>
+        <target>ወደላይ</target>
       </trans-unit>
       <trans-unit>
         <source>desc</source>
-        <target>ግመስ</target>
+        <target>ወደታች</target>
       </trans-unit>
       <trans-unit>
         <source>[0] no result|[1] 1 result|(1,+Inf] %1% results</source> 
-        <target>[0] ውፅኢት ኣልቦ|[1] 1 ውፅኢት |(1,+Inf] %1% ውፅኢታት</target>
+        <target>[0] ውጠት የለ|[1] 1 ውጠ |(1,+Inf] %1% ውጠቶች</target>
       </trans-unit>
 
       <!-- Pagination -->
       <trans-unit>
         <source>First page</source>
-        <target>ፈላማይ ገፅ</target>
+        <target>የመጀመሪያ  ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Previous page</source>
-        <target>ቅዱም ገፅ</target>
+        <target>ቅም ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Next page</source>
-        <target>ቀፃላይ ገፅ</target>
+        <target>ቀጣ ገፅ</target>
       </trans-unit>
       <trans-unit>
         <source>Last page</source>
-        <target>መወዳአታ ገፅ</target>
+        <target>የመጨረሳ ገፅ</target>
       </trans-unit>
 
       <!-- Form -->
       <trans-unit>
         <source>The item was created successfully.</source>
-        <target>ዝተደልየ ብትኽክል ተሰሪሑ ኣሎ።</target>
+        <target>ስራው በትክክል ተከናውኑዋል።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was updated successfully.</source>
-        <target>ዝተደልየ ብትኽክል ተሓዲሱ ኣሎ።</target>
+        <target>ስራው በትክክል ታድሱዋ።</target>
       </trans-unit>
       <trans-unit>
         <source>The item was created successfully. You can add another one below.</source>
-        <target>ዝተደልየ ብትኽክል ተሰሪሑ ኢዩ። ካልአ ኣብ ታሕቲ ምውሳኽ ይከኣል ኢዩ።</target>
+        <target>ስራው በትክክል ተከናውኑዋል። ክስር ለላ መጨመር ይችላሉ</target>
       </trans-unit>
       <trans-unit>
         <source>The item was updated successfully. You can add another one below.</source>
@@ -115,11 +115,11 @@
       </trans-unit>
       <trans-unit>
         <source>The item has not been saved due to some errors.</source>
-        <target>ብሰንኪ ጌጋ ዝተደልየ ብትኽክል ኣይትነበረን።</target>
+        <target>ስራው በትክክል አልተከናወነም። </target>
       </trans-unit>
       <trans-unit>
         <source>The item was deleted successfully.</source>
-        <target>ዝተደልየ ብትኽክል ተደምሲሱ ኣሎ።</target>
+        <target>የማጥፋት ስራው የተሳካ ነበር </target>
       </trans-unit>
     </body>
   </file>

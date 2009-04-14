@@ -6,23 +6,23 @@
     <body>
       <trans-unit id="1">
         <source>About UAS</source>
-        <target>Silegna</target>
+        <target>ስለ ዩአሥ</target>
       </trans-unit>
       <trans-unit id="2">
         <source>Full feed</source>
-        <target>Mulu Megeb</target>
+        <target>ሙሉ መግ</target>
       </trans-unit>
       <trans-unit id="3">
         <source>UAS Documents</source>
-        <target>ye UAS Mezagebt</target>
+        <target>የ UAS መዛግብ</target>
       </trans-unit>
       <trans-unit id="4">
         <source>Become a Member</source>
-        <target>Abal Mehon</target>
+        <target>አባል መሆ</target>
       </trans-unit>
       <trans-unit id="5">
         <source>User </source>
-        <target>tetekami</target>
+        <target>ጠቃሚ</target>
       </trans-unit>
     </body>
   </file>
