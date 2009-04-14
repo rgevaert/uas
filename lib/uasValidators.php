@@ -1,7 +1,7 @@
 <?php
 class uasValidatorLoginExists extends sfValidatorBase
 {
-  protected function doClean($login) // $value = 'bernard'
+  protected function doClean($login)
   {
 	$user = UserPeer::getUserFromLogin($login);
 
@@ -21,7 +21,7 @@ class uasValidatorPasswordIsCorrect extends sfValidatorBase
     parent::configure($options, $messages);
   }
 
-  protected function doClean($password) // $value = 'bernard'
+  protected function doClean($password)
   {
 	$login = $_POST['credentials']['login'];
 	$user = UserPeer::getUserFromLogin($login);
