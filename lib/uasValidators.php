@@ -39,10 +39,9 @@ class uasValidatorPasswordIsStrong extends sfValidatorBase
   protected function doClean($password)
   {
 	    
-    if( preg_match_all('/[a-z]/', $password, $junk) > 1 &&
+    if(
         preg_match_all('/[0-9]/', $password, $junk) > 1 &&
-        preg_match_all('/[&\$@#\)\(\[\]\?><!]/', $password, $junk) > 1 &&
-        preg_match_all('/[A-Z]/', $password, $junk) > 1  &&
+        preg_match_all('/[&\$@#\)\(\[\]\?%=!]/', $password, $junk) > 1 &&
         strlen($password) > 7 )
     {
         return $password;
