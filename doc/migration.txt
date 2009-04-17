@@ -1,7 +1,7 @@
 
 
 1) Dump old database:
-mysqldump useradminstration > useradminstration.sql
+mysqldump useradministration > useradministration.sql
 
 2) copy the sql file to you development machine
 
