@@ -52,4 +52,14 @@ class UserPeer extends BaseUserPeer
 	    $c->add(self::LOGIN, $login);
 	    return self::doSelectOne($c);	   
 	}
+	
+	public function getEmailAccounts()
+	{
+	     $criteria = new Criteria();
+         	$criteria->add(self::STATUS, 'activated');
+         	$criteria->addOr(self::STATUS, 'disactivated');
+      
+         	return self::doSelect($criteria);
+         	
+	}
 }
