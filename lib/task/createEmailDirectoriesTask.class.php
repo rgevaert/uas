@@ -141,8 +141,8 @@ EOF;
           $domain = $a[1];
           $path = $domain . "/" .$local_part;
           exec("mkdir -p ${dir}/$path");
-          chown("${dir}/$path","vmail";
-          chgrp("${dir}/$path","vmail";
+          chown("${dir}/$path","vmail");
+          chgrp("${dir}/$path","vmail");
           echo("mkdir -p ${dir}/$path\n");
      }     
 
