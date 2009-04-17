@@ -7,12 +7,10 @@
       <trans-unit id="1">
         <source>About UAS</source>
         <target>ስለ ዩአሥ</target>
-        <target>ስለ ዩ ኤ ስ </target>
       </trans-unit>
       <trans-unit id="2">
         <source>Full feed</source>
         <target>ሙሉ መግ</target>
-        <target>ሙሉ መግብ </target>
       </trans-unit>
       <trans-unit id="3">
         <source>UAS Documents</source>
@@ -21,14 +19,18 @@
       </trans-unit>
       <trans-unit id="4">
         <source>Become a Member</source>
-        <target>አባል መሆ</target>
-        <target>አባል ሁን </target>
+        <target>አባል ይሁኑ  </target>
       </trans-unit>
       <trans-unit id="5">
         <source>User </source>
-        <target>ጠቃሚ</target>
         <target>ተጤቃሚ </target>
       </trans-unit>
+      
+      <trans-unit id="6">
+        <source>Status </source>
+        <target>ስታተስ </target>
+      </trans-unit>
+      
       <trans-unit>
       <source>Show</source>      
         <target>አሳ ይ </target>
