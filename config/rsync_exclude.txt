@@ -1,4 +1,4 @@
-.svn
+.git
 /web/uploads/*
 /cache/*
 /log/*
