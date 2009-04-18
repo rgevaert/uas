@@ -48,9 +48,9 @@ class UserPeer extends BaseUserPeer
 
 	static public function getUserFromLogin($login)
 	{
-		$c = new Criteria();
-	    $c->add(self::LOGIN, $login);
-	    return self::doSelectOne($c);	   
+	     $c = new Criteria();
+          $c->add(self::LOGIN, $login);
+          return self::doSelectOne($c);	   
 	}
 	
 	public function getEmailAccounts()
