@@ -191,4 +191,13 @@ class User extends BaseUser
         //return true;
     }
 
+	public function getLoginName($email_address)
+	{
+	     $a = explode("@",$email_address);
+	     $c = new Criteria();
+	     $c->add(UserPeer::EMAIL_LOCAL_PART, $a[0]);                  
+          $login = UserPeer::doSelect($c);
+          return $login->getLogin();
+	}    
+
 }
