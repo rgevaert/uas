@@ -10,6 +10,10 @@ class uasSendLoginNamesTask extends sfBaseTask
     // ));
 
     $this->addArguments(array(
+      new sfCommandArgument('message', sfCommandArgument::REQUIRED, 'MESSAGE'),
+    )); 
+
+    $this->addArguments(array(
       new sfCommandArgument('to', sfCommandArgument::OPTIONAL, 'TO'),
     ));    
 
@@ -42,6 +46,7 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
     $to = $arguments['to'] ? $arguments['to'] : '';
+	$message2 = $arguments['message'] ? $arguments['message'] : '';
     
     // TODO : get login, localparts names
 
@@ -75,17 +80,35 @@ EOF;
      {
                $users = UserPeer::getEmailAccounts();
      }
+	
+	 if($message2 != '')
+	 {
+		$handle = fopen($message2, 'r');
+		$Data = fread($handle, filesize($message2));
+		fclose($handle);
+		//echo $Data;
+	 }
+	 else
+	 {
+		echo "You must provide file that has text";
+	 }
+
+
 
      foreach($users as $user)
      {       
           $login = $user->getLogin(); 
           $search  = array("#LOGIN#", "#FIRSTNAME#", "#FATHERSNAME#", "#EMAILADDRESS#");
           $replace = array($user->getLogin(), $user->getName(), $user->getFathersName(), $user->getEmailAddress());
-          if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $message), $headers))
-          {
-               echo "message failed";
-          }    
+		  echo str_replace($search, $replace, $Data);
+          //if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $message2), $headers))
+          //{
+               //echo "message failed";
+          //}    
      }
+
+	 //echo $message2;
+
     
   }
 }
