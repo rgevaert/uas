@@ -1,13 +1,11 @@
-
-
 1) Dump old database:
 mysqldump useradministration > useradministration.sql
 
 2) copy the sql file to you development machine
 
-3) Import useradminstration.sql 
+3) Import useradministration.sql 
 mysqladmin create useradministration
-mysql useradministration < useradminstration.sql
+mysql useradministration < useradministration.sql
 
 3) Insert the old data into the new tables:
 mysql uas
@@ -23,4 +21,3 @@ mysql> update user set status='activated' where status='1';
 mysql> update user set status='disactivated' where status='0';
 
 mysql> insert into ftp_account select id, user_id, ul_bandwidth as up_bandwidth, dl_bandwidth as down_bandwidth, ipaccess as ip_access, quota_size, quota_files, NOW() as created_at, NOW() as updated_at from useradministration.ftp_accounts
-
