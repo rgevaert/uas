@@ -102,8 +102,18 @@ class userActions extends autoUserActions
 	{
 		$user = $this->getRoute()->getObject();
 		
+		// SAMBA FORM		
 		$this->samba_form = new EmbeddedSambaAccountForm();
 		$this->samba_form->setDefault('user_id', $user->getId());
+
+		// FTP FORM
+		$this->ftp_form	  = new EmbeddedFtpAccountForm();
+		$this->ftp_form->setDefault('user_id', $user->getId());
+
+		// UNIX FORM
+		$this->unix_form	  = new EmbeddedUnixAccountForm();
+		$this->unix_form->setDefault('user_id', $user->getId());
+
 		return parent::executeEdit($request);
 	}
 }

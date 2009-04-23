@@ -22,28 +22,43 @@ class BackendUserForm extends UserForm
 			$this['domainname_id']
 			); 
 
-		if (!$this->isNew()) {  
+		if (!$this->isNew()) {   // Embeding only when editing 
 			$user = $this->getObject();
-
+			
+			// EMBED SAMBA FORM
 			foreach ($user->getSambaAccounts() as $samba_account) {
 				$this->embedForm('samba_account-' . $samba_account->getId(),  // name
 				new EmbeddedSambaAccountForm($samba_account));  // form
 			}		
-
+			
 			$new_sambaaccount_form = new EmbeddedSambaAccountForm();
 			$new_sambaaccount_form->setDefault('user_id', $user->getId());
 			$this->embedForm('new_samba_account', $new_sambaaccount_form);
 
+
+			// EMBED FTP FORM
 			foreach ($user->getFtpAccounts() as $ftp_account) {
 				$this->embedForm('ftp_account-' . $ftp_account->getId(),  // name
-				new FtpAccountForm($ftp_account));  // form
+				new EmbeddedFtpAccountForm($ftp_account));  // form
 			}		
 
 			if(count($user->getFtpAccounts()) == 0){
-				$new_ftpaccount_form = new FtpAccountForm();
+				$new_ftpaccount_form = new EmbeddedFtpAccountForm();
 				$new_ftpaccount_form->setDefault('user_id', $user->getId());
 				$this->embedForm('new_ftp_account', $new_ftpaccount_form);
 			}
+
+	
+			// EMBED UNIX FORM
+			foreach ($user->getUnixAccounts() as $unix_account) {
+				$this->embedForm('unix_account-' . $unix_account->getId(),  // name
+				new EmbeddedUnixAccountForm($unix_account));  // form
+			}		
+			
+			$new_unixaccount_form = new EmbeddedUnixAccountForm();
+			$new_unixaccount_form->setDefault('user_id', $user->getId());
+			$this->embedForm('new_unix_account', $new_unixaccount_form);
+
 			
 		}	
 	}
@@ -53,6 +68,11 @@ class BackendUserForm extends UserForm
 		if (is_null($taintedValues['new_samba_account']['hostname']) || strlen($taintedValues['new_samba_account']['hostname']) === 0 ) {    
 			unset($this->embeddedForms['new_samba_account'], $taintedValues['new_samba_account']);  
 			$this->validatorSchema['new_samba_account'] = new sfValidatorPass();  
+		}  
+
+		if (is_null($taintedValues['new_unix_account']['hostname']) || strlen($taintedValues['new_unix_account']['hostname']) === 0 ) {    
+			unset($this->embeddedForms['new_unix_account'], $taintedValues['new_unix_account']);  
+			$this->validatorSchema['new_unix_account'] = new sfValidatorPass();  
 		}  
 
 		// call parent bind method  
