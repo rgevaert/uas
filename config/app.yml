@@ -2,5 +2,5 @@
 all:
   account_expire_days: 365
   account_extend_days: 365
-  default_domain_name: ju.edu.et
+  default_domain_name: mu.edu.et
   crypt_salt: ju
