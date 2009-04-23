@@ -23,7 +23,7 @@ class ChangePasswordForm extends sfForm
     		new sfValidatorString(array('required' => true)),
     		new uasValidatorPasswordIsStrong()
 		), 
-        array(), array('invalid' => 'Your new password is not strong enough!', 'required' => 'Please fill in you new password.')
+        array(), array('invalid' => 'Your new password is not strong enough! <br />  The password should contain digits', 'required' => 'Please fill in you new password.')
     );
 
     $this->validatorSchema['confirm_new_password'] = new sfValidatorString(array('required' => true, 'min_length' => 8));
