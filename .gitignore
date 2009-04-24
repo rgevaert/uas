@@ -4,4 +4,6 @@ web/uploads/*
 config/databases.yml
 data/sql/*
 config/propel.ini
+apps/backend/config/app.yml
+config/app.yml
 *~
