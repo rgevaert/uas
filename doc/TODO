@@ -15,6 +15,7 @@ Back end
 2 * Translation!
 3 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
 4	- provide a printable version of the detail page
+4 * In domain list, show for each domain user count, email accounts, ftp accounts, samba accounts, aliases
 5 * remove the "is empty" from the filter fields where it isn't needed
 5 * restrict the correct pages to the correct credentials as you see fit
 5 * Redo the complete header and flash message placements
