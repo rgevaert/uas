@@ -34,7 +34,7 @@ class registerActions extends sfActions
     if($this->processForm($request, $this->form)){
     
         if($this->user->getGeneratedPassword()){
-            $this->getUser()->setFlash('generated_pass', $this->user->getGeneratedPassword());        
+            $this->getUser()->setFlash('generated_pass', $this->user->getGeneratedPassword());
             $this->getUser()->setAuthenticated(true);
             $this->getUser()->setAttribute('user_id' , $this->user->getId());     
             $this->getUser()->setFlash('notice', 'Welcome'. ' ' . $this->user);
@@ -50,12 +50,15 @@ class registerActions extends sfActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+
     if ($form->isValid())
     {
-      $this->user = $form->save();
-	  return true;
+        $this->user = $form->save();
+        $this->user->setStatus('preregistered');
+        $this->user->save();
+        return true;
     } else {
-	  return false;
+        return false;
 	}
   }
 }
