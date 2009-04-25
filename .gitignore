@@ -1,4 +1,5 @@
 log/*
+config/properties.ini
 cache/*
 web/uploads/*
 config/databases.yml
