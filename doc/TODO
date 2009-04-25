@@ -5,6 +5,7 @@ Todo list
 ---------
 
 Front end
+1 * Embedded forms for identification numbers (think of validation too!). After that send email to users and ask them to fill it in.
 2 * If you try to register a new user - logout if still logged in
 2 * Translation!
 5 * uasValidatorCheckPassword -> rules in the help message!
