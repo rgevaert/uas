@@ -10,15 +10,9 @@ Front end
 5 * uasValidatorCheckPassword -> rules in the help message!
 
 Back end
-1 * When we activate a user the email account home dir needs to be created!
-1 * Add Unix accounts in the edit of a user
-1 * Create embedded forms for ftp and unix (see samba as reference)
+1 * We can only have one FTP account, so if a user already has an ftp account we don't need to add a new one
 2 * Translation!
 3 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
-3 * Redo the validation on the current password: --> changePasswordForm.php line 20
-3 * when changing the language, redirect to the referer.
-3	- add listing of accounts on the show page (<?php var_dump($user->getSambaAccounts()) ?>)
-        	$this->getUser->setAuthenticated(false); in the correct action...
 4	- provide a printable version of the detail page
 5 * remove the "is empty" from the filter fields where it isn't needed
 5 * restrict the correct pages to the correct credentials as you see fit
