@@ -73,7 +73,8 @@ EOF;
      $users = array();
      if($to != '')
      {
-               $users[] = UserPeer::getUserFromLogin($to);
+               $a = explode("@",$to);
+               $users[] = UserPeer::getUserFromEmailLocalPart($a[0]);
                
      }
      else
