@@ -53,6 +53,13 @@ class UserPeer extends BaseUserPeer
           return self::doSelectOne($c);	   
 	}
 	
+	static public function getUserFromEmailLocalPart($email_local_part)
+	{
+	     $c = new Criteria();
+          $c->add(self::EMAIL_LOCAL_PART, $email_local_part);
+          return self::doSelectOne($c);	   
+	}	
+	
 	public function getEmailAccounts()
 	{
 	     $criteria = new Criteria();
