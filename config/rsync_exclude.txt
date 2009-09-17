@@ -6,3 +6,4 @@
 /log/*
 /web/*_dev.php
 /web/frontend_cache.php
+/apps/backend/config/app.yml
