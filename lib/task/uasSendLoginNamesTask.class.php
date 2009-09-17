@@ -50,8 +50,8 @@ EOF;
     
     // TODO : get login, localparts names
 
-     $subject = "Notification";
-     $headers = 'From: ICT <support@ju.edu.et>';
+     $subject = "Welcome to JU email System";
+     $headers = 'From: Jimma University ICTDO <support@ju.edu.et>';
      $message = <<<EOF
 Hello #FIRSTNAME# #FATHERSNAME#,
 
@@ -102,10 +102,10 @@ EOF;
           $search  = array("#LOGIN#", "#FIRSTNAME#", "#FATHERSNAME#", "#EMAILADDRESS#");
           $replace = array($user->getLogin(), $user->getName(), $user->getFathersName(), $user->getEmailAddress());
 		  echo str_replace($search, $replace, $Data);
-          //if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $message2), $headers))
-          //{
-               //echo "message failed";
-          //}    
+          if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $Data), $headers))
+          {
+               echo "message failed";
+          }    
      }
 
 	 //echo $message2;
