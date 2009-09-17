@@ -40,7 +40,7 @@ class uasValidatorPasswordIsStrong extends sfValidatorBase
   {
 	    
     if(
-        preg_match_all('/[0-9]/', $password, $junk) > 1 &&
+        preg_match_all('/[0-9]/', $password, $junk) >= 1 &&
         //preg_match_all('/[&\$@#\)\(\[\]\?%=!]/', $password, $junk) > 1 &&
         strlen($password) > 7 )
     {
