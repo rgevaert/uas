@@ -17,7 +17,10 @@
 	<?php if($sf_user->isAuthenticated()): ?>
 	<div id="menu">
 		<ul>
-			  <li class="first"><?php echo link_to('Logout', 'session/logout') ?></li>
+			  <li class="first">
+			  <li> <?php echo link_to('Account', 'user/show') ?> </li> 
+			  <li> <?php echo link_to('Comment', 'comment/new') ?></li> 
+			  <li> <?php echo link_to('Logout', 'session/logout') ?></li>
 		</ul>
 	</div>
 	<!-- end #menu -->

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="am" datatype="plaintext" original="messages" date="2009-03-23T09:25:06Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1">
+        <source>About UAS</source>
+        <target>ስለ ዩአሥ</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Full feed</source>
+        <target>ሙሉ መግ</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>UAS Documents</source>
+        <target>የ UAS መዛግብ</target>
+        <target>የ  ዩ ኤ ስ መዛግብት </target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Become a Member</source>
+        <target>አባል ይሁኑ  </target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>User </source>
+        <target>ተጤቃሚ </target>
+      </trans-unit>
+      
+      <trans-unit id="6">
+        <source>Status </source>
+        <target>ስታተስ </target>
+      </trans-unit>
+      
+      <trans-unit>
+      <source>Show</source>      
+        <target>አሳ ይ </target>
+       </trans-unit>
+       <trans-unit> 
+      <source>Toggle status</source>
+        <target>ቶግል ስታተስ  </target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

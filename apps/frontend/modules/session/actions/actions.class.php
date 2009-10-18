@@ -60,7 +60,10 @@ class sessionActions extends sfActions
     $this->getUser()->setAuthenticated(false);
 	$this->getUser()->setFlash('notice', 'You have been logged out!');
 	$this->redirect('@user');
-  }  
+  } 
+  public function executeComment(sfWebRequest $request){
+     $this->redirect('@comment');
+  } 
  }
 
 

@@ -102,10 +102,10 @@ EOF;
           $search  = array("#LOGIN#", "#FIRSTNAME#", "#FATHERSNAME#", "#EMAILADDRESS#");
           $replace = array($user->getLogin(), $user->getName(), $user->getFathersName(), $user->getEmailAddress());
 		  echo str_replace($search, $replace, $Data);
-          if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $Data), $headers))
+          /*if(!mail($user->getEmailAddress(), $subject, str_replace($search, $replace, $Data), $headers))
           {
                echo "message failed";
-          }    
+          }*/    
      }
 
 	 //echo $message2;

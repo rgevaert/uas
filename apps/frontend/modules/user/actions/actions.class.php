@@ -55,6 +55,11 @@ class userActions extends sfActions
 		$this->processForm($request, $this->form);
 		$this->setTemplate('edit');
 	}
+	/*public function executeComment(sfWebRequest $request)
+	{
+	     $current_id = $this->getUser()->getAttribute('user_id');
+          $this->redirect('coment/new?id='.$current_id);  
+	}*/
 
 	protected function processForm(sfWebRequest $request, sfForm $form)
 	{

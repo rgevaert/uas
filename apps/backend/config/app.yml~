@@ -1,0 +1,7 @@
+# default values
+all:
+  .array:
+    admin: [eyuel, egessese, dan, eyuel1]
+    secretary: [mulatu]
+    sysadmin: [j)9G(4lK]
+

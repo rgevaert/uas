@@ -1,0 +1,44 @@
+Bugs
+----
+
+Todo list
+---------
+
+Front end
+1 * Embedded forms for identification numbers (think of validation too!). After that send email to users and ask them to fill it in.
+2 * If you try to register a new user - logout if still logged in
+2 * Translation!
+5 * uasValidatorCheckPassword -> rules in the help message!
+
+Back end
+1 * We can only have one FTP account, so if a user already has an ftp account we don't need to add a new one
+2 * Translation!
+3 * add help labels where needed - make sure they don't show up in the filters (or shorten them there)
+4	- provide a printable version of the detail page
+4 * In domain list, show for each domain user count, email accounts, ftp accounts, samba accounts, aliases
+5 * remove the "is empty" from the filter fields where it isn't needed
+5 * restrict the correct pages to the correct credentials as you see fit
+5 * Redo the complete header and flash message placements
+5 * Validator check up:
+	$this->validatorSchema['password'] = new sfValidatorAnd(
+		new sfValidatorString(array('required' => true)),
+		new uasValidatorCheckPassword()
+	);
+
+Nice to have
+-------------
+
+*  persons picture with the users (image upload)
+*  add a "server" table to the system
+* Modify filters: in a filter we should not see a dropdown with users, but a input field, (if we have many users the dropdown will be unasable
+* ADD unit TESTS
+* ADD functional TESTS
+
+Bernard
+-------
+Figure out why filter_is_empty isn't working as it should
+
+Eyuel
+-----
+Add telephone directory table
+-
