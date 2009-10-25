@@ -14,6 +14,7 @@ class commentActions extends sfActions
   {
     //$this->comment_list = CommentPeer::doSelect(new Criteria());
     //$this->form = new CommentForm();
+    $this->getUser()->setFlash('notice', 'Thank you! Your comment has been saved.');
     $this->redirect('comment/new');
     
   }
@@ -25,7 +26,7 @@ class commentActions extends sfActions
   }
 
   public function executeNew(sfWebRequest $request)
-  {
+  {    
     $this->form = new FrontendCommentForm();
   }
 
@@ -75,8 +76,7 @@ class commentActions extends sfActions
     {
       $comment = $form->save();
       $comment->setUserId($this->getUser()->getAttribute('user_id'));
-      $comment->save();
-
+      $comment->save();      
       $this->redirect('comment/index?id='.$comment->getId());
     }
   }
