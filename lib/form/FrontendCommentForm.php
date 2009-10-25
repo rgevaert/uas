@@ -18,5 +18,8 @@ class FrontendCommentForm extends CommentForm
         $this['is_activated'],
         $this['created_at']
         );
+    $this->widgetSchema->setLabels(array(
+     'is_public' => 'Public?'
+     ));
   }
 }
