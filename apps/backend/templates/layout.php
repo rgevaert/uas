@@ -33,6 +33,7 @@
 		          <li><?php echo link_to('Unix', '@unix_account') ?></li>
 		          <li><?php echo link_to('FTP', '@ftp_account') ?></li>
                           <li><?php echo link_to('Samba', '@samba_account') ?></li>
+                          <li><?php echo link_to('Comments', '@comment') ?></li>
 
 		</ul>
 	</div>

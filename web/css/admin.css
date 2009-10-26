@@ -45,7 +45,7 @@ a img {
 
 #header {
 	width: 900px;
-	height: 130px;
+	height: 90px;
 	margin: 0px auto;
 	background: #699C4D;
 }
@@ -99,7 +99,7 @@ a img {
 	display: block;
 	width: auto;
 	height: 28px;
-	padding: 12px 20px 0px 20px;
+	padding: 12px 10px 0px 10px;
 	background: url(/images/img02.jpg) no-repeat right 50%;
 }
 
