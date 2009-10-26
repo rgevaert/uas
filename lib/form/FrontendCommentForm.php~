@@ -15,7 +15,7 @@ class FrontendCommentForm extends CommentForm
    parent::configure_specific();
 
     unset(
-        $this['user_id'], $this['is_activated'],
+        $this['is_activated'],
         $this['created_at']
         );
   }

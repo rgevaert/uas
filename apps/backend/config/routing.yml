@@ -1,3 +1,12 @@
+comment:
+  class: sfPropelRouteCollection
+  options:
+    model:               Comment
+    module:              comment
+    prefix_path:         comment
+    column:              id
+    with_wildcard_routes: true
+
 change_language:
   url:   /change_language
   param: 

@@ -22,9 +22,7 @@ generator:
          max_per_page: 10
          object_actions: 
                     _delete: ~
-                             
-      filter:
-         display: [ user_id, subject, message]
+      filter:  ~
       form:    ~
       edit:    ~
       new:     ~
