@@ -1,7 +1,0 @@
-[production]
-   host=mail.ju.edu.et
-   port=22
-   user=uas
-   dir=/var/www/uas/
-   type=rsync
-   pass=

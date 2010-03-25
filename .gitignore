@@ -8,3 +8,4 @@ config/propel.ini
 apps/backend/config/app.yml
 config/app.yml
 messages/
+*~
