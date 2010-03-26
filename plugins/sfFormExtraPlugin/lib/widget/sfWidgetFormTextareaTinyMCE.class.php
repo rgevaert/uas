@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormTextareaTinyMCE.class.php 11894 2008-10-01 16:36:53Z fabien $
+ * @version    SVN: $Id: sfWidgetFormTextareaTinyMCE.class.php 17192 2009-04-10 07:58:29Z fabien $
  */
 class sfWidgetFormTextareaTinyMCE extends sfWidgetFormTextarea
 {
@@ -55,23 +55,14 @@ class sfWidgetFormTextareaTinyMCE extends sfWidgetFormTextarea
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    if (!isset($attributes['class']))
-    {
-      throw new InvalidArgumentException(sprintf('You must pass a "class" attribute for a TinyMCE widget (%s).', $name));
-    }
-
     $textarea = parent::render($name, $value, $attributes, $errors);
-
-    // take the first class
-    $classes = explode(' ', $attributes['class']);
-    $class = trim($classes[0]);
 
     $js = sprintf(<<<EOF
 <script type="text/javascript">
   tinyMCE.init({
-    mode:                              "textareas",
+    mode:                              "exact",
+    elements:                          "%s",
     theme:                             "%s",
-    editor_selector:                   "%s",
     %s
     %s
     theme_advanced_toolbar_location:   "top",
@@ -83,8 +74,8 @@ class sfWidgetFormTextareaTinyMCE extends sfWidgetFormTextarea
 </script>
 EOF
     ,
+      $this->generateId($name),
       $this->getOption('theme'),
-      $class,
       $this->getOption('width')  ? sprintf('width:                             "%spx",', $this->getOption('width')) : '',
       $this->getOption('height') ? sprintf('height:                            "%spx",', $this->getOption('height')) : '',
       $this->getOption('config') ? ",\n".$this->getOption('config') : ''
