@@ -28,12 +28,14 @@ class Password
 
         public function getLmHash()
         {
+			return "Crypt_CHAR_MSv1 hack";
             $chap = new Crypt_CHAP_MSv1();
             $chap->password = $this->password;
             return bin2hex($chap->lmPasswordHash()); 
         }
         public  function getNtHash()
         {
+			return "Crypt_CHAP_MSv1 hack";
             $chap = new Crypt_CHAP_MSv1();
             $chap->password = $this->password;
             return bin2hex($chap->ntPasswordHash());
