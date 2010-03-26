@@ -16,7 +16,7 @@
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     David Heinemeier Hansson
- * @version    SVN: $Id: AssetHelper.php 13476 2008-11-29 03:00:16Z dwhittle $
+ * @version    SVN: $Id: AssetHelper.php 24289 2009-11-23 19:45:06Z Kris.Wallsmith $
  */
 
 /**
@@ -37,9 +37,9 @@
  *    => <link rel="alternate" type="application/rss+xml" title="My RSS" href="http://www.curenthost.com/module/feed" />
  * </code>
  *
- * @param  string $type         feed type ('rss', 'atom')
- * @param  string $url          'module/action' or '@rule' of the feed
- * @param  array  $tag_options  additional HTML compliant <link> tag parameters
+ * @param string $type        feed type ('rss', 'atom')
+ * @param string $url         'module/action' or '@rule' of the feed
+ * @param array  $tag_options additional HTML compliant <link> tag parameters
  *
  * @return string XHTML compliant <link> tag
  */
@@ -67,15 +67,15 @@ function auto_discovery_link_tag($type = 'rss', $url = '', $tag_options = array(
  * - file name, like "myscript.js", that gets expanded to "/js/myscript.js"
  * - file name without extension, like "myscript", that gets expanded to "/js/myscript.js"
  *
- * @param  string $source    asset name
- * @param  bool   $absolute  return absolute path ?
+ * @param string $source   asset name
+ * @param bool   $absolute return absolute path ?
  *
  * @return string file path to the JavaScript file
  * @see    javascript_include_tag
  */
 function javascript_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'js', 'js', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_js_dir_name', 'js'), 'js', $absolute);
 }
 
 /**
@@ -90,8 +90,8 @@ function javascript_path($source, $absolute = false)
  *       <script language="JavaScript" type="text/javascript" src="/elsewhere/cools.js"></script>
  * </code>
  *
- * @param  string asset names
- * @param  array additional HTML compliant <link> tag parameters
+ * @param string asset names
+ * @param array additional HTML compliant <link> tag parameters
  *
  * @return string XHTML compliant <script> tag(s)
  * @see    javascript_path
@@ -130,7 +130,7 @@ function javascript_include_tag()
     $options = array_merge(array('type' => 'text/javascript', 'src' => $source), $sourceOptions);
     $tag = content_tag('script', '', $options);
 
-    if (!is_null($condition))
+    if (null !== $condition)
     {
       $tag = comment_as_conditional($condition, $tag);
     }
@@ -155,15 +155,15 @@ function javascript_include_tag()
  * - file name, like "style.css", that gets expanded to "/css/style.css"
  * - file name without extension, like "style", that gets expanded to "/css/style.css"
  *
- * @param  string $source    asset name
- * @param  bool   $absolute  return absolute path ?
+ * @param string $source   asset name
+ * @param bool   $absolute return absolute path ?
  *
  * @return string file path to the stylesheet file
  * @see    stylesheet_tag
  */
 function stylesheet_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'css', 'css', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_css_dir_name', 'css'), 'css', $absolute);
 }
 
 /**
@@ -188,8 +188,8 @@ function stylesheet_path($source, $absolute = false)
  *       <link href="/css/stylish.css" media="screen" rel="stylesheet" type="text/css" />
  * </code>
  *
- * @param  string asset names
- * @param  array additional HTML compliant <link> tag parameters
+ * @param string asset names
+ * @param array  additional HTML compliant <link> tag parameters
  *
  * @return string XHTML compliant <link> tag(s)
  * @see    stylesheet_path
@@ -228,7 +228,7 @@ function stylesheet_tag()
     $options = array_merge(array('rel' => 'stylesheet', 'type' => 'text/css', 'media' => 'screen', 'href' => $source), $sourceOptions);
     $tag = tag('link', $options);
 
-    if (!is_null($condition))
+    if (null !== $condition)
     {
       $tag = comment_as_conditional($condition, $tag);
     }
@@ -262,7 +262,7 @@ function use_javascript($js, $position = '', $options = array())
 /**
  * Decorates the current template with a given layout.
  *
- * @param mixed $layout  The layout name or path or false to disable the layout
+ * @param mixed $layout The layout name or path or false to disable the layout
  */
 function decorate_with($layout)
 {
@@ -290,15 +290,15 @@ function decorate_with($layout)
  * - file name, like "rss.gif", that gets expanded to "/images/rss.gif"
  * - file name without extension, like "logo", that gets expanded to "/images/logo.png"
  *
- * @param  string $source    asset name
- * @param  bool   $absolute  return absolute path ?
+ * @param string $source   asset name
+ * @param bool   $absolute return absolute path ?
  *
  * @return string file path to the image file
  * @see    image_tag
  */
 function image_path($source, $absolute = false)
 {
-  return _compute_public_path($source, 'images', 'png', $absolute);
+  return _compute_public_path($source, sfConfig::get('sf_web_images_dir_name', 'images'), 'png', $absolute);
 }
 
 /**
@@ -317,8 +317,8 @@ function image_path($source, $absolute = false)
  *    => <img src="/my_images/image.gif" alt="Alternative text" width="100" height="200" />
  * </code>
  *
- * @param  string $source   image asset name
- * @param  array  $options  additional HTML compliant <img> tag parameters
+ * @param string $source  image asset name
+ * @param array  $options additional HTML compliant <img> tag parameters
  *
  * @return string XHTML compliant <img> tag
  * @see    image_path
@@ -446,7 +446,7 @@ function include_metas()
   $i18n = sfConfig::get('sf_i18n') ? $context->getI18N() : null;
   foreach ($context->getResponse()->getMetas() as $name => $content)
   {
-    echo tag('meta', array('name' => $name, 'content' => is_null($i18n) ? $content : $i18n->__($content)))."\n";
+    echo tag('meta', array('name' => $name, 'content' => null === $i18n ? $content : $i18n->__($content)))."\n";
   }
 }
 
@@ -460,7 +460,7 @@ function include_metas()
  *    => <meta http-equiv="content-type" content="text/html; charset=utf-8" />
  * </code>
  *
- * <b>Note:</b> Modify the view.yml or use sfWebResponse::addMeta() to change, add or remove HTTP metas.
+ * <b>Note:</b> Modify the view.yml or use sfWebResponse::addHttpMeta() to change, add or remove HTTP metas.
  *
  * @return string XHTML compliant <meta> tag(s)
  * @see    include_metas
@@ -560,11 +560,11 @@ function include_stylesheets()
  *
  * The helper automatically adds the sf_format to the internal URI, so you don't have to.
  *
- * @param  string $uri       The internal URI for the dynamic javascript
- * @param  bool   $absolute  Whether to generate an absolute URL
- * @param  array  $options   An array of options
+ * @param string $uri      The internal URI for the dynamic javascript
+ * @param bool   $absolute Whether to generate an absolute URL
+ * @param array  $options  An array of options
  *
- * @return string  XHTML compliant <script> tag(s)
+ * @return string XHTML compliant <script> tag(s)
  * @see    javascript_include_tag
  */
 function dynamic_javascript_include_tag($uri, $absolute = false, $options = array())
@@ -612,6 +612,19 @@ function _dynamic_path($uri, $format, $absolute = false)
 /**
  * Returns <script> tags for all javascripts associated with the given form.
  *
+ * The scripts are set by implementing the getJavaScripts() method in the
+ * corresponding widget.
+ *
+ * <code>
+ * class MyWidget extends sfWidgetForm
+ * {
+ *   public function getJavaScripts()
+ *   {
+ *     return array('/path/to/a/file.js');
+ *   }
+ * }
+ * </code>
+ *
  * @return string <script> tags
  */
 function get_javascripts_for_form(sfForm $form)
@@ -636,7 +649,35 @@ function include_javascripts_for_form(sfForm $form)
 }
 
 /**
+ * Adds javascripts from the supplied form to the response object.
+ *
+ * @param sfForm $form
+ */
+function use_javascripts_for_form(sfForm $form)
+{
+  $response = sfContext::getInstance()->getResponse();
+
+  foreach ($form->getJavascripts() as $file)
+  {
+    $response->addJavascript($file);
+  }
+}
+
+/**
  * Returns <link> tags for all stylesheets associated with the given form.
+ *
+ * The stylesheets are set by implementing the getStyleSheets() method in the
+ * corresponding widget.
+ *
+ * <code>
+ * class MyWidget extends sfWidgetForm
+ * {
+ *   public function getStyleSheets()
+ *   {
+ *     return array('/path/to/a/file.css');
+ *   }
+ * }
+ * </code>
  *
  * @return string <link> tags
  */
@@ -659,4 +700,19 @@ function get_stylesheets_for_form(sfForm $form)
 function include_stylesheets_for_form(sfForm $form)
 {
   echo get_stylesheets_for_form($form);
+}
+
+/**
+ * Adds stylesheets from the supplied form to the response object.
+ *
+ * @param sfForm $form
+ */
+function use_stylesheets_for_form(sfForm $form)
+{
+  $response = sfContext::getInstance()->getResponse();
+
+  foreach ($form->getStylesheets() as $file => $media)
+  {
+    $response->addStylesheet($file, '', array('media' => $media));
+  }
 }

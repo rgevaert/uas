@@ -5,12 +5,17 @@
       return;
     }
 
+    if (!in_array(strtolower($sort[1]), array('asc', 'desc')))
+    {
+      $sort[1] = 'asc';
+    }
+
     $query->addOrderBy($sort[0] . ' ' . $sort[1]);
   }
 
   protected function getSort()
   {
-    if (!is_null($sort = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.sort', null, 'admin_module')))
+    if (null !== $sort = $this->getUser()->getAttribute('<?php echo $this->getModuleName() ?>.sort', null, 'admin_module'))
     {
       return $sort;
     }
@@ -22,10 +27,15 @@
 
   protected function setSort(array $sort)
   {
-    if (!is_null($sort[0]) && is_null($sort[1]))
+    if (null !== $sort[0] && null === $sort[1])
     {
       $sort[1] = 'asc';
     }
 
     $this->getUser()->setAttribute('<?php echo $this->getModuleName() ?>.sort', $sort, 'admin_module');
+  }
+
+  protected function isValidSortColumn($column)
+  {
+    return Doctrine::getTable('<?php echo $this->getModelClass() ?>')->hasColumn($column);
   }

@@ -16,7 +16,7 @@
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     François Zaninotto <francois.zaninotto@symfony-project.com>
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfPropelDatabaseSchema.class.php 24392 2009-11-25 18:35:39Z FabianLange $
  */
 class sfPropelDatabaseSchema
 {
@@ -112,7 +112,7 @@ class sfPropelDatabaseSchema
       $tmp = array_keys($schema);
       $connection_name = array_shift($tmp);
 
-      if(!empty($connection_name) && isset($schema[$connection_name]))
+      if (!empty($connection_name) && isset($schema[$connection_name]))
       {
         $new_schema['connection'] = $connection_name;
 
@@ -123,6 +123,11 @@ class sfPropelDatabaseSchema
           {
             // Database attributes
             $new_schema = array_merge($new_schema, $table_params);
+          }
+          else if ('_propel_behaviors' == $table)
+          {
+            // Database behaviors
+            $new_schema['propel_behaviors'] = $table_params;
           }
           else
           {
@@ -151,6 +156,9 @@ class sfPropelDatabaseSchema
               {
                 case '_behaviors':
                   $classes[$phpName]['behaviors'] = $column_params;
+                  break;
+                case '_propel_behaviors':
+                  $classes[$phpName]['propel_behaviors'] = $column_params;
                   break;
                 case '_inheritance':
                   $classes[$phpName]['inheritance'] = $column_params;
@@ -241,6 +249,11 @@ class sfPropelDatabaseSchema
           $tableParams['_behaviors'] = $classParams['behaviors'];
           unset($classParams['behaviors']);
         }
+        if (isset($classParams['propel_behaviors']))
+        {
+          $tableParams['_propel_behaviors'] = $classParams['propel_behaviors'];
+          unset($classParams['propel_behaviors']);
+        }
 
         // Inheritance
         if (isset($classParams['inheritance']))
@@ -284,6 +297,13 @@ class sfPropelDatabaseSchema
       unset($schema['classes']);
     }
 
+    // Database behaviors
+    if (isset($schema['propel_behaviors']))
+    {
+      $database['_propel_behaviors'] = $schema['propel_behaviors'];
+      unset($schema['propel_behaviors']);
+    }
+
     // Database attributes
     if ($schema)
     {
@@ -303,6 +323,27 @@ class sfPropelDatabaseSchema
     $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
     $xml .= "<database name=\"$this->connection_name\"".$this->getAttributesFor($this->database).">\n";
+
+    if (isset($this->database['_propel_behaviors']))
+    {
+      foreach ($this->database['_propel_behaviors'] as $name => $parameters)
+      {
+        $xml .= "\n  <behavior name=\"$name\"";
+        if (is_array($parameters) && count($parameters))
+        {
+          $xml .= ">\n";
+          foreach ($parameters as $key => $value)
+          {
+            $xml .= "    <parameter name=\"$key\" value=\"{$this->fixXMLBoolean($value)}\"/>\n";
+          }
+          $xml .= "  </behavior>\n";
+        }
+        else
+        {
+          $xml .= "/>\n";
+        }
+      }
+    }
 
     // tables
     foreach ($this->getChildren($this->database) as $tb_name => $table)
@@ -337,7 +378,28 @@ class sfPropelDatabaseSchema
         $xml .= sprintf(" behaviors=\"%s\"", htmlspecialchars(serialize($table['_behaviors'])), ENT_QUOTES, sfConfig::get('sf_charset'));
       }
       $xml .= ">\n";
-
+      
+      // behaviors
+      if (isset($table['_propel_behaviors']))
+      {
+        foreach ($table['_propel_behaviors'] as $behavior_name => $parameters)
+        {
+          if ($parameters)
+          {
+            $xml .= "    <behavior name=\"$behavior_name\">\n";
+            foreach ($parameters as $param_name => $param_value)
+            {
+              $xml .= "      <parameter name=\"$param_name\" value=\"{$this->fixXMLBoolean($param_value)}\" />\n";
+            }
+            $xml .= "    </behavior>\n";
+          }
+          else
+          {
+            $xml .= "    <behavior name=\"$behavior_name\" />\n";
+          }
+        }
+      }
+      
       // columns
       foreach ($this->getChildren($table) as $col_name => $column)
       {
@@ -862,7 +924,7 @@ class sfPropelDatabaseSchema
     }
     else
     {
-      return is_null($value) ? 'null' : $value;
+      return null === $value ? 'null' : $value;
     }
   }
 
@@ -954,7 +1016,7 @@ class sfPropelDatabaseSchema
       }
 
       // foreign-keys
-      $database[$table_name]['_foreign_keys'] = array();
+      $database[$table_name]['_foreignKeys'] = array();
       foreach ($table->xpath('foreign-key') as $foreign_key)
       {
         $foreign_key_table = array();
@@ -962,7 +1024,7 @@ class sfPropelDatabaseSchema
         // foreign key attributes
         if (isset($foreign_key['foreignTable']))
         {
-          $foreign_key_table['foreign_table'] = (string) $foreign_key['foreignTable'];
+          $foreign_key_table['foreignTable'] = (string) $foreign_key['foreignTable'];
         }
         else
         {
@@ -970,11 +1032,11 @@ class sfPropelDatabaseSchema
         }
         if (isset($foreign_key['onDelete']))
         {
-          $foreign_key_table['on_delete'] = (string) $foreign_key['onDelete'];
+          $foreign_key_table['onDelete'] = (string) $foreign_key['onDelete'];
         }
         if (isset($foreign_key['onUpdate']))
         {
-          $foreign_key_table['on_update'] = (string) $foreign_key['onUpdate'];
+          $foreign_key_table['onUpdate'] = (string) $foreign_key['onUpdate'];
         }
 
         // foreign key references
@@ -991,15 +1053,15 @@ class sfPropelDatabaseSchema
 
         if (isset($foreign_key['name']))
         {
-          $database[$table_name]['_foreign_keys'][(string)$foreign_key['name']] = $foreign_key_table;
+          $database[$table_name]['_foreignKeys'][(string)$foreign_key['name']] = $foreign_key_table;
         }
         else
         {
-          $database[$table_name]['_foreign_keys'][] = $foreign_key_table;
+          $database[$table_name]['_foreignKeys'][] = $foreign_key_table;
         }
 
       }
-      $this->removeEmptyKey($database[$table_name], '_foreign_keys');
+      $this->removeEmptyKey($database[$table_name], '_foreignKeys');
 
       // indexes
       $database[$table_name]['_indexes'] = array();
@@ -1053,9 +1115,9 @@ class sfPropelDatabaseSchema
   {
     foreach ($this->getTables() as $table => $columns)
     {
-      if (isset($this->database[$table]['_foreign_keys']))
+      if (isset($this->database[$table]['_foreignKeys']))
       {
-        $foreign_keys = $this->database[$table]['_foreign_keys'];
+        $foreign_keys = $this->database[$table]['_foreignKeys'];
         foreach ($foreign_keys as $foreign_key_name => $foreign_key_attributes)
         {
           // Only single foreign keys can be simplified
@@ -1064,22 +1126,22 @@ class sfPropelDatabaseSchema
             $reference = $foreign_key_attributes['references'][0];
 
             // set simple foreign key
-            $this->database[$table][$reference['local']]['foreignTable'] = $foreign_key_attributes['foreign_table'];
+            $this->database[$table][$reference['local']]['foreignTable'] = $foreign_key_attributes['foreignTable'];
             $this->database[$table][$reference['local']]['foreignReference'] = $reference['foreign'];
-            if (isset($foreign_key_attributes['on_delete']))
+            if (isset($foreign_key_attributes['onDelete']))
             {
-              $this->database[$table][$reference['local']]['onDelete'] = $foreign_key_attributes['on_delete'];
+              $this->database[$table][$reference['local']]['onDelete'] = $foreign_key_attributes['onDelete'];
             }
-            if (isset($foreign_key_attributes['on_update']))
+            if (isset($foreign_key_attributes['onUpdate']))
             {
-              $this->database[$table][$reference['local']]['onUpdate'] = $foreign_key_attributes['on_update'];
+              $this->database[$table][$reference['local']]['onUpdate'] = $foreign_key_attributes['onUpdate'];
             }
 
             // remove complex foreign key
-            unset($this->database[$table]['_foreign_keys'][$foreign_key_name]);
+            unset($this->database[$table]['_foreignKeys'][$foreign_key_name]);
           }
 
-          $this->removeEmptyKey($this->database[$table], '_foreign_keys');
+          $this->removeEmptyKey($this->database[$table], '_foreignKeys');
         }
       }
     }
@@ -1171,6 +1233,19 @@ class sfPropelDatabaseSchema
           $this->database[$table][$column] = null;
         }
       }
+    }
+  }
+
+  protected function fixXMLBoolean($value)
+  {
+    switch (true)
+    {
+      case true === $value:
+        return 'true';
+      case false === $value:
+        return 'false';
+      default:
+        return $value;
     }
   }
 

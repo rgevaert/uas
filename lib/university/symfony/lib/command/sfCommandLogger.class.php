@@ -13,15 +13,15 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandLogger.class.php 15114 2009-01-30 17:41:21Z fabien $
+ * @version    SVN: $Id: sfCommandLogger.class.php 17865 2009-05-02 09:23:55Z FabianLange $
  */
 class sfCommandLogger extends sfConsoleLogger
 {
   /**
    * Initializes this logger.
    *
-   * @param  sfEventDispatcher $dispatcher  A sfEventDispatcher instance
-   * @param  array             $options     An array of options.
+   * @param sfEventDispatcher $dispatcher A sfEventDispatcher instance
+   * @param array             $options    An array of options.
    */
   public function initialize(sfEventDispatcher $dispatcher, $options = array())
   {
@@ -48,8 +48,13 @@ class sfCommandLogger extends sfConsoleLogger
       $prefix = '>> '.$subject.' ';
     }
 
-    foreach ($event->getParameters() as $message)
+    foreach ($event->getParameters() as $key => $message)
     {
+      if ('priority' === $key)
+      {
+        continue;
+      }
+
       $this->log(sprintf('%s%s', $prefix, $message), $priority);
     }
   }

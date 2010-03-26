@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+require_once dirname(__FILE__).'/sfRichTextEditor.class.php';
+
 /**
  * sfRichTextEditorTinyMCE implements the TinyMCE rich text editor.
  *
@@ -26,7 +28,7 @@
  * @package    symfony
  * @subpackage helper
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRichTextEditorTinyMCE.class.php 11783 2008-09-25 16:21:27Z fabien $
+ * @version    SVN: $Id: sfRichTextEditorTinyMCE.class.php 23515 2009-11-02 13:12:42Z Kris.Wallsmith $
  */
 class sfRichTextEditorTinyMCE extends sfRichTextEditor
 {
@@ -95,7 +97,7 @@ tinyMCE.init({
   theme_advanced_buttons1: "'.$style_selector.'justifyleft,justifycenter,justifyright,justifyfull,separator,bold,italic,strikethrough,separator,sub,sup,separator,charmap",
   theme_advanced_buttons2: "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,image,flash,separator,cleanup,removeformat,separator,code",
   theme_advanced_buttons3: "tablecontrols",
-  extended_valid_elements: "img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]",
+  extended_valid_elements: "img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style]",
   relative_urls: false,
   debug: false
   '.($tinymce_options ? ','.$tinymce_options : '').'

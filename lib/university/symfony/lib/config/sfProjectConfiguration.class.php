@@ -14,14 +14,15 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfProjectConfiguration.class.php 13929 2008-12-10 22:06:40Z FabianLange $
+ * @version    SVN: $Id: sfProjectConfiguration.class.php 27191 2010-01-26 13:38:49Z FabianLange $
  */
 class sfProjectConfiguration
 {
   protected
     $rootDir               = null,
     $symfonyLibDir         = null,
-    $plugins               = array('sfPropelPlugin'),
+    $dispatcher            = null,
+    $plugins               = array(),
     $pluginPaths           = array(),
     $overriddenPluginPaths = array(),
     $pluginConfigurations  = array(),
@@ -38,25 +39,28 @@ class sfProjectConfiguration
    */
   public function __construct($rootDir = null, sfEventDispatcher $dispatcher = null)
   {
-    if (is_null(sfProjectConfiguration::$active) || $this instanceof sfApplicationConfiguration)
+    if (null === self::$active || $this instanceof sfApplicationConfiguration)
     {
-      sfProjectConfiguration::$active = $this;
+      self::$active = $this;
     }
 
-    $this->rootDir = is_null($rootDir) ? self::guessRootDir() : realpath($rootDir);
+    $this->rootDir = null === $rootDir ? self::guessRootDir() : realpath($rootDir);
     $this->symfonyLibDir = realpath(dirname(__FILE__).'/..');
-    $this->dispatcher = is_null($dispatcher) ? new sfEventDispatcher() : $dispatcher;
+    $this->dispatcher = null === $dispatcher ? new sfEventDispatcher() : $dispatcher;
 
     ini_set('magic_quotes_runtime', 'off');
-    ini_set('register_globals', 'off');
 
     sfConfig::set('sf_symfony_lib_dir', $this->symfonyLibDir);
 
     $this->setRootDir($this->rootDir);
 
+    // provide forms the dispatcher
+    sfFormSymfony::setEventDispatcher($this->dispatcher);
+
     $this->setup();
 
     $this->loadPlugins();
+    $this->setupPlugins();
   }
 
   /**
@@ -98,6 +102,15 @@ class sfProjectConfiguration
   }
 
   /**
+   * Sets up plugin configurations.
+   *
+   * Override this method if you want to customize plugin configurations.
+   */
+  public function setupPlugins()
+  {
+  }
+
+  /**
    * Sets the project root directory.
    *
    * @param string $rootDir The project root directory
@@ -116,7 +129,6 @@ class sfProjectConfiguration
       'sf_data_dir'    => $rootDir.DIRECTORY_SEPARATOR.'data',
       'sf_config_dir'  => $rootDir.DIRECTORY_SEPARATOR.'config',
       'sf_test_dir'    => $rootDir.DIRECTORY_SEPARATOR.'test',
-      'sf_doc_dir'     => $rootDir.DIRECTORY_SEPARATOR.'doc',
       'sf_plugins_dir' => $rootDir.DIRECTORY_SEPARATOR.'plugins',
     ));
 
@@ -254,27 +266,27 @@ class sfProjectConfiguration
     $globalConfigPath = basename(dirname($configPath)).'/'.basename($configPath);
 
     $files = array(
-      sfConfig::get('sf_symfony_lib_dir').'/config/'.$globalConfigPath,              // symfony
+      $this->getSymfonyLibDir().'/config/'.$globalConfigPath, // symfony
     );
 
     foreach ($this->getPluginPaths() as $path)
     {
       if (is_file($file = $path.'/'.$globalConfigPath))
       {
-        $files[] = $file;                                                            // plugins
+        $files[] = $file;                                     // plugins
       }
     }
 
     $files = array_merge($files, array(
-      sfConfig::get('sf_root_dir').'/'.$globalConfigPath,                            // project
-      sfConfig::get('sf_root_dir').'/'.$configPath,                                  // project
+      $this->getRootDir().'/'.$globalConfigPath,              // project
+      $this->getRootDir().'/'.$configPath,                    // project
     ));
 
     foreach ($this->getPluginPaths() as $path)
     {
       if (is_file($file = $path.'/'.$configPath))
       {
-        $files[] = $file;                                                            // plugins
+        $files[] = $file;                                     // plugins
       }
     }
 
@@ -293,7 +305,7 @@ class sfProjectConfiguration
   /**
    * Sets the enabled plugins.
    *
-   * @param array An array of plugin names
+   * @param array $plugins An array of plugin names
    * 
    * @throws LogicException If plugins have already been loaded
    */
@@ -312,17 +324,29 @@ class sfProjectConfiguration
   /**
    * Enables a plugin or a list of plugins.
    *
-   * @param array|string A plugin name or a plugin list
+   * @param array|string $plugins A plugin name or a plugin list
    */
   public function enablePlugins($plugins)
   {
-    $this->setPlugins(array_merge($this->plugins, is_array($plugins) ? $plugins : array($plugins)));
+    if (!is_array($plugins))
+    {
+      if (func_num_args() > 1)
+      {
+        $plugins = func_get_args();
+      }
+      else
+      {
+        $plugins = array($plugins);
+      }
+    }
+    
+    $this->setPlugins(array_merge($this->plugins, $plugins));
   }
 
   /**
    * Disables a plugin.
    *
-   * @param array|string A plugin name or a plugin list
+   * @param array|string $plugins A plugin name or a plugin list
    * 
    * @throws LogicException If plugins have already been loaded
    */
@@ -356,7 +380,7 @@ class sfProjectConfiguration
   /**
    * Enabled all installed plugins except the one given as argument.
    *
-   * @param array|string A plugin name or a plugin list
+   * @param array|string $plugins A plugin name or a plugin list
    * 
    * @throws LogicException If plugins have already been loaded
    */
@@ -367,11 +391,9 @@ class sfProjectConfiguration
       throw new LogicException('Plugins have already been loaded.');
     }
 
-    $this->plugins = array();
-    foreach ($this->getAllPluginPaths() as $plugin => $path)
-    {
-      $this->plugins[] = $plugin;
-    }
+    $this->plugins = array_keys($this->getAllPluginPaths());
+
+    sort($this->plugins);
 
     $this->disablePlugins($plugins);
   }
@@ -417,26 +439,26 @@ class sfProjectConfiguration
    * Gets the paths to plugins root directories, minding overloaded plugins.
    *
    * @return array The plugin root paths.
+   *
+   * @throws InvalidArgumentException If an enabled plugin does not exist
    */
   public function getPluginPaths()
   {
-    if (array_key_exists('', $this->pluginPaths))
+    if (!isset($this->pluginPaths['']))
     {
-      return $this->pluginPaths[''];
-    }
+      $pluginPaths = $this->getAllPluginPaths();
 
-    $pluginPaths = $this->getAllPluginPaths();
-
-    $this->pluginPaths[''] = array();
-    foreach ($this->getPlugins() as $plugin)
-    {
-      if (isset($pluginPaths[$plugin]))
+      $this->pluginPaths[''] = array();
+      foreach ($this->getPlugins() as $plugin)
       {
-        $this->pluginPaths[''][] = $pluginPaths[$plugin];
-      }
-      else
-      {
-        throw new InvalidArgumentException(sprintf('The plugin "%s" does not exist.', $plugin));
+        if (isset($pluginPaths[$plugin]))
+        {
+          $this->pluginPaths[''][] = $pluginPaths[$plugin];
+        }
+        else
+        {
+          throw new InvalidArgumentException(sprintf('The plugin "%s" does not exist.', $plugin));
+        }
       }
     }
 
@@ -452,9 +474,11 @@ class sfProjectConfiguration
   {
     $pluginPaths = array();
 
-    $finder = sfFinder::type('dir')->maxdepth(0)->follow_link()->name('*Plugin');
+    // search for *Plugin directories representing plugins
+    // follow links and do not recurse. No need to exclude VC because they do not end with *Plugin
+    $finder = sfFinder::type('dir')->maxdepth(0)->ignore_version_control(false)->follow_link()->name('*Plugin');
     $dirs = array(
-      sfConfig::get('sf_symfony_lib_dir').'/plugins',
+      $this->getSymfonyLibDir().'/plugins',
       sfConfig::get('sf_plugins_dir'),
     );
 
@@ -530,14 +554,29 @@ class sfProjectConfiguration
    */
   static public function getActive()
   {
-    if (is_null(sfProjectConfiguration::$active))
+    if (!self::hasActive())
     {
       throw new RuntimeException('There is no active configuration.');
     }
 
-    return sfProjectConfiguration::$active;
+    return self::$active;
   }
 
+  /**
+   * Returns true if these is an active configuration.
+   * 
+   * @return boolean
+   */
+  static public function hasActive()
+  {
+    return null !== self::$active;
+  }
+
+  /**
+   * Guesses the project root directory.
+   *
+   * @return string The project root directory
+   */
   static public function guessRootDir()
   {
     $r = new ReflectionClass('ProjectConfiguration');
@@ -560,7 +599,7 @@ class sfProjectConfiguration
   {
     $class = $application.'Configuration';
 
-    if (is_null($rootDir))
+    if (null === $rootDir)
     {
       $rootDir = self::guessRootDir();
     }

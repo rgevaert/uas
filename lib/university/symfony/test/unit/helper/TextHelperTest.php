@@ -13,7 +13,7 @@ require_once(dirname(__FILE__).'/../../../test/bootstrap/unit.php');
 require_once(dirname(__FILE__).'/../../../lib/helper/TagHelper.php');
 require_once(dirname(__FILE__).'/../../../lib/helper/TextHelper.php');
 
-$t = new lime_test(48, new lime_output_color());
+$t = new lime_test(51);
 
 // truncate_text()
 $t->diag('truncate_text()');
@@ -41,11 +41,13 @@ $t->is(truncate_text($text, 15, '...', true), $truncated_true, 'text_truncate() 
 
 if(extension_loaded('mbstring'))
 {
-  $t->is(truncate_text('P?�li? ?lu?ou?k? k?? �p?l ?�belsk� �dy!', 11), 'P?�li? ?...', 'text_truncate() handles unicode characters using mbstring if available');
+  $oldEncoding = mb_internal_encoding();
+  $t->is(truncate_text('のビヘイビアにパラメーターを渡すことで特定のモデルでのフォーム生成を無効にできます', 11), 'のビヘイビアにパ...', 'text_truncate() handles unicode characters using mbstring if available');
+  $t->is(mb_internal_encoding(), $oldEncoding, 'text_truncate() sets back the internal encoding in case it changes it');
 }
 else
 {
-  $t->skip('mbstring extension is not enabled');
+  $t->skip('mbstring extension is not enabled', 2);
 }
 
 // highlight_text()
@@ -98,8 +100,10 @@ $t->is(wrap_text($line, 5), "This\nis a\nvery\nlong\nline\nto be\nwrapped...\n",
 // simple_format_text()
 $t->diag('simple_format_text()');
 $t->is(simple_format_text("crazy\r\n cross\r platform linebreaks"), "<p>crazy\n<br /> cross\n<br /> platform linebreaks</p>", 'text_simple_format() replaces \n by <br />');
-$t->is(simple_format_text("A paragraph\n\nand another one!"), "<p>A paragraph</p>\n\n<p>and another one!</p>", 'text_simple_format() replaces \n\n by <p>');
+$t->is(simple_format_text("A paragraph\n\nand another one!"), "<p>A paragraph</p><p>and another one!</p>", 'text_simple_format() replaces \n\n by <p>');
+$t->is(simple_format_text("A paragraph\n\n\n\nand another one!"), "<p>A paragraph</p><p>and another one!</p>", 'text_simple_format() replaces \n\n\n\n by <p>');
 $t->is(simple_format_text("A paragraph\n With a newline"), "<p>A paragraph\n<br /> With a newline</p>", 'text_simple_format() wrap all string with <p>');
+$t->is(simple_format_text("1\n2\n3"), "<p>1\n<br />2\n<br />3</p>", 'text_simple_format() Ticket #6824');
 
 // text_strip_links()
 $t->diag('text_strip_links()');

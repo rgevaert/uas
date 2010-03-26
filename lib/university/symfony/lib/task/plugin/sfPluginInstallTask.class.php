@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/sfPluginBaseTask.class.php');
  * @package    symfony
  * @subpackage task
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPluginInstallTask.class.php 10198 2008-07-10 11:55:29Z fabien $
+ * @version    SVN: $Id: sfPluginInstallTask.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfPluginInstallTask extends sfPluginBaseTask
 {
@@ -74,10 +74,6 @@ You can specify another channel with the [channel|COMMENT] option:
   [./symfony plugin:install --channel=mypearchannel sfGuardPlugin|INFO]
   [./symfony plugin:install -c mypearchannel sfGuardPlugin|INFO]
 
-Or you can use the [channel/package|INFO] notation:
-
-  [./symfony plugin:install mypearchannel/sfGuardPlugin|INFO]
-
 You can also install PEAR packages hosted on a website:
 
   [./symfony plugin:install http://somewhere.example.com/sfGuardPlugin-1.0.0.tgz|INFO]
@@ -117,7 +113,7 @@ EOF;
       if (false !== $license)
       {
         $temp = trim(str_replace('license', '', strtolower($license)));
-        if (!is_null($license) && !in_array($temp, array('mit', 'bsd', 'lgpl', 'php', 'apache')))
+        if (null !== $license && !in_array($temp, array('mit', 'bsd', 'lgpl', 'php', 'apache')))
         {
           throw new sfCommandException(sprintf('The license of this plugin "%s" is not MIT like (use --force-license to force installation).', $license));
         }

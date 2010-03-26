@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFormField.class.php 13461 2008-11-28 15:00:13Z fabien $
+ * @version    SVN: $Id: sfFormField.class.php 22401 2009-09-25 03:49:27Z Kris.Wallsmith $
  */
 class sfFormField
 {
@@ -31,11 +31,11 @@ class sfFormField
   /**
    * Constructor.
    *
-   * @param sfWidgetForm     $widget    A sfWidget instance
-   * @param sfFormField      $parent    The sfFormField parent instance (null for the root widget)
-   * @param string           $name      The field name
-   * @param string           $value     The field value
-   * @param sfValidatorError $error     A sfValidatorError instance
+   * @param sfWidgetForm     $widget A sfWidget instance
+   * @param sfFormField      $parent The sfFormField parent instance (null for the root widget)
+   * @param string           $name   The field name
+   * @param string           $value  The field value
+   * @param sfValidatorError $error  A sfValidatorError instance
    */
   public function __construct(sfWidgetForm $widget, sfFormField $parent = null, $name, $value, sfValidatorError $error = null)
   {
@@ -75,7 +75,7 @@ class sfFormField
    */
   static public function hasToStringException()
   {
-    return !is_null(self::$toStringException);
+    return null !== self::$toStringException;
   }
 
   /**
@@ -99,7 +99,7 @@ class sfFormField
    */
   static public function setToStringException(Exception $e)
   {
-    if (is_null(self::$toStringException))
+    if (null === self::$toStringException)
     {
       self::$toStringException = $e;
     }
@@ -108,13 +108,20 @@ class sfFormField
   /**
    * Renders the form field.
    *
-   * @param  array  $attributes   An array of HTML attributes
+   * @param array $attributes An array of HTML attributes
    *
    * @return string The rendered widget
    */
   function render($attributes = array())
   {
-    return $this->widget->render($this->parent ? $this->parent->getWidget()->generateName($this->name) : $this->name, $this->value, $attributes, $this->error);
+    if ($this->parent)
+    {
+      return $this->parent->getWidget()->renderField($this->name, $this->value, $attributes, $this->error);
+    }
+    else
+    {
+      return $this->widget->render($this->name, $this->value, $attributes, $this->error);
+    }
   }
 
   /**
@@ -124,15 +131,15 @@ class sfFormField
    * The formatted row contains the label, the field, the error and
    * the help message.
    *
-   * @param  array  $attributes   An array of HTML attributes to merge with the current attributes
-   * @param  string $label        The label name (not null to override the current value)
-   * @param  string $help         The help text (not null to override the current value)
+   * @param array  $attributes An array of HTML attributes to merge with the current attributes
+   * @param string $label      The label name (not null to override the current value)
+   * @param string $help       The help text (not null to override the current value)
    *
    * @return string The formatted row
    */
   public function renderRow($attributes = array(), $label = null, $help = null)
   {
-    if (is_null($this->parent))
+    if (null === $this->parent)
     {
       throw new LogicException(sprintf('Unable to render the row for "%s".', $this->name));
     }
@@ -141,7 +148,7 @@ class sfFormField
 
     $error = $this->error instanceof sfValidatorErrorSchema ? $this->error->getGlobalErrors() : $this->error;
 
-    $help = is_null($help) ? $this->parent->getWidget()->getHelp($this->name) : $help;
+    $help = null === $help ? $this->parent->getWidget()->getHelp($this->name) : $help;
 
     return strtr($this->parent->getWidget()->getFormFormatter()->formatRow($this->renderLabel($label), $field, $error, $help), array('%hidden_fields%' => ''));
   }
@@ -155,7 +162,7 @@ class sfFormField
    */
   public function renderError()
   {
-    if (is_null($this->parent))
+    if (null === $this->parent)
     {
       throw new LogicException(sprintf('Unable to render the error for "%s".', $this->name));
     }
@@ -172,30 +179,30 @@ class sfFormField
    */
   public function renderHelp()
   {
-    if (is_null($this->parent))
+    if (null === $this->parent)
     {
-      throw new LogicException(sprintf('Unable to render the label for "%s".', $this->name));
+      throw new LogicException(sprintf('Unable to render the help for "%s".', $this->name));
     }
 
-    return $this->parent->getWidget()->getHelp($this->name);
+    return $this->parent->getWidget()->getFormFormatter()->formatHelp($this->parent->getWidget()->getHelp($this->name));
   }
 
   /**
    * Returns the label tag.
    *
-   * @param  string $label       The label name (not null to override the current value)
-   * @param  array  $attributes  Optional html attributes
+   * @param string $label      The label name (not null to override the current value)
+   * @param array  $attributes Optional html attributes
    *
    * @return string The label tag
    */
   public function renderLabel($label = null, $attributes = array())
   {
-    if (is_null($this->parent))
+    if (null === $this->parent)
     {
       throw new LogicException(sprintf('Unable to render the label for "%s".', $this->name));
     }
 
-    if (!is_null($label))
+    if (null !== $label)
     {
       $currentLabel = $this->parent->getWidget()->getLabel($this->name);
       $this->parent->getWidget()->setLabel($this->name, $label);
@@ -203,7 +210,7 @@ class sfFormField
 
     $html = $this->parent->getWidget()->getFormFormatter()->generateLabel($this->name, $attributes);
 
-    if (!is_null($label))
+    if (null !== $label)
     {
       $this->parent->getWidget()->setLabel($this->name, $currentLabel);
     }
@@ -218,12 +225,22 @@ class sfFormField
    */
   public function renderLabelName()
   {
-    if (is_null($this->parent))
+    if (null === $this->parent)
     {
       throw new LogicException(sprintf('Unable to render the label name for "%s".', $this->name));
     }
 
     return $this->parent->getWidget()->getFormFormatter()->generateLabelName($this->name);
+  }
+
+  /**
+   * Returns the name attribute of the widget.
+   * 
+   * @return string The name attribute of the widget
+   */
+  public function renderName()
+  {
+    return $this->parent ? $this->parent->getWidget()->generateName($this->name) : $this->name;
   }
 
   /**
@@ -303,6 +320,6 @@ class sfFormField
    */
   public function hasError()
   {
-    return !is_null($this->error) && count($this->error);
+    return null !== $this->error && count($this->error);
   }
 }

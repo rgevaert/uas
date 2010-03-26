@@ -6,7 +6,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfModelGeneratorConfigurationField.class.php 13089 2008-11-17 23:18:18Z fabien $
+ * @version    SVN: $Id: sfModelGeneratorConfigurationField.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfModelGeneratorConfigurationField
 {
@@ -17,13 +17,19 @@ class sfModelGeneratorConfigurationField
   /**
    * Constructor.
    *
-   * @param string $config The configuration for this field
-   * @param array  $flags  The column flags
+   * @param string $name   The field name
+   * @param array  $config The configuration for this field
    */
   public function __construct($name, $config)
   {
     $this->name = $name;
     $this->config = $config;
+
+    if (isset($this->config['flag']))
+    {
+      $this->setFlag($this->config['flag']);
+      unset($this->config['flag']);
+    }
   }
 
   /**
@@ -41,15 +47,15 @@ class sfModelGeneratorConfigurationField
    *
    * If the key is null, the method returns all the configuration array.
    *
-   * @param  string  $key     A key string
-   * @param  mixed   $default The default value if the key does not exist
-   * @param  Boolean $escaped Whether to escape single quote (false by default)
+   * @param string  $key     A key string
+   * @param mixed   $default The default value if the key does not exist
+   * @param Boolean $escaped Whether to escape single quote (false by default)
    *
-   * @return mixed   The configuration value associated with the key
+   * @return mixed The configuration value associated with the key
    */
   public function getConfig($key = null, $default = null, $escaped = false)
   {
-    if (is_null($key))
+    if (null === $key)
     {
       return $this->config;
     }
@@ -142,7 +148,7 @@ class sfModelGeneratorConfigurationField
   /**
    * Sets the list renderer for the field.
    *
-   * @param mixed A PHP callable
+   * @param mixed $renderer A PHP callable
    */
   public function setRenderer($renderer)
   {
@@ -162,7 +168,7 @@ class sfModelGeneratorConfigurationField
   /**
    * Sets the list renderer arguments for the field.
    *
-   * @param array An array of arguments to pass to the renderer
+   * @param array $arguments An array of arguments to pass to the renderer
    */
   public function setRendererArguments(array $arguments)
   {
@@ -198,11 +204,11 @@ class sfModelGeneratorConfigurationField
    *
    * The flag can be =, _, or ~.
    *
-   * @param string The flag
+   * @param string $flag The flag
    */
   public function setFlag($flag)
   {
-    if (is_null($flag))
+    if (null === $flag)
     {
       return;
     }

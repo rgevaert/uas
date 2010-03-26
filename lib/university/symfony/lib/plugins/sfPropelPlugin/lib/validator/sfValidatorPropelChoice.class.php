@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorPropelChoice.class.php 11669 2008-09-19 14:03:40Z fabien $
+ * @version    SVN: $Id: sfValidatorPropelChoice.class.php 22299 2009-09-23 18:32:54Z fabien $
  */
 class sfValidatorPropelChoice extends sfValidatorBase
 {
@@ -29,6 +29,8 @@ class sfValidatorPropelChoice extends sfValidatorBase
    *                must be in field name format
    *  * connection: The Propel connection to use (null by default)
    *  * multiple:   true if the select tag must allow multiple selections
+   *  * min:        The minimum number of values that need to be selected (this option is only active if multiple is true)
+   *  * max:        The maximum number of values that need to be selected (this option is only active if multiple is true)
    *
    * @see sfValidatorBase
    */
@@ -39,6 +41,11 @@ class sfValidatorPropelChoice extends sfValidatorBase
     $this->addOption('column', null);
     $this->addOption('connection', null);
     $this->addOption('multiple', false);
+    $this->addOption('min');
+    $this->addOption('max');
+
+    $this->addMessage('min', 'At least %min% values must be selected (%count% values selected).');
+    $this->addMessage('max', 'At most %max% values must be selected (%count% values selected).');
   }
 
   /**
@@ -46,7 +53,7 @@ class sfValidatorPropelChoice extends sfValidatorBase
    */
   protected function doClean($value)
   {
-    $criteria = is_null($this->getOption('criteria')) ? new Criteria() : clone $this->getOption('criteria');
+    $criteria = null === $this->getOption('criteria') ? new Criteria() : clone $this->getOption('criteria');
 
     if ($this->getOption('multiple'))
     {
@@ -55,22 +62,34 @@ class sfValidatorPropelChoice extends sfValidatorBase
         $value = array($value);
       }
 
-      $criteria->add($this->getColumn(), $value, Criteria::IN);
+      $count = count($value);
 
-      $objects = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doSelect'), $criteria, $this->getOption('connection'));
+      if ($this->hasOption('min') && $count < $this->getOption('min'))
+      {
+        throw new sfValidatorError($this, 'min', array('count' => $count, 'min' => $this->getOption('min')));
+      }
 
-      if (count($objects) != count($value))
+      if ($this->hasOption('max') && $count > $this->getOption('max'))
+      {
+        throw new sfValidatorError($this, 'max', array('count' => $count, 'max' => $this->getOption('max')));
+      }
+
+      $criteria->addAnd($this->getColumn(), $value, Criteria::IN);
+
+      $dbcount = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doCount'), $criteria, $this->getOption('connection'));
+
+      if ($dbcount != $count)
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
     }
     else
     {
-      $criteria->add($this->getColumn(), $value);
+      $criteria->addAnd($this->getColumn(), $value);
 
-      $object = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doSelectOne'), $criteria, $this->getOption('connection'));
+      $dbcount = call_user_func(array(constant($this->getOption('model').'::PEER'), 'doCount'), $criteria, $this->getOption('connection'));
 
-      if (is_null($object))
+      if (0 === $dbcount)
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
@@ -91,6 +110,7 @@ class sfValidatorPropelChoice extends sfValidatorBase
     if ($this->getOption('column'))
     {
       $columnName = $this->getOption('column');
+      $from = BasePeer::TYPE_FIELDNAME;
     }
     else
     {
@@ -99,12 +119,13 @@ class sfValidatorPropelChoice extends sfValidatorBase
       {
         if ($column->isPrimaryKey())
         {
-          $columnName = strtolower($column->getColumnName());
+          $columnName = $column->getPhpName();
           break;
         }
       }
+      $from = BasePeer::TYPE_PHPNAME;
     }
 
-    return call_user_func(array(constant($this->getOption('model').'::PEER'), 'translateFieldName'), $columnName, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_COLNAME);
+    return call_user_func(array(constant($this->getOption('model').'::PEER'), 'translateFieldName'), $columnName, $from, BasePeer::TYPE_COLNAME);
   }
 }

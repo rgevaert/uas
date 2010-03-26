@@ -6,7 +6,7 @@
  * @package    ##PROJECT_NAME##
  * @subpackage <?php echo $this->getGeneratedModuleName()."\n" ?>
  * @author     ##AUTHOR_NAME##
- * @version    SVN: $Id: actions.class.php 11340 2008-09-06 07:37:02Z fabien $
+ * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfActions
 {
@@ -111,7 +111,7 @@ else
   {
     $this-><?php echo $this->getSingularName() ?> = $this->get<?php echo $this->getClassName() ?>OrCreate();
 
-    if ($request->isMethod('post'))
+    if ($request->isMethod(sfRequest::POST))
     {
       $this->update<?php echo $this->getClassName() ?>FromRequest();
 
@@ -227,7 +227,7 @@ $column = sfPropelManyToMany::getColumn($class, $through_class, $remote_column);
 <?php endif; ?>
       // Update many-to-many for "<?php echo $name ?>"
       $c = new Criteria();
-      $c->add(<?php echo constant($through_class.'::PEER') ?>::<?php echo strtoupper($column->getColumnName()) ?>, $<?php echo $this->getSingularName() ?>->getPrimaryKey());
+      $c->add(<?php echo constant($through_class.'::PEER') ?>::<?php echo strtoupper($column->getName()) ?>, $<?php echo $this->getSingularName() ?>->getPrimaryKey());
       <?php echo constant($through_class.'::PEER') ?>::doDelete($c);
 
       $ids = $this->getRequestParameter('associated_<?php echo $name ?>');

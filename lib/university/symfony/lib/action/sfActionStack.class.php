@@ -17,7 +17,7 @@
  * @subpackage action
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfActionStack.class.php 9044 2008-05-19 06:18:41Z Carl.Vondrick $
+ * @version    SVN: $Id: sfActionStack.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfActionStack
 {
@@ -27,9 +27,9 @@ class sfActionStack
   /**
    * Adds an entry to the action stack.
    *
-   * @param string   $moduleName      A module name
-   * @param string   $actionName      An action name
-   * @param sfAction $actionInstance  An sfAction implementation instance
+   * @param string   $moduleName     A module name
+   * @param string   $actionName     An action name
+   * @param sfAction $actionInstance An sfAction implementation instance
    *
    * @return sfActionStackEntry sfActionStackEntry instance
    */

@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelFormGenerator.class.php 15134 2009-01-31 19:30:35Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelFormGenerator.class.php 24392 2009-11-25 18:35:39Z FabianLange $
  */
 class sfPropelFormGenerator extends sfGenerator
 {
@@ -61,17 +61,17 @@ class sfPropelFormGenerator extends sfGenerator
       $this->params['form_dir_name'] = 'form';
     }
 
-    $this->loadBuilders();
-
     $this->dbMap = Propel::getDatabaseMap($this->params['connection']);
 
+    $this->loadBuilders();
+    
     // create the project base class for all forms
     $file = sfConfig::get('sf_lib_dir').'/form/BaseFormPropel.class.php';
     if (!file_exists($file))
     {
-      if (!is_dir(sfConfig::get('sf_lib_dir').'/form/base'))
+      if (!is_dir($directory = dirname($file)))
       {
-        mkdir(sfConfig::get('sf_lib_dir').'/form/base', 0777, true);
+        mkdir($directory, 0777, true);
       }
 
       file_put_contents($file, $this->evalTemplate('sfPropelFormBaseTemplate.php'));
@@ -80,6 +80,12 @@ class sfPropelFormGenerator extends sfGenerator
     // create a form class for every Propel class
     foreach ($this->dbMap->getTables() as $tableName => $table)
     {
+      $behaviors = $table->getBehaviors();
+      if (isset($behaviors['symfony']['form']) && 'false' === $behaviors['symfony']['form'])
+      {
+        continue;
+      }
+
       $this->table = $table;
 
       // find the package to store forms in the same directory as the model classes
@@ -233,7 +239,7 @@ class sfPropelFormGenerator extends sfGenerator
         $name = 'DateTime';
         break;
       default:
-        $name = 'Input';
+        $name = 'InputText';
     }
 
     if ($column->isPrimaryKey())
@@ -340,11 +346,11 @@ class sfPropelFormGenerator extends sfGenerator
 
     if ($column->isForeignKey())
     {
-      $options[] = sprintf('\'model\' => \'%s\', \'column\' => \'%s\'', $this->getForeignTable($column)->getClassname(), strtolower($column->getRelatedColumnName()));
+      $options[] = sprintf('\'model\' => \'%s\', \'column\' => \'%s\'', $this->getForeignTable($column)->getClassname(), $this->translateColumnName($column, true));
     }
     else if ($column->isPrimaryKey())
     {
-      $options[] = sprintf('\'model\' => \'%s\', \'column\' => \'%s\'', $column->getTable()->getClassname(), strtolower($column->getColumnName()));
+      $options[] = sprintf('\'model\' => \'%s\', \'column\' => \'%s\'', $column->getTable()->getClassname(), $this->translateColumnName($column));
     }
     else
     {
@@ -359,6 +365,22 @@ class sfPropelFormGenerator extends sfGenerator
             $options[] = sprintf('\'max_length\' => %s', $column->getSize());
           }
           break;
+
+       case PropelColumnTypes::TINYINT:
+         $options[] = sprintf('\'min\' => %s, \'max\' => %s', -128, 127);
+         break;
+
+       case PropelColumnTypes::SMALLINT:
+         $options[] = sprintf('\'min\' => %s, \'max\' => %s', -32768, 32767);
+         break;
+
+       case PropelColumnTypes::INTEGER:
+         $options[] = sprintf('\'min\' => %s, \'max\' => %s', -2147483648, 2147483647);
+         break;
+
+       case PropelColumnTypes::BIGINT:
+         $options[] = sprintf('\'min\' => %s, \'max\' => %s', -9223372036854775808, 9223372036854775807);
+         break;
       }
     }
 
@@ -380,7 +402,7 @@ class sfPropelFormGenerator extends sfGenerator
     $max = 0;
     foreach ($this->table->getColumns() as $column)
     {
-      if (($m = strlen($column->getColumnName())) > $max)
+      if (($m = strlen($column->getName())) > $max)
       {
         $max = $m;
       }
@@ -409,7 +431,7 @@ class sfPropelFormGenerator extends sfGenerator
     {
       if ($column->isPrimaryKey())
       {
-        $pks[] = strtolower($column->getColumnName());
+        $pks[] = $this->translateColumnName($column);
       }
     }
 
@@ -462,7 +484,7 @@ class sfPropelFormGenerator extends sfGenerator
       $uniqueColumn = array();
       foreach ($unique as $column)
       {
-        $uniqueColumn[] = strtolower($this->table->getColumn($column)->getColumnName());
+        $uniqueColumn[] = $this->translateColumnName($this->table->getColumn($column));
       }
 
       $uniqueColumns[] = $uniqueColumn;
@@ -471,23 +493,28 @@ class sfPropelFormGenerator extends sfGenerator
     return $uniqueColumns;
   }
 
+  public function translateColumnName($column, $related = false, $to = BasePeer::TYPE_FIELDNAME)
+  {
+    $peer = $related ? constant($column->getTable()->getDatabaseMap()->getTable($column->getRelatedTableName())->getPhpName().'::PEER') : constant($column->getTable()->getPhpName().'::PEER');
+    $field = $related ? $column->getRelatedName() : $column->getFullyQualifiedName();
+
+    return call_user_func(array($peer, 'translateFieldName'), $field, BasePeer::TYPE_COLNAME, $to);
+  }
+
   /**
    * Loads all Propel builders.
    */
   protected function loadBuilders()
   {
-    $classes = sfFinder::type('file')->name('*MapBuilder.php')->in($this->generatorManager->getConfiguration()->getModelDirs());
+    $this->dbMap = Propel::getDatabaseMap($this->params['connection']);
+    $classes = sfFinder::type('file')->name('*TableMap.php')->in($this->generatorManager->getConfiguration()->getModelDirs());
     foreach ($classes as $class)
     {
-      $omClass = basename($class, 'MapBuilder.php');
+      $omClass = basename($class, 'TableMap.php');
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
       {
-        $class = basename($class, '.php');
-        $map = new $class();
-        if (!$map->isBuilt())
-        {
-          $map->doBuild();
-        }
+        $tableMapClass = basename($class, '.php');
+        $this->dbMap->addTableFromMapClass($tableMapClass);
       }
     }
   }

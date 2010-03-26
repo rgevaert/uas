@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandArgument.class.php 9076 2008-05-19 23:19:44Z Carl.Vondrick $
+ * @version    SVN: $Id: sfCommandArgument.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCommandArgument
 {
@@ -32,14 +32,14 @@ class sfCommandArgument
   /**
    * Constructor.
    *
-   * @param string  $name     The argument name
-   * @param integer $mode     The argument mode: self::REQUIRED or self::OPTIONAL
-   * @param string  $help     A help text
-   * @param mixed   $default  The default value (for self::OPTIONAL mode only)
+   * @param string  $name    The argument name
+   * @param integer $mode    The argument mode: self::REQUIRED or self::OPTIONAL
+   * @param string  $help    A help text
+   * @param mixed   $default The default value (for self::OPTIONAL mode only)
    */
   public function __construct($name, $mode = null, $help = '', $default = null)
   {
-    if (is_null($mode))
+    if (null === $mode)
     {
       $mode = self::OPTIONAL;
     }
@@ -92,14 +92,14 @@ class sfCommandArgument
    */
   public function setDefault($default = null)
   {
-    if (self::REQUIRED === $this->mode && !is_null($default))
+    if (self::REQUIRED === $this->mode && null !== $default)
     {
       throw new sfCommandException('Cannot set a default value except for sfCommandParameter::OPTIONAL mode.');
     }
 
     if ($this->isArray())
     {
-      if (is_null($default))
+      if (null === $default)
       {
         $default = array();
       }

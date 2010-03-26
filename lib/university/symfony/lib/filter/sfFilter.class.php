@@ -16,7 +16,7 @@
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfFilter.class.php 9087 2008-05-20 02:00:40Z Carl.Vondrick $
+ * @version    SVN: $Id: sfFilter.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfFilter
 {
@@ -43,9 +43,7 @@ abstract class sfFilter
    * @param sfContext $context    The current application context
    * @param array     $parameters An associative array of initialization parameters
    *
-   * @return boolean true, if initialization completes successfully, otherwise false
-   *
-   * @throws <b>sfInitializationException</b> If an error occurs while initializing this Filter
+   * @return boolean true
    */
   public function initialize($context, $parameters = array())
   {
@@ -123,7 +121,7 @@ abstract class sfFilter
    *
    * <code>$this->getParameterHolder()->has()</code>
    *
-   * @param string $name  The key name
+   * @param string $name The key name
    *
    * @return boolean true if the given key exists, false otherwise
    *

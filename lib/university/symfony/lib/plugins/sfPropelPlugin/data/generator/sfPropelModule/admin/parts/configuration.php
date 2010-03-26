@@ -6,20 +6,13 @@
  * @package    ##PROJECT_NAME##
  * @subpackage <?php echo $this->getModuleName()."\n" ?>
  * @author     ##AUTHOR_NAME##
- * @version    SVN: $Id: configuration.php 12831 2008-11-09 14:33:38Z fabien $
+ * @version    SVN: $Id: configuration.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration extends sfModelGeneratorConfiguration
+abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration extends sfModelGeneratorConfiguration
 {
 <?php include dirname(__FILE__).'/actionsConfiguration.php' ?>
 
 <?php include dirname(__FILE__).'/fieldsConfiguration.php' ?>
-
-  public function getForm($object = null)
-  {
-    $class = $this->getFormClass();
-
-    return new $class($object, $this->getFormOptions());
-  }
 
   /**
    * Gets the form class name.
@@ -30,11 +23,6 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration ex
   {
     return '<?php echo isset($this->config['form']['class']) ? $this->config['form']['class'] : $this->getModelClass().'Form' ?>';
 <?php unset($this->config['form']['class']) ?>
-  }
-
-  public function getFormOptions()
-  {
-    return array();
   }
 
   public function hasFilterForm()
@@ -53,8 +41,6 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration ex
 <?php unset($this->config['filter']['class']) ?>
   }
 
-<?php include dirname(__FILE__).'/filtersConfiguration.php' ?>
-
 <?php include dirname(__FILE__).'/paginationConfiguration.php' ?>
 
 <?php include dirname(__FILE__).'/sortingConfiguration.php' ?>
@@ -69,10 +55,5 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration ex
   {
     return '<?php echo isset($this->config['list']['peer_count_method']) ? $this->config['list']['peer_count_method'] : 'doCount' ?>';
 <?php unset($this->config['list']['peer_count_method']) ?>
-  }
-
-  public function getConnection()
-  {
-    return null;
   }
 }

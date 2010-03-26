@@ -10,14 +10,14 @@
  */
 
 /**
- * sfValidationExecutionFilter is the last filter registered for each filter chain. This
+ * sfExecutionFilter is the last filter registered for each filter chain. This
  * filter does all action and view execution.
  *
  * @package    symfony
  * @subpackage filter
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfExecutionFilter.class.php 9945 2008-06-27 20:40:58Z fabien $
+ * @version    SVN: $Id: sfExecutionFilter.class.php 24615 2009-11-30 22:30:46Z Kris.Wallsmith $
  */
 class sfExecutionFilter extends sfFilter
 {
@@ -55,22 +55,24 @@ class sfExecutionFilter extends sfFilter
     }
   }
 
-  /*
+  /**
    * Handles the action.
    *
-   * @param  sfFilterChain $filterChain     The current filter chain
-   * @param  sfAction      $actionInstance  An sfAction instance
+   * @param sfFilterChain $filterChain    The current filter chain
+   * @param sfAction      $actionInstance An sfAction instance
    *
-   * @return string        The view type
+   * @return string The view type
    */
   protected function handleAction($filterChain, $actionInstance)
   {
-    $uri = $this->context->getRouting()->getCurrentInternalUri();
-
-    if (sfConfig::get('sf_cache') && !is_null($uri) && $this->context->getViewCacheManager()->hasActionCache($uri))
+    if (sfConfig::get('sf_cache'))
     {
-      // action in cache, so go to the view
-      return sfView::SUCCESS;
+      $uri = $this->context->getViewCacheManager()->getCurrentCacheKey();
+      if (null !== $uri && $this->context->getViewCacheManager()->hasActionCache($uri))
+      {
+        // action in cache, so go to the view
+        return sfView::SUCCESS;
+      }
     }
 
     return $this->executeAction($actionInstance);
@@ -79,9 +81,9 @@ class sfExecutionFilter extends sfFilter
   /**
    * Executes the execute method of an action.
    *
-   * @param  sfAction $actionInstance An sfAction instance
+   * @param sfAction $actionInstance An sfAction instance
    *
-   * @return string   The view type
+   * @return string The view type
    */
   protected function executeAction($actionInstance)
   {
@@ -90,15 +92,15 @@ class sfExecutionFilter extends sfFilter
     $viewName = $actionInstance->execute($this->context->getRequest());
     $actionInstance->postExecute();
 
-    return is_null($viewName) ? sfView::SUCCESS : $viewName;
+    return null === $viewName ? sfView::SUCCESS : $viewName;
   }
 
   /**
    * Handles the view.
    *
-   * @param sfFilterChain  $filterChain     The current filter chain
-   * @param sfAction       $actionInstance  An sfAction instance
-   * @param string         $viewName        The view name
+   * @param sfFilterChain $filterChain    The current filter chain
+   * @param sfAction      $actionInstance An sfAction instance
+   * @param string        $viewName       The view name
    */
   protected function handleView($filterChain, $actionInstance, $viewName)
   {
@@ -123,10 +125,10 @@ class sfExecutionFilter extends sfFilter
    *   - sfView::RENDER_CLIENT: View data populates the response content.
    *   - sfView::RENDER_DATA: View data populates the data presentation variable.
    *
-   * @param  string $moduleName     The module name
-   * @param  string $actionName     The action name
-   * @param  string $viewName       The view name
-   * @param  array  $viewAttributes An array of view attributes
+   * @param string $moduleName     The module name
+   * @param string $actionName     The action name
+   * @param string $viewName       The view name
+   * @param array  $viewAttributes An array of view attributes
    *
    * @return string The view data
    */

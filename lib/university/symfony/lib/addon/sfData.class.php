@@ -15,9 +15,8 @@
  * @package    symfony
  * @subpackage addon
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfData.class.php 12695 2008-11-06 18:09:15Z fabien $
+ * @version    SVN: $Id: sfData.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-
 abstract class sfData
 {
   protected
@@ -39,7 +38,7 @@ abstract class sfData
    * Gets the current value of the flag that indicates whether
    * current data is to be deleted or not.
    *
-   * @returns boolean
+   * @return boolean
    */
   public function getDeleteCurrentData()
   {
@@ -72,7 +71,7 @@ abstract class sfData
    *
    * @param array $files The path names of the YAML data files
    */
-  protected function doLoadData($files)
+  protected function doLoadData(array $files)
   {
     $this->object_references = array();
     $this->maps = array();
@@ -88,8 +87,8 @@ abstract class sfData
    *
    * The returned array of files is sorted by alphabetical order.
    *
-   * @param  string|array $element A directory or file name or an array of directories and/or file names
-   *                               If null, then defaults to 'sf_data_dir'/fixtures
+   * @param string|array $element A directory or file name or an array of directories and/or file names
+   *                              If null, then defaults to 'sf_data_dir'/fixtures
    *
    * @return array A list of *.yml files
    *
@@ -97,9 +96,9 @@ abstract class sfData
    */
   public function getFiles($element = null)
   {
-    if (is_null($element))
+    if (null === $element)
     {
-      $directory_or_file = sfConfig::get('sf_data_dir').'/fixtures';
+      $element = sfConfig::get('sf_data_dir').'/fixtures';
     }
 
     $files = array();
@@ -116,7 +115,7 @@ abstract class sfData
     }
     else if (is_dir($element))
     {
-      $files = sfFinder::type('file')->name('*.yml')->in($element);
+      $files = sfFinder::type('file')->name('*.yml')->sort_by_name()->in($element);
     }
     else
     {

@@ -1,5 +1,5 @@
 fillin:
-  enabled:       Yes
+  enabled:       true
 
 validators:
   myStringValidator:

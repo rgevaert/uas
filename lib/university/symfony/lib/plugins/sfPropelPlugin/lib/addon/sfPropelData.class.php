@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage propel
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelData.class.php 13384 2008-11-27 08:10:41Z fabien $
+ * @version    SVN: $Id: sfPropelData.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfPropelData extends sfData
 {
@@ -135,7 +135,7 @@ class sfPropelData extends sfData
           // foreign key?
           if ($isARealColumn)
           {
-            if ($column->isForeignKey() && !is_null($value))
+            if ($column->isForeignKey() && null !== $value)
             {
               $relatedTable = $this->dbMap->getTable($column->getRelatedTableName());
               if (!isset($this->object_references[$relatedTable->getPhpName().'_'.$value]))
@@ -269,18 +269,15 @@ class sfPropelData extends sfData
    */
   protected function loadMapBuilders()
   {
-    $files = sfFinder::type('file')->name('*MapBuilder.php')->in(sfProjectConfiguration::getActive()->getModelDirs());
+    $dbMap = Propel::getDatabaseMap();
+    $files = sfFinder::type('file')->name('*TableMap.php')->in(sfProjectConfiguration::getActive()->getModelDirs());
     foreach ($files as $file)
     {
-      $omClass = basename($file, 'MapBuilder.php');
+      $omClass = basename($file, 'TableMap.php');
       if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
       {
-        $mapBuilderClass = basename($file, '.php');
-        $map = new $mapBuilderClass();
-        if (!$map->isBuilt())
-        {
-          $map->doBuild();
-        }
+        $tableMapClass = basename($file, '.php');
+        $dbMap->addTableFromMapClass($tableMapClass);
       }
     }
   }
@@ -331,7 +328,7 @@ class sfPropelData extends sfData
     $this->dbMap = Propel::getDatabaseMap($connectionName);
 
     // get tables
-    if ('all' === $tables || is_null($tables))
+    if ('all' === $tables || null === $tables)
     {
       $tables = array();
       foreach ($this->dbMap->getTables() as $table)
@@ -355,7 +352,7 @@ class sfPropelData extends sfData
       $fixColumn = null;
       foreach ($tableMap->getColumns() as $column)
       {
-        $col = strtolower($column->getColumnName());
+        $col = strtolower($column->getName());
         if ($column->isForeignKey())
         {
           $relatedTable = $this->dbMap->getTable($column->getRelatedTableName());
@@ -384,12 +381,20 @@ class sfPropelData extends sfData
       $resultsSets = array();
       if ($hasParent)
       {
-        $resultsSets = $this->fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $fixColumn);
+        $resultsSets[] = $this->fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $fixColumn);
       }
       else
       {
-        $stmt = $this->con->query('SELECT * FROM '.constant(constant($tableName.'::PEER').'::TABLE_NAME'));
+        $in = array();
+        foreach ($tableMap->getColumns() as $column)
+        {
+          $in[] = strtolower($column->getName());
+        }
+        $stmt = $this->con->query(sprintf('SELECT %s FROM %s', implode(',', $in), constant(constant($tableName.'::PEER').'::TABLE_NAME')));
+
         $resultsSets[] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        unset($stmt);
       }
 
       foreach ($resultsSets as $rows)
@@ -407,10 +412,10 @@ class sfPropelData extends sfData
 
             foreach ($tableMap->getColumns() as $column)
             {
-              $col = strtolower($column->getColumnName());
+              $col = strtolower($column->getName());
               $isPrimaryKey = $column->isPrimaryKey();
 
-              if (is_null($row[$col]))
+              if (null === $row[$col])
               {
                 continue;
               }
@@ -500,28 +505,23 @@ class sfPropelData extends sfData
 
   protected function fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $column, $in = null)
   {
-    $stmt = $this->con->prepare('SELECT * FROM :table WHERE :column :where');
-    $stmt->bindValue(':table', constant(constant($tableName.'::PEER').'::TABLE_NAME'));
-    $stmt->bindValue(':column', strtolower($column->getColumnName()));
-    $stmt->bindValue(':where', is_null($in) ? 'IS NULL' : 'IN ('.$in.')');
+    $sql = sprintf('SELECT * FROM %s WHERE %s %s',
+                   constant(constant($tableName.'::PEER').'::TABLE_NAME'),
+                   strtolower($column->getName()),
+                   null === $in ? 'IS NULL' : 'IN ('.$in.')');
+    $stmt = $this->con->prepare($sql);
 
-    $stmt = $stmt->execute();
+    $stmt->execute();
 
-    $first = null;
     $in = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-      if(is_null($first))
-      {
-        $first = $row;
-      }
-
       $in[] = "'".$row[strtolower($column->getRelatedColumnName())]."'";
+      $resultsSets[] = $row;
     }
 
     if ($in = implode(', ', $in))
     {
-      $resultsSets[] = $first;
       $resultsSets = $this->fixOrderingOfForeignKeyDataInSameTable($resultsSets, $tableName, $column, $in);
     }
 

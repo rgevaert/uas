@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage cache
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFunctionCache.class.php 9084 2008-05-20 01:29:54Z Carl.Vondrick $
+ * @version    SVN: $Id: sfFunctionCache.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfFunctionCache
 {
@@ -47,15 +47,15 @@ class sfFunctionCache
    * $cache->call('functionName', array($arg1, $arg2));
    * $cache->call(array($object, 'methodName'), array($arg1, $arg2));
    *
-   * @param mixed  $callable  A PHP callable
-   * @param array  $arguments An array of arguments to pass to the callable
+   * @param mixed $callable  A PHP callable
+   * @param array $arguments An array of arguments to pass to the callable
    *
    * @return mixed The result of the function/method
    */
   public function call($callable, $arguments = array())
   {
     // Generate a cache id
-    $key = md5(serialize($callable).serialize($arguments));
+    $key = $this->computeCacheKey($callable, $arguments);
 
     $serialized = $this->cache->get($key);
     if ($serialized !== null)
@@ -92,5 +92,28 @@ class sfFunctionCache
     echo $data['output'];
 
     return $data['result'];
+  }
+
+  /**
+   * Returns the cache instance.
+   *
+   * @return sfCache The sfCache instance
+   */
+  public function getCache()
+  {
+    return $this->cache;
+  }
+
+  /**
+   * Computes the cache key for a given callable and the arguments.
+   *
+   * @param mixed $callable  A PHP callable
+   * @param array $arguments An array of arguments to pass to the callable
+   *
+   * @return string The associated cache key
+   */
+  public function computeCacheKey($callable, $arguments = array())
+  {
+    return md5(serialize($callable).serialize($arguments));
   }
 }

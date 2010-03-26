@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandManager.class.php 12536 2008-11-01 14:43:18Z fabien $
+ * @version    SVN: $Id: sfCommandManager.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCommandManager
 {
@@ -35,13 +35,13 @@ class sfCommandManager
    */
   public function __construct(sfCommandArgumentSet $argumentSet = null, sfCommandOptionSet $optionSet = null)
   {
-    if (is_null($argumentSet))
+    if (null === $argumentSet)
     {
       $argumentSet = new sfCommandArgumentSet();
     }
     $this->setArgumentSet($argumentSet);
 
-    if (is_null($optionSet))
+    if (null === $optionSet)
     {
       $optionSet = new sfCommandOptionSet();
     }
@@ -95,7 +95,7 @@ class sfCommandManager
    */
   public function process($arguments = null)
   {
-    if (is_null($arguments))
+    if (null === $arguments)
     {
       $arguments = $_SERVER['argv'];
 
@@ -205,7 +205,7 @@ class sfCommandManager
   /**
    * Returns the argument value for a given argument name.
    *
-   * @param  string $name The argument name
+   * @param string $name The argument name
    *
    * @return mixed The argument value
    */
@@ -232,7 +232,7 @@ class sfCommandManager
   /**
    * Returns the option value for a given option name.
    *
-   * @param  string $name The option name
+   * @param string $name The option name
    *
    * @return mixed The option value
    */
@@ -328,7 +328,7 @@ class sfCommandManager
   {
     if (false !== strpos($argument, '='))
     {
-      list($name, $value) = explode('=', $argument);
+      list($name, $value) = explode('=', $argument, 2);
 
       if (!$this->optionSet->hasOption($name))
       {

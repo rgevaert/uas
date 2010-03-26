@@ -12,16 +12,18 @@
  * @package    symfony
  * @subpackage controller
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfConsoleController.class.php 9078 2008-05-20 00:33:39Z Carl.Vondrick $
+ * @version    SVN: $Id: sfConsoleController.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfConsoleController extends sfController
 {
   /**
    * Dispatches a request.
    *
-   * @param string $moduleName  A module name
-   * @param string $actionName  An action name
-   * @param array  $parameters  An associative array of parameters to be set
+   * @param string $moduleName A module name
+   * @param string $actionName An action name
+   * @param array  $parameters An associative array of parameters to be set
+   *
+   * @throws sfException
    */
   public function dispatch($moduleName, $actionName, $parameters = array())
   {

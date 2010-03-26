@@ -15,7 +15,7 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfYamlConfigHandler.class.php 9085 2008-05-20 01:53:23Z Carl.Vondrick $
+ * @version    SVN: $Id: sfYamlConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfYamlConfigHandler extends sfConfigHandler
 {
@@ -25,7 +25,7 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
   /**
    * Parses an array of YAMLs files and merges them in one configuration array.
    *
-   * @param  array $configFiles An array of configuration file paths
+   * @param array $configFiles An array of configuration file paths
    *
    * @return array A merged configuration array
    */
@@ -34,7 +34,17 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
     $config = array();
     foreach ($configFiles as $configFile)
     {
-      $config = sfToolkit::arrayDeepMerge($config, self::parseYaml($configFile));
+      // the first level is an environment and its value must be an array
+      $values = array();
+      foreach (self::parseYaml($configFile) as $env => $value)
+      {
+        if (null !== $value)
+        {
+          $values[$env] = $value;
+        }
+      }
+
+      $config = sfToolkit::arrayDeepMerge($config, $values);
     }
 
     return $config;
@@ -67,14 +77,14 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
       throw new sfParseException(sprintf('Configuration file "%s" could not be parsed', $configFile));
     }
 
-    return is_null($config) ? array() : $config;
+    return null === $config ? array() : $config;
   }
 
   /**
    * Merges configuration values for a given key and category.
    *
-   * @param string $keyName   The key name
-   * @param string $category  The category name
+   * @param string $keyName  The key name
+   * @param string $category The category name
    *
    * @return string The value associated with this key name and category
    */
@@ -98,9 +108,9 @@ abstract class sfYamlConfigHandler extends sfConfigHandler
   /**
    * Gets a configuration value for a given key and category.
    *
-   * @param string $keyName       The key name
-   * @param string $category      The category name
-   * @param string $defaultValue  The default value
+   * @param string $keyName      The key name
+   * @param string $category     The category name
+   * @param string $defaultValue The default value
    *
    * @return string The value associated with this key name and category
    */

@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage widget
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidget.class.php 12518 2008-11-01 07:18:12Z fabien $
+ * @version    SVN: $Id: sfWidget.class.php 22933 2009-10-11 22:42:56Z Kris.Wallsmith $
  */
 abstract class sfWidget
 {
@@ -32,19 +32,25 @@ abstract class sfWidget
    *
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes
+   *
+   * @throws InvalidArgumentException when a option is not supported
+   * @throws RuntimeException         when a required option is not given
    */
   public function __construct($options = array(), $attributes = array())
   {
     $this->configure($options, $attributes);
 
+    $currentOptionKeys = array_keys($this->options);
+    $optionKeys = array_keys($options);
+
     // check option names
-    if ($diff = array_diff(array_keys($options), array_merge(array_keys($this->options), $this->requiredOptions)))
+    if ($diff = array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
     {
       throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
 
     // check required options
-    if ($diff = array_diff($this->requiredOptions, array_merge(array_keys($this->options), array_keys($options))))
+    if ($diff = array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
     {
       throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
@@ -90,16 +96,20 @@ abstract class sfWidget
    * Adds a required option.
    *
    * @param string $name  The option name
+   *
+   * @return sfWidget The current widget instance
    */
   public function addRequiredOption($name)
   {
     $this->requiredOptions[] = $name;
+
+    return $this;
   }
 
   /**
    * Returns all required option names.
    *
-   * @param array An array of required option names
+   * @return array An array of required option names
    */
   public function getRequiredOptions()
   {
@@ -111,10 +121,14 @@ abstract class sfWidget
    *
    * @param string $name   The option name
    * @param mixed  $value  The default value
+   *
+   * @return sfWidget The current widget instance
    */
   public function addOption($name, $value = null)
   {
     $this->options[$name] = $value;
+
+    return $this;
   }
 
   /**
@@ -122,6 +136,10 @@ abstract class sfWidget
    *
    * @param string $name   The option name
    * @param mixed  $value  The value
+   *
+   * @return sfWidget The current widget instance
+   *
+   * @throws InvalidArgumentException when a option is not supported
    */
   public function setOption($name, $value)
   {
@@ -131,12 +149,14 @@ abstract class sfWidget
     }
 
     $this->options[$name] = $value;
+
+    return $this;
   }
 
   /**
    * Gets an option value.
    *
-   * @param  string The option name
+   * @param  string $name The option name
    *
    * @return mixed  The option value
    */
@@ -171,10 +191,14 @@ abstract class sfWidget
    * Sets the options.
    *
    * @param array $options  An array of options
+   *
+   * @return sfWidget The current widget instance
    */
   public function setOptions($options)
   {
     $this->options = $options;
+
+    return $this;
   }
 
   /**
@@ -192,10 +216,14 @@ abstract class sfWidget
    *
    * @param string $name   The attribute name
    * @param string $value  The attribute value
+   *
+   * @return sfWidget The current widget instance
    */
   public function setAttribute($name, $value)
   {
     $this->attributes[$name] = $value;
+
+    return $this;
   }
 
   /**
@@ -214,10 +242,14 @@ abstract class sfWidget
    * Sets the HTML attributes.
    *
    * @param array $attributes  An array of HTML attributes
+   *
+   * @return sfWidget The current widget instance
    */
   public function setAttributes($attributes)
   {
     $this->attributes = $attributes;
+
+    return $this;
   }
 
   /**
@@ -329,9 +361,7 @@ abstract class sfWidget
    */
   static public function escapeOnce($value)
   {
-    $value = is_object($value) ? $value->__toString() : (string) $value;
-
-    return self::fixDoubleEscape(htmlspecialchars($value, ENT_QUOTES, self::getCharset()));
+    return self::fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES, self::getCharset()));
   }
 
   /**
@@ -371,6 +401,6 @@ abstract class sfWidget
    */
   protected function attributesToHtmlCallback($k, $v)
   {
-    return false === $v || is_null($v) || ('' === $v && 'value' != $k) ? '' : sprintf(' %s="%s"', $k, $this->escapeOnce($v));
+    return false === $v || null === $v || ('' === $v && 'value' != $k) ? '' : sprintf(' %s="%s"', $k, $this->escapeOnce($v));
   }
 }

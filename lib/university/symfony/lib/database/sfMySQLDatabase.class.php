@@ -16,24 +16,15 @@
  *
  * # <b>database</b>   - [none]      - The database name.
  * # <b>host</b>       - [localhost] - The database host.
- * # <b>method</b>     - [normal]    - How to read connection parameters.
- *                                     Possible values are normal, server, and
- *                                     env. The normal method reads them from
- *                                     the specified values. server reads them
- *                                     from $_SERVER where the keys to retrieve
- *                                     the values are what you specify the value
- *                                     as in the settings. env reads them from
- *                                     $_ENV and works like $_SERVER.
+ * # <b>username</b>   - [none]      - The database username.
  * # <b>password</b>   - [none]      - The database password.
- * # <b>persistent</b> - [No]        - Indicates that the connection should be
- *                                     persistent.
- * # <b>username</b>       - [none]  - The database username.
+ * # <b>persistent</b> - [No]        - Indicates that the connection should be persistent.
  *
  * @package    symfony
  * @subpackage database
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfMySQLDatabase.class.php 12763 2008-11-08 11:27:24Z FabianLange $
+ * @version    SVN: $Id: sfMySQLDatabase.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfMySQLDatabase extends sfDatabase
 {
@@ -44,42 +35,12 @@ class sfMySQLDatabase extends sfDatabase
    */
   public function connect()
   {
-    // determine how to get our
-    $method = $this->getParameter('method', 'normal');
+    $database = $this->getParameter('database');
+    $host     = $this->getParameter('host', 'localhost');
+    $password = $this->getParameter('password');
+    $username = $this->getParameter('username');
+    $encoding = $this->getParameter('encoding');
 
-    switch ($method)
-    {
-      case 'normal':
-        // get parameters normally
-        $database = $this->getParameter('database');
-        $host     = $this->getParameter('host', 'localhost');
-        $password = $this->getParameter('password');
-        $username = $this->getParameter('username');
-        $encoding = $this->getParameter('encoding');
-
-        break;
-
-      case 'server':
-        // construct a connection string from existing $_SERVER values
-        // and extract them to local scope
-        $parameters =& $this->loadParameters($_SERVER);
-        extract($parameters);
-
-        break;
-
-      case 'env':
-        // construct a connection string from existing $_ENV values
-        // and extract them to local scope
-        $string =& $this->loadParameters($_ENV);
-        extract($parameters);
-
-        break;
-
-      default:
-        // who knows what the user wants...
-        throw new sfDatabaseException(sprintf('Invalid MySQLDatabase parameter retrieval method "%s".', $method));
-    }
-    
     // let's see if we need a persistent connection
     $connect = $this->getConnectMethod($this->getParameter('persistent', false));
     if ($password == null)
@@ -113,7 +74,7 @@ class sfMySQLDatabase extends sfDatabase
     }
 
     // set encoding if specified
-    if($encoding)
+    if ($encoding)
     {
       @mysql_query("SET NAMES '".$encoding."'", $this->connection);
     }
@@ -126,7 +87,7 @@ class sfMySQLDatabase extends sfDatabase
   /**
    * Returns the appropriate connect method.
    * 
-   * @param  bool $persistent wether persistent connections are use or not
+   * @param bool $persistent wether persistent connections are use or not
    * @return string name of connect method.
    */
   protected function getConnectMethod($persistent)
@@ -137,35 +98,13 @@ class sfMySQLDatabase extends sfDatabase
   /**
    * Selects the database to be used in this connection
    * 
-   * @param  string $database Name of database to be connected
+   * @param string $database Name of database to be connected
    *
    * @return bool true if this was successful
    */
   protected function selectDatabase($database)
   {
    return ($database != null && !@mysql_select_db($database, $this->connection));
-  }
-  
-  /**
-   * Loads connection parameters from an existing array.
-   *
-   * @return array An associative array of connection parameters
-   */
-  protected function & loadParameters(&$array)
-  {
-    // list of available parameters
-    $available = array('database', 'host', 'password', 'user');
-
-    $parameters = array();
-
-    foreach ($available as $parameter)
-    {
-      $$parameter = $this->getParameter($parameter);
-
-      $parameters[$parameter] = ($$parameter != null) ? $array[$$parameter] : null;
-    }
-
-    return $parameters;
   }
 
   /**

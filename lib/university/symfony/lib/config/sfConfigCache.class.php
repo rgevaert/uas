@@ -18,7 +18,7 @@
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfConfigCache.class.php 10059 2008-07-02 05:38:45Z fabien $
+ * @version    SVN: $Id: sfConfigCache.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfConfigCache
 {
@@ -40,9 +40,9 @@ class sfConfigCache
   /**
    * Loads a configuration handler.
    *
-   * @param string $handler   The handler to use when parsing a configuration file
-   * @param array  $configs   An array of absolute filesystem paths to configuration files
-   * @param string $cache     An absolute filesystem path to the cache file that will be written
+   * @param string $handler The handler to use when parsing a configuration file
+   * @param array  $configs An array of absolute filesystem paths to configuration files
+   * @param string $cache   An absolute filesystem path to the cache file that will be written
    *
    * @throws <b>sfConfigurationException</b> If a requested configuration file does not have an associated configuration handler
    */
@@ -60,8 +60,8 @@ class sfConfigCache
       $this->mergeUserConfigHandlers();
     }
 
-    // handler key to call for this configuration file
-    $handlerKey = null;
+    // handler instance to call for this configuration file
+    $handlerInstance = null;
 
     $handler = str_replace(DIRECTORY_SEPARATOR, '/', $handler);
 
@@ -70,12 +70,12 @@ class sfConfigCache
     if (isset($this->handlers[$handler]))
     {
       // we have a handler associated with the full configuration path
-      $handlerKey = $handler;
+      $handlerInstance = $this->getHandler($handler);
     }
     else if (isset($this->handlers[$basename]))
     {
       // we have a handler associated with the configuration base name
-      $handlerKey = $basename;
+      $handlerInstance = $this->getHandler($basename);
     }
     else
     {
@@ -83,26 +83,29 @@ class sfConfigCache
       foreach (array_keys($this->handlers) as $key)
       {
         // replace wildcard chars in the configuration
-        $pattern = strtr($key, array('.' => '\.', '*' => '.*?'));
+        $pattern = strtr($key, array('.' => '\.', '*' => '(.*?)'));
+        $matches = array();
 
         // create pattern from config
-        if (preg_match('#'.$pattern.'$#', $handler))
+        if (preg_match('#'.$pattern.'$#', $handler, $matches))
         {
-          $handlerKey = $key;
+          $handlerInstance = $this->getHandler($key);
+          array_shift($matches);
+          $handlerInstance->getParameterHolder()->set('wildcardValues', $matches);
 
           break;
         }
       }
     }
 
-    if (!$handlerKey)
+    if (!$handlerInstance)
     {
       // we do not have a registered handler for this file
       throw new sfConfigurationException(sprintf('Configuration file "%s" does not have a registered handler.', implode(', ', $configs)));
     }
 
     // call the handler and retrieve the cache data
-    $data = $this->getHandler($handlerKey)->execute($configs);
+    $data = $handlerInstance->execute($configs);
 
     $this->writeCacheFile($handler, $cache, $data);
   }
@@ -110,7 +113,7 @@ class sfConfigCache
   /**
    * Returns the config handler configured for the given name
    *
-   * @param  string $name The config handler name
+   * @param string $name The config handler name
    *
    * @return sfConfigHandler A sfConfigHandler instance
    */
@@ -134,8 +137,8 @@ class sfConfigCache
    * If the configuration file path is relative, symfony will look in directories 
    * defined in the sfConfiguration::getConfigPaths() method.
    *
-   * @param string  $configPath  A filesystem path to a configuration file
-   * @param boolean $optional    If true, config path does not need to exist
+   * @param string  $configPath A filesystem path to a configuration file
+   * @param boolean $optional   If true, config path does not need to exist
    *
    * @return string An absolute filesystem path to the cache filename associated with this specified configuration file
    *
@@ -235,9 +238,9 @@ class sfConfigCache
   /**
    * Imports a configuration file.
    *
-   * @param string $config    A filesystem path to a configuration file
-   * @param bool   $once      Only allow this configuration file to be included once per request?
-   * @param bool   $optional  Only include if true
+   * @param string $config   A filesystem path to a configuration file
+   * @param bool   $once     Only allow this configuration file to be included once per request?
+   * @param bool   $optional Only include if true
    *
    * @see checkConfig()
    */
@@ -321,36 +324,54 @@ class sfConfigCache
   /**
    * Writes a cache file.
    *
-   * @param string $config  An absolute filesystem path to a configuration file
-   * @param string $cache   An absolute filesystem path to the cache file that will be written
-   * @param string $data    Data to be written to the cache file
+   * @param string $config An absolute filesystem path to a configuration file
+   * @param string $cache  An absolute filesystem path to the cache file that will be written
+   * @param string $data   Data to be written to the cache file
    *
    * @throws sfCacheException If the cache file cannot be written
    */
   protected function writeCacheFile($config, $cache, $data)
   {
+    $current_umask = umask(0000);
     if (!is_dir(dirname($cache)))
     {
-      $current_umask = umask(0000);
       if (false === @mkdir(dirname($cache), 0777, true))
       {
         throw new sfCacheException(sprintf('Failed to make cache directory "%s" while generating cache for configuration file "%s".', dirname($cache), $config));
       }
-      umask($current_umask);
     }
 
-    if (false === @file_put_contents($cache, $data))
+    $tmpFile = tempnam(dirname($cache), basename($cache));
+
+    if (!$fp = @fopen($tmpFile, 'wb'))
     {
-      throw new sfCacheException(sprintf('Failed to write cache file "%s" generated from configuration file "%s".', $cache, $config));
+      throw new sfCacheException(sprintf('Failed to write cache file "%s" generated from configuration file "%s".', $tmpFile, $config));
     }
+
+    @fwrite($fp, $data);
+    @fclose($fp);
+
+    // Hack from Agavi (http://trac.agavi.org/changeset/3979)
+    // With php < 5.2.6 on win32, renaming to an already existing file doesn't work, but copy does,
+    // so we simply assume that when rename() fails that we are on win32 and try to use copy()
+    if (!@rename($tmpFile, $cache))
+    {
+      if (copy($tmpFile, $cache))
+      {
+        unlink($tmpFile);
+      }
+    }
+
+    chmod($cache, 0666);
+    umask($current_umask);
   }
 
   /**
    * Registers a configuration handler.
    *
-   * @param string $handler   The handler to use when parsing a configuration file
-   * @param class  $class     A configuration handler class
-   * @param string $params    An array of options for the handler class initialization
+   * @param string $handler The handler to use when parsing a configuration file
+   * @param class  $class   A configuration handler class
+   * @param string $params  An array of options for the handler class initialization
    */
   public function registerConfigHandler($handler, $class, $params = array())
   {

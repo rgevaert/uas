@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage routing
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfRouting.class.php 11794 2008-09-26 09:05:48Z fabien $
+ * @version    SVN: $Id: sfRouting.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfRouting
 {
@@ -217,20 +217,10 @@ abstract class sfRouting
     $this->defaultParameters = $parameters;
   }
 
-  protected function mergeArrays($arr1, $arr2)
-  {
-    foreach ($arr2 as $key => $value)
-    {
-      $arr1[$key] = $value;
-    }
-
-    return $arr1;
-  }
-
   /**
    * Listens to the user.change_culture event.
    *
-   * @param sfEvent An sfEvent instance
+   * @param sfEvent $event An sfEvent instance
    *
    */
   public function listenToChangeCultureEvent(sfEvent $event)
@@ -274,7 +264,7 @@ abstract class sfRouting
       }
     }
 
-    if ($absolute && isset($this->options['context']['host']))
+    if ($absolute && isset($this->options['context']['host']) && 0 !== strpos($url, 'http'))
     {
       $url = 'http'.(isset($this->options['context']['is_secure']) && $this->options['context']['is_secure'] ? 's' : '').'://'.$this->options['context']['host'].$url;
     }

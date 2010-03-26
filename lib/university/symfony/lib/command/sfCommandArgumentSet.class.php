@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandArgumentSet.class.php 9076 2008-05-19 23:19:44Z Carl.Vondrick $
+ * @version    SVN: $Id: sfCommandArgumentSet.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCommandArgumentSet
 {
@@ -54,7 +54,7 @@ class sfCommandArgumentSet
    */
   public function addArguments($arguments = array())
   {
-    if (!is_null($arguments))
+    if (null !== $arguments)
     {
       foreach ($arguments as $argument)
       {
@@ -105,7 +105,7 @@ class sfCommandArgumentSet
   /**
    * Returns an argument by name.
    *
-   * @param  string $name The argument name
+   * @param string $name The argument name
    *
    * @return sfCommandArgument A sfCommandArgument object
    */
@@ -122,7 +122,7 @@ class sfCommandArgumentSet
   /**
    * Returns true if an argument object exists by name.
    *
-   * @param  string  $name  The argument name
+   * @param string $name The argument name
    *
    * @return Boolean true if the argument object exists, false otherwise
    */

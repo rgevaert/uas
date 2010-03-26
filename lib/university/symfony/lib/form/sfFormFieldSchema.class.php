@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage form
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfFormFieldSchema.class.php 9045 2008-05-19 06:33:56Z Carl.Vondrick $
+ * @version    SVN: $Id: sfFormFieldSchema.class.php 23214 2009-10-20 18:11:23Z Kris.Wallsmith $
  */
 class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Countable
 {
@@ -26,23 +26,68 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
   /**
    * Constructor.
    *
-   * @param sfWidgetFormSchema $widget  A sfWidget instance
-   * @param sfFormField        $parent  The sfFormField parent instance (null for the root widget)
-   * @param string             $name    The field name
-   * @param string             $value   The field value
-   * @param sfValidatorError   $error   A sfValidatorError instance
+   * @param sfWidgetFormSchema $widget A sfWidget instance
+   * @param sfFormField        $parent The sfFormField parent instance (null for the root widget)
+   * @param string             $name   The field name
+   * @param string             $value  The field value
+   * @param sfValidatorError   $error  A sfValidatorError instance
    */
   public function __construct(sfWidgetFormSchema $widget, sfFormField $parent = null, $name, $value, sfValidatorError $error = null)
   {
     parent::__construct($widget, $parent, $name, $value, $error);
 
-    $this->fieldNames = array_keys($widget->getFields());
+    $this->fieldNames = $widget->getPositions();
+  }
+
+  /**
+   * Renders hidden form fields.
+   *
+   * @param boolean $recursive False will prevent hidden fields from embedded forms from rendering
+   *
+   * @return string
+   */
+  public function renderHiddenFields($recursive = true)
+  {
+    $output = '';
+
+    foreach ($this->getHiddenFields($recursive) as $field)
+    {
+      $output .= $field->render();
+    }
+
+    return $output;
+  }
+
+  /**
+   * Returns an array of hidden fields from the current schema.
+   *
+   * @param boolean $recursive Whether to recur through embedded schemas
+   *
+   * @return array
+   */
+  public function getHiddenFields($recursive = true)
+  {
+    $fields = array();
+
+    foreach ($this as $name => $field)
+    {
+      if ($field instanceof sfFormFieldSchema && $recursive)
+      {
+        $fields = array_merge($fields, $field->getHiddenFields($recursive));
+      }
+      else if ($field->isHidden())
+      {
+        $fields[] = $field;
+      }
+    }
+
+    return $fields;
   }
 
   /**
    * Returns true if the bound field exists (implements the ArrayAccess interface).
    *
-   * @param  string  $name  The name of the bound field
+   * @param string $name The name of the bound field
    *
    * @return Boolean true if the widget exists, false otherwise
    */
@@ -54,7 +99,7 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
   /**
    * Returns the form field associated with the name (implements the ArrayAccess interface).
    *
-   * @param  string $name The offset of the value to get
+   * @param string $name The offset of the value to get
    *
    * @return sfFormField A form field instance
    */
@@ -62,14 +107,28 @@ class sfFormFieldSchema extends sfFormField implements ArrayAccess, Iterator, Co
   {
     if (!isset($this->fields[$name]))
     {
-      if (is_null($widget = $this->widget[$name]))
+      if (null === $widget = $this->widget[$name])
       {
         throw new InvalidArgumentException(sprintf('Widget "%s" does not exist.', $name));
       }
 
-      $class = $widget instanceof sfWidgetFormSchema ? 'sfFormFieldSchema' : 'sfFormField';
+      $error = isset($this->error[$name]) ? $this->error[$name] : null;
 
-      $this->fields[$name] = new $class($widget, $this, $name, isset($this->value[$name]) ? $this->value[$name] : null, isset($this->error[$name]) ? $this->error[$name] : null);
+      if ($widget instanceof sfWidgetFormSchema)
+      {
+        $class = 'sfFormFieldSchema';
+
+        if ($error && !$error instanceof sfValidatorErrorSchema)
+        {
+          $error = new sfValidatorErrorSchema($error->getValidator(), array($error));
+        }
+      }
+      else
+      {
+        $class = 'sfFormField';
+      }
+
+      $this->fields[$name] = new $class($widget, $this, $name, isset($this->value[$name]) ? $this->value[$name] : null, $error);
     }
 
     return $this->fields[$name];

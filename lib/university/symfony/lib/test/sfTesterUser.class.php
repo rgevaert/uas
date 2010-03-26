@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage test
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfTesterUser.class.php 14486 2009-01-06 10:44:41Z fabien $
+ * @version    SVN: $Id: sfTesterUser.class.php 21769 2009-09-08 03:01:39Z dwhittle $
  */
 class sfTesterUser extends sfTester
 {

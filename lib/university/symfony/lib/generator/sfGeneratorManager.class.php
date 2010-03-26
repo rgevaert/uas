@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGeneratorManager.class.php 12264 2008-10-20 09:41:28Z fabien $
+ * @version    SVN: $Id: sfGeneratorManager.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfGeneratorManager
 {
@@ -39,7 +39,7 @@ class sfGeneratorManager
   /**
    * Initializes the sfGeneratorManager instance.
    *
-   * @param      sfProjectConfiguration $configuration A sfProjectConfiguration instance
+   * @param sfProjectConfiguration $configuration A sfProjectConfiguration instance
    * @deprecated
    */
   public function initialize(sfProjectConfiguration $configuration)
@@ -64,7 +64,7 @@ class sfGeneratorManager
    */
   public function getBasePath()
   {
-    if (is_null($this->basePath))
+    if (null === $this->basePath)
     {
       // for BC
       $this->basePath = sfConfig::get('sf_module_cache_dir');
@@ -114,8 +114,8 @@ class sfGeneratorManager
   /**
    * Generates classes and templates for a given generator class.
    *
-   * @param string $generatorClass    The generator class name
-   * @param array  $param             An array of parameters
+   * @param string $generatorClass The generator class name
+   * @param array  $param          An array of parameters
    *
    * @return string The cache for the configuration file
    */

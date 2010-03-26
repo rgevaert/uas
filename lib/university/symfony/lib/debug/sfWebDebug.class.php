@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWebDebug.class.php 15247 2009-02-04 16:18:12Z FabianLange $
+ * @version    SVN: $Id: sfWebDebug.class.php 27284 2010-01-28 18:34:57Z Kris.Wallsmith $
  */
 class sfWebDebug
 {
@@ -29,7 +29,8 @@ class sfWebDebug
    *
    * Available options:
    *
-   *  * image_root_path: The image root path
+   *  * image_root_path:    The image root path
+   *  * request_parameters: The current request parameters
    *
    * @param sfEventDispatcher $dispatcher The event dispatcher
    * @param sfVarLogger       $logger     The logger
@@ -44,6 +45,11 @@ class sfWebDebug
     if (!isset($this->options['image_root_path']))
     {
       $this->options['image_root_path'] = '';
+    }
+
+    if (!isset($this->options['request_parameters']))
+    {
+      $this->options['request_parameters'] = array();
     }
 
     $this->configure();
@@ -64,6 +70,7 @@ class sfWebDebug
     if (sfConfig::get('sf_logging_enabled'))
     {
       $this->setPanel('config', new sfWebDebugPanelConfig($this));
+      $this->setPanel('view', new sfWebDebugPanelView($this));
     }
     $this->setPanel('logs', new sfWebDebugPanelLogs($this));
     $this->setPanel('memory', new sfWebDebugPanelMemory($this));
@@ -71,6 +78,8 @@ class sfWebDebug
     {
       $this->setPanel('time', new sfWebDebugPanelTimer($this));
     }
+
+    $this->setPanel('mailer', new sfWebDebugPanelMailer($this));
   }
 
   /**
@@ -117,7 +126,7 @@ class sfWebDebug
   /**
    * Removes a panel by name.
    *
-   * @param string          $name  The panel name
+   * @param string $name The panel name
    */
   public function removePanel($name)
   {
@@ -127,9 +136,9 @@ class sfWebDebug
   /**
    * Gets an option value by name.
    *
-   * @param  string $name  The option name
+   * @param string $name The option name
    *
-   * @return mixed  The option value
+   * @return mixed The option value
    */
   public function getOption($name, $default = null)
   {
@@ -139,13 +148,13 @@ class sfWebDebug
   /**
    * Injects the web debug toolbar into a given HTML string.
    *
-   * @param string  $content The HTML content
+   * @param string $content The HTML content
    *
    * @return string The content with the web debug toolbar injected
    */
   public function injectToolbar($content)
   {
-    $content = str_ireplace('</head>', '<style type="text/css">'.str_replace("\n", ' ', $this->getStylesheet()).'</style></head>', $content);
+    $content = str_ireplace('</head>', '<style type="text/css">'.str_replace(array("\r", "\n"), ' ', $this->getStylesheet()).'</style></head>', $content);
 
     $debug = $this->asHtml();
     $count = 0;
@@ -165,6 +174,8 @@ class sfWebDebug
    */
   public function asHtml()
   {
+    $current = isset($this->options['request_parameters']['sfWebDebugPanel']) ? $this->options['request_parameters']['sfWebDebugPanel'] : null;
+
     $titles = array();
     $panels = array();
     foreach ($this->panels as $name => $panel)
@@ -174,14 +185,16 @@ class sfWebDebug
         if (($content = $panel->getPanelContent()) || $panel->getTitleUrl())
         {
           $id = sprintf('sfWebDebug%sDetails', $name);
-          $titles[]  = sprintf('<li><a title="%s" href="%s"%s>%s</a></li>',
+          $titles[] = sprintf('<li%s><a title="%s" href="%s"%s>%s</a></li>',
+            $panel->getStatus() ? ' class="sfWebDebug'.ucfirst($this->getPriority($panel->getStatus())).'"' : '',
             $panel->getPanelTitle(),
             $panel->getTitleUrl() ? $panel->getTitleUrl() : '#',
             $panel->getTitleUrl() ? '' : ' onclick="sfWebDebugShowDetailsFor(\''.$id.'\'); return false;"',
             $title
           );
-          $panels[] = sprintf('<div id="%s" class="sfWebDebugTop" style="display: none"><h1>%s</h1>%s</div>',
+          $panels[] = sprintf('<div id="%s" class="sfWebDebugTop" style="display:%s"><h1>%s</h1>%s</div>',
             $id,
+            $name == $current ? 'block' : 'none',
             $panel->getPanelTitle(),
             $content
           );
@@ -195,10 +208,10 @@ class sfWebDebug
 
     return '
       <div id="sfWebDebug">
-        <div id="sfWebDebugBar" class="sfWebDebug'.ucfirst($this->getPriority($this->logger->getHighestPriority())).'">
+        <div id="sfWebDebugBar">
           <a href="#" onclick="sfWebDebugToggleMenu(); return false;"><img src="'.$this->options['image_root_path'].'/sf.png" alt="Debug toolbar" /></a>
 
-          <ul id="sfWebDebugDetails" class="menu">
+          <ul id="sfWebDebugDetails" class="sfWebDebugMenu">
             '.implode("\n", $titles).'
             <li class="last">
               <a href="#" onclick="document.getElementById(\'sfWebDebug\').style.display=\'none\'; return false;"><img src="'.$this->options['image_root_path'].'/close.png" alt="Close" /></a>
@@ -255,7 +268,7 @@ function sfWebDebugGetElementsByClassName(strClass, strTag, objContElm)
   var j = objColl.length;
   for (var i = 0; i < j; i++) {
     if(objColl[i].className == undefined) continue;
-    var arrObjClass = objColl[i].className.split(' ');
+    var arrObjClass = objColl[i].className.split ? objColl[i].className.split(' ') : [];
     if (delim == ' ' && arrClass.length > arrObjClass.length) continue;
     var c = 0;
     comparisonLoop:
@@ -417,7 +430,10 @@ EOF;
 
 #sfWebDebug img
 {
+  float: none;
+  margin: 0;
   border: 0;
+  display: inline;
 }
 
 #sfWebDebugBar
@@ -431,6 +447,7 @@ EOF;
   filter: alpha(opacity:80);
   z-index: 10000;
   white-space: nowrap;
+  background-color: #ddd;
 }
 
 #sfWebDebugBar[id]
@@ -443,7 +460,7 @@ EOF;
   vertical-align: middle;
 }
 
-#sfWebDebugBar .menu
+#sfWebDebugBar .sfWebDebugMenu
 {
   padding: 5px;
   padding-left: 0;
@@ -451,7 +468,7 @@ EOF;
   margin: 0;
 }
 
-#sfWebDebugBar .menu li
+#sfWebDebugBar .sfWebDebugMenu li
 {
   display: inline;
   list-style: none;
@@ -459,7 +476,7 @@ EOF;
   padding: 0 6px;
 }
 
-#sfWebDebugBar .menu li.last
+#sfWebDebugBar .sfWebDebugMenu li.last
 {
   margin: 0;
   padding: 0;
@@ -500,7 +517,7 @@ EOF;
 {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 0;
   border: 0px;
   background-color: #eee;
@@ -509,6 +526,16 @@ EOF;
 #sfWebDebug h2
 {
   font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 0;
+  border: 0px;
+  background: none;
+}
+
+#sfWebDebug h3
+{
+  font-size: 12px;
   font-weight: bold;
   margin: 10px 0;
   padding: 0;
@@ -534,6 +561,11 @@ EOF;
   margin: 0;
   padding: 3px;
   font-size: 11px;
+}
+
+#sfWebDebugLogMenu
+{
+  margin-bottom: 5px;
 }
 
 #sfWebDebugLogMenu li
@@ -574,12 +606,12 @@ EOF;
 
 .sfWebDebugWarning, .sfWebDebugWarning td
 {
-  background-color: orange;
+  background-color: orange !important;
 }
 
 .sfWebDebugError, .sfWebDebugError td
 {
-  background-color: #f99;
+  background-color: #f99 !important;
 }
 
 .sfWebDebugLogNumber
@@ -591,7 +623,16 @@ EOF;
 {
   width: 1%;
   white-space: nowrap;
+}
+
+.sfWebDebugLogType, #sfWebDebug .sfWebDebugLogType a
+{
   color: darkgreen;
+}
+
+#sfWebDebug .sfWebDebugLogType a:hover
+{
+  text-decoration: underline;
 }
 
 .sfWebDebugLogInfo
@@ -649,9 +690,18 @@ EOF;
 
 .sfWebDebugDebugInfo
 {
-  margin-left: 10px;
-  padding-left: 5px;
+  color: #999;
+  font-size: 11px;
+  margin: 5px 0 5px 10px;
+  padding: 2px 0 2px 5px;
   border-left: 1px solid #aaa;
+  line-height: 1.25em;
+}
+
+.sfWebDebugDebugInfo .sfWebDebugLogInfo,
+.sfWebDebugDebugInfo a.sfWebDebugFileLink
+{
+  color: #333 !important;
 }
 
 .sfWebDebugCache
@@ -675,6 +725,76 @@ EOF;
   padding: 1px 4px;
   background-color: #666;
   color: #fff;
+}
+
+#sfWebDebugviewDetails ul
+{
+  padding-left: 2em;
+  margin: .5em 0;
+  list-style: none;
+}
+
+#sfWebDebugviewDetails li
+{
+  margin-bottom: .5em;
+}
+
+#sfWebDebug .sfWebDebugDataType,
+#sfWebDebug .sfWebDebugDataType a
+{
+  color: #666;
+  font-style: italic;
+}
+
+#sfWebDebug .sfWebDebugDataType a:hover
+{
+  text-decoration: underline;
+}
+
+#sfWebDebugDatabaseLogs
+{
+  margin-bottom: 10px;
+}
+
+#sfWebDebugDatabaseLogs ol
+{
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+  list-style: number;
+}
+
+#sfWebDebugDatabaseLogs li
+{
+  padding: 6px;
+}
+
+#sfWebDebugDatabaseLogs li:nth-child(odd)
+{
+  background-color: #CCC;
+}
+
+.sfWebDebugDatabaseQuery
+{
+  margin-bottom: .5em;
+  margin-top: 0;
+}
+
+.sfWebDebugDatabaseLogInfo
+{
+  color: #666;
+  font-size: 11px;
+}
+
+.sfWebDebugDatabaseQuery .sfWebDebugLogInfo
+{
+  color: #909;
+  font-weight: bold;
+}
+
+.sfWebDebugHighlight
+{
+  background: #FFC;
 }
 EOF;
   }

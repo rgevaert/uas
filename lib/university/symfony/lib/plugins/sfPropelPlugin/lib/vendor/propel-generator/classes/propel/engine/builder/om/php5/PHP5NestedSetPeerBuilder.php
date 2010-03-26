@@ -1,7 +1,7 @@
 <?php
 
 /*
- *  $Id: PHP5NestedSetPeerBuilder.php 1086 2008-11-17 12:28:44Z heltem $
+ *  $Id: PHP5NestedSetPeerBuilder.php 1262 2009-10-26 20:54:39Z francois $
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -809,8 +809,12 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 			\$omClass = $peerClassname::getOMClass(\$row, 0);
 			\$cls = substr('.'.\$omClass, strrpos('.'.\$omClass, '.') + 1);
 
-			" . $this->buildObjectInstanceCreationCode('$root', '$cls') . "
-			\$root->hydrate(\$row);
+			\$key = ".$peerClassname."::getPrimaryKeyHashFromRow(\$row, 0);
+			if (null === (\$root = ".$peerClassname."::getInstanceFromPool(\$key))) {
+				" . $this->buildObjectInstanceCreationCode('$root', '$cls') . "
+				\$root->hydrate(\$row);
+			}
+
 			\$root->setLevel(0);
 			$peerClassname::hydrateDescendants(\$root, \$stmt);
 			$peerClassname::addInstanceToPool(\$root);
@@ -1365,6 +1369,8 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 				\$prevSibling->setNextSibling(\$child);
 			}
 
+			\$descendants[] = \$child;
+
 			if (\$child->hasChildren()) {
 				\$descendants = array_merge(\$descendants, $peerClassname::hydrateDescendants(\$child, \$stmt));
 			} else {
@@ -1372,7 +1378,6 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 			}
 
 			\$children[] = \$child;
-			\$descendants[] = \$child;
 			\$prevSibling = \$child;
 
 			$peerClassname::addInstanceToPool(\$child);
@@ -1613,8 +1618,8 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 			\$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
-		\$leftUpdateCol = substr(self::LEFT_COL, strrpos(self::LEFT_COL, '.') + 1);
-		\$rightUpdateCol = substr(self::RIGHT_COL, strrpos(self::RIGHT_COL, '.') + 1);
+		\$leftUpdateCol = self::LEFT_COL;
+		\$rightUpdateCol = self::RIGHT_COL;
 
 		// Shift left column values
 		\$whereCriteria = new Criteria($peerClassname::DATABASE_NAME);

@@ -15,7 +15,7 @@
  * @subpackage propel
  * @author     Nick Lane <nick.lane@internode.on.net>
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfPropelManyToMany.class.php 13234 2008-11-22 13:52:02Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfPropelManyToMany.class.php 22881 2009-10-08 16:50:37Z Kris.Wallsmith $
  */
 class sfPropelManyToMany
 {
@@ -73,23 +73,8 @@ class sfPropelManyToMany
   {
     $column = self::getRelatedColumn($class, $middleClass, $relatedColumn);
 
-    // we must load all map builder classes
-    $classes = sfFinder::type('file')->name('*MapBuilder.php')->in(sfProjectConfiguration::getActive()->getModelDirs());
-    foreach ($classes as $class)
-    {
-      $omClass = basename($class, 'MapBuilder.php');
-      if (class_exists($omClass) && is_subclass_of($omClass, 'BaseObject'))
-      {
-        $class_map_builder = basename($class, '.php');
-        $map = new $class_map_builder();
-        if (!$map->isBuilt())
-        {
-          $map->doBuild();
-        }
-      }
-    }
-
     $tableMap = call_user_func(array(constant($middleClass.'::PEER'), 'getTableMap'));
+    $tableMap->getRelations();
 
     return $tableMap->getDatabaseMap()->getTable($column->getRelatedTableName())->getPhpName();
   }
@@ -146,7 +131,7 @@ class sfPropelManyToMany
       $localColumn = self::getColumn(get_class($object), $middleClass, $relatedColumn);
       $remoteColumn = self::getRelatedColumn(get_class($object), $middleClass, $relatedColumn);
       $c = new Criteria();
-      $c->add(constant(constant($middleClass.'::PEER').'::'.$localColumn->getColumnName()), $object->getId());
+      $c->add(constant(constant($middleClass.'::PEER').'::'.$localColumn->getName()), $object->getId());
       $relatedMethod = 'get'.$relatedClass.'RelatedBy'.$remoteColumn->getPhpName();
       $rels = call_user_func(array(constant($middleClass.'::PEER'), 'doSelectJoin'.$relatedClass.'RelatedBy'.$remoteColumn->getPhpName()), $c);
     }

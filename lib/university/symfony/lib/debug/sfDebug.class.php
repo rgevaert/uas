@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage debug
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDebug.class.php 13931 2008-12-10 22:43:27Z FabianLange $
+ * @version    SVN: $Id: sfDebug.class.php 22118 2009-09-18 07:02:26Z fabien $
  */
 class sfDebug
 {
@@ -43,6 +43,8 @@ class sfDebug
       'os'         => php_uname(),
       'extensions' => get_loaded_extensions(),
     );
+
+    natcasesort($values['extensions']); 
 
     // assign extension version
     if ($values['extensions'])
@@ -113,6 +115,7 @@ class sfDebug
     }
 
     return array(
+      'options'         => $request->getOptions(),
       'parameterHolder' => self::flattenParameterHolder($request->getParameterHolder(), true),
       'attributeHolder' => self::flattenParameterHolder($request->getAttributeHolder(), true),
     );
@@ -133,6 +136,7 @@ class sfDebug
     }
 
     return array(
+      'status'      => array('code' => $response->getStatusCode(), 'text' => $response->getStatusText()),
       'options'     => $response->getOptions(),
       'cookies'     => method_exists($response, 'getCookies')     ? $response->getCookies() : array(),
       'httpHeaders' => method_exists($response, 'getHttpHeaders') ? $response->getHttpHeaders() : array(),
@@ -232,5 +236,26 @@ class sfDebug
     }
 
     return $nvalues;
+  }
+
+  /**
+   * Shortens a file path by replacing symfony directory constants.
+   * 
+   * @param  string $file
+   * 
+   * @return string
+   */
+  static public function shortenFilePath($file)
+  {
+    foreach (array('sf_root_dir', 'sf_symfony_lib_dir') as $key)
+    {
+      if (0 === strpos($file, $value = sfConfig::get($key)))
+      {
+        $file = str_replace($value, strtoupper($key), $file);
+        break;
+      }
+    }
+
+    return $file;
   }
 }

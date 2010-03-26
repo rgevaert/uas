@@ -24,7 +24,7 @@
  * @package    symfony
  * @subpackage log
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfLogger.class.php 15114 2009-01-30 17:41:21Z fabien $
+ * @version    SVN: $Id: sfLogger.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 abstract class sfLogger
 {
@@ -38,6 +38,8 @@ abstract class sfLogger
   const DEBUG   = 7; // Debug-level messages
 
   protected
+    $dispatcher = null,
+    $options = array(),
     $level = self::INFO;
 
   /**
@@ -71,12 +73,31 @@ abstract class sfLogger
    */
   public function initialize(sfEventDispatcher $dispatcher, $options = array())
   {
-    if (isset($options['level']))
+    $this->dispatcher = $dispatcher;
+    $this->options = $options;
+    
+    if (isset($this->options['level']))
     {
-      $this->setLogLevel($options['level']);
+      $this->setLogLevel($this->options['level']);
     }
 
     $dispatcher->connect('application.log', array($this, 'listenToLogEvent'));
+  }
+  
+  /**
+   * Returns the options for the logger instance.
+   */
+  public function getOptions()
+  {
+    return $this->options;
+  }
+  
+  /**
+   * Returns the options for the logger instance.
+   */
+  public function setOption($name, $value)
+  {
+    $this->options[$name] = $value;
   }
 
   /**
@@ -112,7 +133,7 @@ abstract class sfLogger
    */
   public function log($message, $priority = self::INFO)
   {
-    if ($this->level < $priority)
+    if ($this->getLogLevel() < $priority)
     {
       return false;
     }
@@ -219,8 +240,13 @@ abstract class sfLogger
 
     $subject  = $event->getSubject();
     $subject  = is_object($subject) ? get_class($subject) : (is_string($subject) ? $subject : 'main');
-    foreach ($event->getParameters() as $message)
+    foreach ($event->getParameters() as $key => $message)
     {
+      if ('priority' === $key)
+      {
+        continue;
+      }
+
       $this->log(sprintf('{%s} %s', $subject, $message), $priority);
     }
   }

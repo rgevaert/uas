@@ -17,7 +17,7 @@
  * @package    symfony
  * @subpackage autoload
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfSimpleAutoload.class.php 14689 2009-01-13 16:33:49Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfSimpleAutoload.class.php 23205 2009-10-20 13:20:17Z Kris.Wallsmith $
  */
 class sfSimpleAutoload
 {
@@ -31,11 +31,12 @@ class sfSimpleAutoload
     $cacheChanged = false,
     $dirs         = array(),
     $files        = array(),
-    $classes      = array();
+    $classes      = array(),
+    $overriden    = array();
 
   protected function __construct($cacheFile = null)
   {
-    if (!is_null($cacheFile))
+    if (null !== $cacheFile)
     {
       $this->cacheFile = $cacheFile;
     }
@@ -100,12 +101,14 @@ class sfSimpleAutoload
   /**
    * Handles autoloading of classes.
    *
-   * @param  string  A class name.
+   * @param  string $class A class name.
    *
    * @return boolean Returns true if the class has been loaded
    */
   public function autoload($class)
   {
+    $class = strtolower($class);
+
     // class already exists
     if (class_exists($class, false) || interface_exists($class, false))
     {
@@ -115,7 +118,18 @@ class sfSimpleAutoload
     // we have a class path, let's include it
     if (isset($this->classes[$class]))
     {
-      require($this->classes[$class]);
+      try
+      {
+        require $this->classes[$class];
+      }
+      catch (sfException $e)
+      {
+        $e->printStackTrace();
+      }
+      catch (Exception $e)
+      {
+        sfException::createFromException($e)->printStackTrace();
+      }
 
       return true;
     }
@@ -173,6 +187,11 @@ class sfSimpleAutoload
       $this->addFile($file);
     }
 
+    foreach ($this->overriden as $class => $path)
+    {
+      $this->classes[$class] = $path;
+    }
+
     $this->cacheLoaded = true;
     $this->cacheChanged = true;
   }
@@ -188,18 +207,18 @@ class sfSimpleAutoload
   /**
    * Adds a directory to the autoloading system if not yet present and give it the highest possible precedence.
    *
-   * @param string The directory to look for classes
-   * @param string The extension to look for
+   * @param string $dir The directory to look for classes
+   * @param string $ext The extension to look for
    */
   public function addDirectory($dir, $ext = '.php')
   {
     $finder = sfFinder::type('file')->follow_link()->name('*'.$ext);
 
-    if($dirs = glob($dir))
+    if ($dirs = glob($dir))
     {
       foreach ($dirs as $dir)
       {
-        if (false !== ($key = array_search($dir, $this->dirs)))
+        if (false !== $key = array_search($dir, $this->dirs))
         {
           unset($this->dirs[$key]);
           $this->dirs[] = $dir;
@@ -223,8 +242,8 @@ class sfSimpleAutoload
   /**
    * Adds files to the autoloading system.
    *
-   * @param array   An array of files
-   * @param Boolean Whether to register those files as single entities (used when reloading)
+   * @param array   $files    An array of files
+   * @param Boolean $register Whether to register those files as single entities (used when reloading)
    */
   public function addFiles(array $files, $register = true)
   {
@@ -237,8 +256,8 @@ class sfSimpleAutoload
   /**
    * Adds a file to the autoloading system.
    *
-   * @param string  A file path
-   * @param Boolean Whether to register those files as single entities (used when reloading)
+   * @param string  $file     A file path
+   * @param Boolean $register Whether to register those files as single entities (used when reloading)
    */
   public function addFile($file, $register = true)
   {
@@ -270,14 +289,52 @@ class sfSimpleAutoload
     preg_match_all('~^\s*(?:abstract\s+|final\s+)?(?:class|interface)\s+(\w+)~mi', file_get_contents($file), $classes);
     foreach ($classes[1] as $class)
     {
-      $this->classes[$class] = $file;
+      $this->classes[strtolower($class)] = $file;
     }
   }
 
+  /**
+   * Sets the path for a particular class.
+   *
+   * @param string $class A PHP class name
+   * @param string $path  An absolute path
+   */
   public function setClassPath($class, $path)
   {
+    $class = strtolower($class);
+
     $this->overriden[$class] = $path;
 
     $this->classes[$class] = $path;
+  }
+
+  /**
+   * Returns the path where a particular class can be found.
+   *
+   * @param string $class A PHP class name
+   *
+   * @return string|null An absolute path
+   */
+  public function getClassPath($class)
+  {
+    $class = strtolower($class);
+
+    return isset($this->classes[$class]) ? $this->classes[$class] : null;
+  }
+
+  /**
+   * Loads configuration from the supplied files.
+   *
+   * @param array $files An array of autoload.yml files
+   * 
+   * @see sfAutoloadConfigHandler
+   */
+  public function loadConfiguration(array $files)
+  {
+    $config = new sfAutoloadConfigHandler();
+    foreach ($config->evaluate($files) as $class => $file)
+    {
+      $this->setClassPath($class, $file);
+    }
   }
 }

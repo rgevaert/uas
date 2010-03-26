@@ -16,7 +16,7 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorSchema.class.php 10836 2008-08-13 12:06:35Z fabien $
+ * @version    SVN: $Id: sfValidatorSchema.class.php 22446 2009-09-26 07:55:47Z fabien $
  */
 class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
 {
@@ -48,7 +48,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
         $this[$name] = $validator;
       }
     }
-    else if (!is_null($fields))
+    else if (null !== $fields)
     {
       throw new InvalidArgumentException('sfValidatorSchema constructor takes an array of sfValidatorBase objects.');
     }
@@ -79,6 +79,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
     $this->addOption('filter_extra_fields', true);
 
     $this->addMessage('extra_fields', 'Unexpected extra form field named "%field%".');
+    $this->addMessage('post_max_size', 'The form submission cannot be processed. It probably means that you have uploaded a file that is too big.');
   }
 
   /**
@@ -94,7 +95,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    */
   protected function doClean($values)
   {
-    if (is_null($values))
+    if (null === $values)
     {
       $values = array();
     }
@@ -107,6 +108,14 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
     $clean  = array();
     $unused = array_keys($this->fields);
     $errorSchema = new sfValidatorErrorSchema($this);
+
+    // check that post_max_size has not been reached
+    if (isset($_SERVER['CONTENT_LENGTH']) && (int) $_SERVER['CONTENT_LENGTH'] > $this->getBytes(ini_get('post_max_size')))
+    {
+      $errorSchema->addError(new sfValidatorError($this, 'post_max_size'));
+
+      throw $errorSchema;
+    }
 
     // pre validator
     try
@@ -207,7 +216,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    */
   public function preClean($values)
   {
-    if (is_null($validator = $this->getPreValidator()))
+    if (null === $validator = $this->getPreValidator())
     {
       return;
     }
@@ -229,7 +238,7 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    */
   public function postClean($values)
   {
-    if (is_null($validator = $this->getPostValidator()))
+    if (null === $validator = $this->getPostValidator())
     {
       return $values;
     }
@@ -241,10 +250,14 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    * Sets the pre validator.
    *
    * @param sfValidatorBase $validator  An sfValidatorBase instance
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setPreValidator(sfValidatorBase $validator)
   {
     $this->preValidator = clone $validator;
+
+    return $this;
   }
 
   /**
@@ -261,10 +274,14 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
    * Sets the post validator.
    *
    * @param sfValidatorBase $validator  An sfValidatorBase instance
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setPostValidator(sfValidatorBase $validator)
   {
     $this->postValidator = clone $validator;
+
+    return $this;
   }
 
   /**
@@ -352,14 +369,31 @@ class sfValidatorSchema extends sfValidatorBase implements ArrayAccess
       $this->fields[$name] = clone $field;
     }
 
-    if (!is_null($this->preValidator))
+    if (null !== $this->preValidator)
     {
       $this->preValidator = clone $this->preValidator;
     }
 
-    if (!is_null($this->postValidator))
+    if (null !== $this->postValidator)
     {
       $this->postValidator = clone $this->postValidator;
     }
+  }
+
+  protected function getBytes($value)
+  {
+    $value = trim($value);
+    switch (strtolower($value[strlen($value) - 1]))
+    {
+      // The 'G' modifier is available since PHP 5.1.0
+      case 'g':
+        $value *= 1024;
+      case 'm':
+        $value *= 1024;
+      case 'k':
+        $value *= 1024;
+    }
+
+    return $value;
   }
 }

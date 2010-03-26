@@ -16,14 +16,13 @@
  * @package    symfony
  * @subpackage validator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfValidatorBase.class.php 12876 2008-11-10 12:53:18Z nicolas $
+ * @version    SVN: $Id: sfValidatorBase.class.php 22446 2009-09-26 07:55:47Z fabien $
  */
 abstract class sfValidatorBase
 {
   protected static
-    $charset         = 'UTF-8',
-    $invalidMessage  = 'Invalid.',
-    $requiredMessage = 'Required.';
+    $charset = 'UTF-8',
+    $globalDefaultMessages = array('invalid' => 'Invalid.', 'required' => 'Required.');
 
   protected
     $requiredOptions = array(),
@@ -52,15 +51,18 @@ abstract class sfValidatorBase
   public function __construct($options = array(), $messages = array())
   {
     $this->options  = array_merge(array('required' => true, 'trim' => false, 'empty_value' => null), $this->options);
-    $this->messages = array_merge(array('required' => self::$requiredMessage, 'invalid' => self::$invalidMessage), $this->messages);
+    $this->messages = array_merge(array('required' => self::$globalDefaultMessages['required'], 'invalid' => self::$globalDefaultMessages['invalid']), $this->messages);
 
     $this->configure($options, $messages);
 
     $this->setDefaultOptions($this->getOptions());
     $this->setDefaultMessages($this->getMessages());
 
+    $currentOptionKeys = array_keys($this->options);
+    $optionKeys = array_keys($options);
+
     // check option names
-    if ($diff = array_diff(array_keys($options), array_merge(array_keys($this->options), $this->requiredOptions)))
+    if ($diff = array_diff($optionKeys, array_merge($currentOptionKeys, $this->requiredOptions)))
     {
       throw new InvalidArgumentException(sprintf('%s does not support the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
@@ -72,7 +74,7 @@ abstract class sfValidatorBase
     }
 
     // check required options
-    if ($diff = array_diff($this->requiredOptions, array_merge(array_keys($this->options), array_keys($options))))
+    if ($diff = array_diff($this->requiredOptions, array_merge($currentOptionKeys, $optionKeys)))
     {
       throw new RuntimeException(sprintf('%s requires the following options: \'%s\'.', get_class($this), implode('\', \'', $diff)));
     }
@@ -117,10 +119,14 @@ abstract class sfValidatorBase
    *
    * @param string $name   The error code
    * @param string $value  The error message
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function addMessage($name, $value)
   {
-    $this->messages[$name] = $value;
+    $this->messages[$name] = isset(self::$globalDefaultMessages[$name]) ? self::$globalDefaultMessages[$name] : $value;
+
+    return $this;
   }
 
   /**
@@ -128,6 +134,8 @@ abstract class sfValidatorBase
    *
    * @param string $name   The error code
    * @param string $value  The error message
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setMessage($name, $value)
   {
@@ -137,6 +145,8 @@ abstract class sfValidatorBase
     }
 
     $this->messages[$name] = $value;
+
+    return $this;
   }
 
   /**
@@ -153,10 +163,14 @@ abstract class sfValidatorBase
    * Changes all error messages.
    *
    * @param array $values  An array of error messages
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setMessages($values)
   {
     $this->messages = $values;
+
+    return $this;
   }
 
   /**
@@ -176,10 +190,14 @@ abstract class sfValidatorBase
    *
    * @param string $name   The option name
    * @param mixed  $value  The default value
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function addOption($name, $value = null)
   {
     $this->options[$name] = $value;
+
+    return $this;
   }
 
   /**
@@ -187,6 +205,8 @@ abstract class sfValidatorBase
    *
    * @param string $name   The option name
    * @param mixed  $value  The value
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setOption($name, $value)
   {
@@ -196,6 +216,8 @@ abstract class sfValidatorBase
     }
 
     $this->options[$name] = $value;
+
+    return $this;
   }
 
   /**
@@ -213,7 +235,7 @@ abstract class sfValidatorBase
   /**
    * Returns all options.
    *
-   * @return array An array if options
+   * @return array An array of options
    */
   public function getOptions()
   {
@@ -223,27 +245,35 @@ abstract class sfValidatorBase
   /**
    * Changes all options.
    *
-   * @param array $values  An array if options
+   * @param array $values  An array of options
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function setOptions($values)
   {
     $this->options = $values;
+
+    return $this;
   }
 
   /**
    * Adds a required option.
    *
    * @param string $name  The option name
+   *
+   * @return sfValidatorBase The current validator instance
    */
   public function addRequiredOption($name)
   {
     $this->requiredOptions[] = $name;
+
+    return $this;
   }
 
   /**
    * Returns all required option names.
    *
-   * @param array An array of required option names
+   * @return array An array of required option names
    */
   public function getRequiredOptions()
   {
@@ -251,23 +281,38 @@ abstract class sfValidatorBase
   }
 
   /**
-   * Sets the default invalid message
+   * Sets the default message for a given name.
+   *
+   * @param string $name    The name of the message
+   * @param string $message The default message string
+   */
+  static public function setDefaultMessage($name, $message)
+  {
+    self::$globalDefaultMessages[$name] = $message;
+  }
+
+  /**
+   * Sets the default invalid message.
+   *
+   * DEPRECATED. Use setDefaultMessage instead.
    *
    * @param string $message
    */
   static public function setInvalidMessage($message)
   {
-    self::$invalidMessage = $message;
+    self::setDefaultMessage('invalid', $message);
   }
 
   /**
-   * Sets the default required message
+   * Sets the default required message.
+   *
+   * DEPRECATED. Use setDefaultMessage instead.
    *
    * @param string $message
    */
   static public function setRequiredMessage($message)
   {
-    self::$requiredMessage = $message;
+    self::setDefaultMessage('required', $message);
   }
 
   /**

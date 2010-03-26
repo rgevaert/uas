@@ -13,14 +13,14 @@
  * @package    symfony
  * @subpackage config
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfDefineEnvironmentConfigHandler.class.php 9085 2008-05-20 01:53:23Z Carl.Vondrick $
+ * @version    SVN: $Id: sfDefineEnvironmentConfigHandler.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
 {
   /**
    * Executes this configuration handler.
    *
-   * @param  string $configFiles An absolute filesystem path to a configuration file
+   * @param string $configFiles An absolute filesystem path to a configuration file
    *
    * @return string Data to be written to a cache file
    *
@@ -32,10 +32,13 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
     // get our prefix
     $prefix = strtolower($this->getParameterHolder()->get('prefix', ''));
 
-    // add dynamic prefix if needed
+    // add module prefix if needed
     if ($this->getParameterHolder()->get('module', false))
     {
-      $prefix .= "'.strtolower(\$moduleName).'_";
+      $wildcardValues = $this->getParameterHolder()->get('wildcardValues');
+      // either the module name is in wildcard values, or it needs to be inserted on runtime
+      $moduleName = $wildcardValues ? strtolower($wildcardValues[0]) : "'.strtolower(\$moduleName).'";
+      $prefix .= $moduleName."_";
     }
 
     // parse the yaml
@@ -69,8 +72,8 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
   /**
    * Gets values from the configuration array.
    *
-   * @param string $prefix    The prefix name
-   * @param string $category  The category name
+   * @param string $prefix   The prefix name
+   * @param string $category The category name
    * @param mixed  $keys      The key/value array
    *
    * @return array The new key/value array
@@ -101,9 +104,9 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
   /**
    * Fixes the category name and replaces constants in the value.
    *
-   * @param string $category  The category name
-   * @param string $key       The key name
-   * @param string $value     The value
+   * @param string $category The category name
+   * @param string $key      The key name
+   * @param string $value    The value
    *
    * @return string Return the new key and value
    */
@@ -115,8 +118,8 @@ class sfDefineEnvironmentConfigHandler extends sfYamlConfigHandler
   /**
    * Fixes the category name.
    *
-   * @param string $category  The category name
-   * @param string $prefix    The prefix
+   * @param string $category The category name
+   * @param string $prefix   The prefix
    *
    * @return string The fixed category name
    */

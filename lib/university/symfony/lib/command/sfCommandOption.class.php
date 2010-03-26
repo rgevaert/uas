@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage command
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfCommandOption.class.php 9076 2008-05-19 23:19:44Z Carl.Vondrick $
+ * @version    SVN: $Id: sfCommandOption.class.php 21908 2009-09-11 12:06:21Z fabien $
  */
 class sfCommandOption
 {
@@ -34,11 +34,11 @@ class sfCommandOption
   /**
    * Constructor.
    *
-   * @param string  $name       The option name
-   * @param string  $shortcut   The shortcut (can be null)
-   * @param integer $mode       The option mode: self::PARAMETER_REQUIRED, self::PARAMETER_NONE or self::PARAMETER_OPTIONAL
-   * @param string  $help       A help text
-   * @param mixed   $default    The default value (must be null for self::PARAMETER_REQUIRED or self::PARAMETER_NONE)
+   * @param string  $name     The option name
+   * @param string  $shortcut The shortcut (can be null)
+   * @param integer $mode     The option mode: self::PARAMETER_REQUIRED, self::PARAMETER_NONE or self::PARAMETER_OPTIONAL
+   * @param string  $help     A help text
+   * @param mixed   $default  The default value (must be null for self::PARAMETER_REQUIRED or self::PARAMETER_NONE)
    */
   public function __construct($name, $shortcut = null, $mode = null, $help = '', $default = null)
   {
@@ -52,7 +52,7 @@ class sfCommandOption
       $shortcut = null;
     }
 
-    if (!is_null($shortcut))
+    if (null !== $shortcut)
     {
       if ('-' == $shortcut[0])
       {
@@ -60,7 +60,7 @@ class sfCommandOption
       }
     }
 
-    if (is_null($mode))
+    if (null === $mode)
     {
       $mode = self::PARAMETER_NONE;
     }
@@ -144,14 +144,14 @@ class sfCommandOption
    */
   public function setDefault($default = null)
   {
-    if (self::PARAMETER_NONE === (self::PARAMETER_NONE & $this->mode) && !is_null($default))
+    if (self::PARAMETER_NONE === (self::PARAMETER_NONE & $this->mode) && null !== $default)
     {
       throw new sfCommandException('Cannot set a default value when using sfCommandOption::PARAMETER_NONE mode.');
     }
 
     if ($this->isArray())
     {
-      if (is_null($default))
+      if (null === $default)
       {
         $default = array();
       }

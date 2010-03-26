@@ -21,7 +21,7 @@
  * @subpackage storage
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Sean Kerr <sean@code-box.org>
- * @version    SVN: $Id: sfSessionStorage.class.php 13499 2008-11-29 17:23:39Z fabien $
+ * @version    SVN: $Id: sfSessionStorage.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfSessionStorage extends sfStorage
 {
@@ -83,7 +83,7 @@ class sfSessionStorage extends sfStorage
     $httpOnly = $this->options['session_cookie_httponly'];
     session_set_cookie_params($lifetime, $path, $domain, $secure, $httpOnly);
 
-    if (!is_null($this->options['session_cache_limiter']))
+    if (null !== $this->options['session_cache_limiter'])
     {
       session_cache_limiter($this->options['session_cache_limiter']);
     }
@@ -180,5 +180,6 @@ class sfSessionStorage extends sfStorage
   public function shutdown()
   {
     // don't need a shutdown procedure because read/write do it in real-time
+    session_write_close();
   }
 }

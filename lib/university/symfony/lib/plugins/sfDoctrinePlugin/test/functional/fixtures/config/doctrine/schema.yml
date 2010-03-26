@@ -2,7 +2,7 @@
 Article:
   actAs:
     I18n:
-      fields: [title, body]
+      fields: [title, body, test_column]
       actAs:
         Sluggable:
           fields: [title]
@@ -11,15 +11,51 @@ Article:
   columns:
     author_id: integer
     is_on_homepage: boolean
-    title: string(255)
+    title:
+      type: string(255)
+      unique: true
     body: string(255)
+    test_column: string(255)
   relations:
     Author:
       foreignAlias: Articles
 
+BlogArticle:
+  inheritance:
+    extends: Article
+    type: column_aggregation
+  relations:
+    Author:
+      class: BlogAuthor
+      foreignAlias: Articles
+
+CamelCase:
+  columns:
+    article_id: integer
+    testCamelCase: string(255)
+  relations:
+    Article:
+      foreignAlias: camelCase
+
 Author:
   columns:
     name: string(255)
+
+AuthorInheritance:
+  inheritance:
+    extends: Author
+    type: column_aggregation
+
+BlogAuthor:
+  inheritance:
+    extends: Author
+    type: column_aggregation
+
+AuthorInheritanceConcrete:
+  inheritance:
+    extends: Author
+  columns:
+    additional: string(255)
 
 Subscription:
   connection: doctrine2
@@ -53,9 +89,16 @@ UniqueTest:
       unique: true
     unique_test2: string(255)
     unique_test3: string(255)
+    unique_test4: string(255)
   indexes:
     unique_test:
       fields: [unique_test1, unique_test2]
+      type: unique
+    unique_test2:
+      fields:
+        unique_test4:
+          sorting: ASC
+          length: 10
       type: unique
 
 Profile:
@@ -82,6 +125,10 @@ Permission:
     name: string(255)
 
 UserGroup:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     user_id:
       type: integer
@@ -91,6 +138,10 @@ UserGroup:
       primary: true
 
 UserPermission:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     user_id:
       type: integer
@@ -100,6 +151,10 @@ UserPermission:
       primary: true
 
 GroupPermission:
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     group_id:
       type: integer
@@ -107,3 +162,59 @@ GroupPermission:
     permission_id:
       type: integer
       primary: true
+
+FormGeneratorTest:
+  options:
+    symfony:
+      form: true
+      filter: false
+  columns:
+    name: string(255)
+
+FormGeneratorTest2:
+  options:
+    symfony:
+      form: false
+      filter: true
+  columns:
+    name: string(255)
+
+FormGeneratorTest3:
+  options:
+    symfony:
+      form: false
+      filter: false
+  actAs:
+    I18n:
+      fields: [name]
+  columns:
+    name: string(255)  
+
+DefaultValueTest:
+  columns:
+    name:
+      type: string(255)
+      notnull: true
+      default: ''
+
+Attachment:
+  columns:
+    file_path: string(255)
+
+ModelWithNumberInColumn:
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    column_1: string(255)
+    column2: string(255)
+    column__3: string(255)
+
+ResourceType:
+  columns:
+    id:
+      type: enum
+      values: [type1, type2, type3]
+      primary: true
+    name: string(255)

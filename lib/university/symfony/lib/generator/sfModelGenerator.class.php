@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage generator
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfModelGenerator.class.php 13947 2008-12-11 14:15:32Z fabien $
+ * @version    SVN: $Id: sfModelGenerator.class.php 25459 2009-12-16 13:08:43Z fabien $
  */
 abstract class sfModelGenerator extends sfGenerator
 {
@@ -67,6 +67,16 @@ abstract class sfModelGenerator extends sfGenerator
     }
 
     return "require_once(sfConfig::get('sf_module_cache_dir').'/".$this->generatedModuleName."/actions/actions.class.php');";
+  }
+
+  /**
+   * Gets the actions base class for the generated module.
+   *
+   * @return string The actions base class
+   */
+  public function getActionsBaseClass()
+  {
+    return isset($this->params['actions_base_class']) ? $this->params['actions_base_class'] : 'sfActions';
   }
 
   /**
@@ -181,9 +191,9 @@ abstract class sfModelGenerator extends sfGenerator
    *
    * This method is ORM dependant.
    *
-   * @param string  $column     The column name
-   * @param boolean $developed  true if you want developped method names, false otherwise
-   * @param string  $prefix     The prefix value
+   * @param string  $column    The column name
+   * @param boolean $developed true if you want developped method names, false otherwise
+   * @param string  $prefix    The prefix value
    *
    * @return string PHP code
    */
@@ -194,9 +204,9 @@ abstract class sfModelGenerator extends sfGenerator
   /**
    * Returns HTML code for an action link.
    *
-   * @param string  $actionName   The action name
-   * @param array   $params       The parameters
-   * @param boolean $pk_link      Whether to add a primary key link or not
+   * @param string  $actionName The action name
+   * @param array   $params     The parameters
+   * @param boolean $pk_link    Whether to add a primary key link or not
    *
    * @return string HTML code
    */
@@ -206,14 +216,14 @@ abstract class sfModelGenerator extends sfGenerator
 
     $url_params = $pk_link ? '?'.$this->getPrimaryKeyUrlParams() : '\'';
 
-    return '[?php echo link_to(__(\''.$params['label'].'\'), \''.$this->getModuleName().'/'.$action.$url_params.', '.$this->asPhp($params['params']).', \''.$this->getI18nCatalogue().'\') ?]';
+    return '[?php echo link_to(__(\''.$params['label'].'\', array(), \''.$this->getI18nCatalogue().'\'), \''.$this->getModuleName().'/'.$action.$url_params.', '.$this->asPhp($params['params']).') ?]';
   }
 
   /**
    * Wraps content with a credential condition.
    *
-   * @param string  $content  The content
-   * @param array   $params   The parameters
+   * @param string $content The content
+   * @param array  $params  The parameters
    *
    * @return string HTML code
    */
@@ -257,11 +267,11 @@ EOF;
     }
     else if ($field->isPartial())
     {
-      return sprintf("get_partial('%s', array('type' => 'list', '%s' => \$%s))", $field->getName(), $this->getSingularName(), $this->getSingularName());
+      return sprintf("get_partial('%s/%s', array('type' => 'list', '%s' => \$%s))", $this->getModuleName(), $field->getName(), $this->getSingularName(), $this->getSingularName());
     }
     else if ('Date' == $field->getType())
     {
-      $html = sprintf("$html ? format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
+      $html = sprintf("false !== strtotime($html) ? format_date(%s, \"%s\") : '&nbsp;'", $html, $field->getConfig('date_format', 'f'));
     }
     else if ('Boolean' == $field->getType())
     {
@@ -314,9 +324,9 @@ EOF;
    */
   public function getFormObject()
   {
-    if (is_null($this->formObject))
+    if (null === $this->formObject)
     {
-      $class = is_null($this->configuration) ? $this->getModelClass().'Form' : $this->configuration->getFormClass();
+      $class = null === $this->configuration ? $this->getModelClass().'Form' : $this->configuration->getFormClass();
 
       $this->formObject = new $class();
     }
@@ -439,5 +449,10 @@ EOF;
   public function asPhp($variable)
   {
     return str_replace(array("\n", 'array ('), array('', 'array('), var_export($variable, true));
+  }
+
+  public function escapeString($string)
+  {
+    return str_replace("'", "\\'", $string);
   }
 }
