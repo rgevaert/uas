@@ -3,18 +3,19 @@
 /**
  * Domainname form base class.
  *
+ * @method Domainname getObject() Returns the current form's model object
+ *
  * @package    symfony
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
  */
-class BaseDomainnameForm extends BaseFormPropel
+abstract class BaseDomainnameForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'   => new sfWidgetFormInputHidden(),
-      'name' => new sfWidgetFormInput(),
+      'name' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

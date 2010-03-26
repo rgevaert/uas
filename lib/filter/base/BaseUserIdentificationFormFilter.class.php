@@ -1,16 +1,13 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * UserIdentification filter form base class.
  *
  * @package    symfony
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
-class BaseUserIdentificationFormFilter extends BaseFormFilterPropel
+abstract class BaseUserIdentificationFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {

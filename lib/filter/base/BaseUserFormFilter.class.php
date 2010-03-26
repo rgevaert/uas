@@ -1,39 +1,36 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * User filter form base class.
  *
  * @package    symfony
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
-class BaseUserFormFilter extends BaseFormFilterPropel
+abstract class BaseUserFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'domainname_id'      => new sfWidgetFormPropelChoice(array('model' => 'Domainname', 'add_empty' => true)),
-      'name'               => new sfWidgetFormFilterInput(),
-      'fathers_name'       => new sfWidgetFormFilterInput(),
-      'grand_fathers_name' => new sfWidgetFormFilterInput(),
-      'login'              => new sfWidgetFormFilterInput(),
+      'name'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'fathers_name'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'grand_fathers_name' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'login'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'phone'              => new sfWidgetFormFilterInput(),
       'nt_password'        => new sfWidgetFormFilterInput(),
       'lm_password'        => new sfWidgetFormFilterInput(),
       'crypt_password'     => new sfWidgetFormFilterInput(),
       'unix_password'      => new sfWidgetFormFilterInput(),
-      'gid'                => new sfWidgetFormFilterInput(),
-      'uid'                => new sfWidgetFormFilterInput(),
-      'status'             => new sfWidgetFormFilterInput(),
+      'gid'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'uid'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'status'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'alternate_email'    => new sfWidgetFormFilterInput(),
-      'email_local_part'   => new sfWidgetFormFilterInput(),
-      'email_quota'        => new sfWidgetFormFilterInput(),
+      'email_local_part'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'email_quota'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'expires_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(

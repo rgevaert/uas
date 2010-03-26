@@ -15,8 +15,8 @@ class BaseCommentForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
       'user_id'      => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => false)),
-      'subject'      => new sfWidgetFormInput(),
-      'message'      => new sfWidgetFormInput(),
+      'subject'      => new sfWidgetFormInputText(),
+      'message'      => new sfWidgetFormInputText(),
       'is_public'    => new sfWidgetFormInputCheckbox(),
       'is_activated' => new sfWidgetFormInputCheckbox(),
       'created_at'   => new sfWidgetFormDateTime(),

@@ -1,25 +1,22 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * UnixAccount filter form base class.
  *
  * @package    symfony
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
-class BaseUnixAccountFormFilter extends BaseFormFilterPropel
+abstract class BaseUnixAccountFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'user_id'    => new sfWidgetFormPropelChoice(array('model' => 'User', 'add_empty' => true)),
-      'hostname'   => new sfWidgetFormFilterInput(),
+      'hostname'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'quota'      => new sfWidgetFormFilterInput(),
-      'created_at' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'updated_at' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'created_at' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'updated_at' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(

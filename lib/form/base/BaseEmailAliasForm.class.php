@@ -3,20 +3,21 @@
 /**
  * EmailAlias form base class.
  *
+ * @method EmailAlias getObject() Returns the current form's model object
+ *
  * @package    symfony
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
  */
-class BaseEmailAliasForm extends BaseFormPropel
+abstract class BaseEmailAliasForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'            => new sfWidgetFormInputHidden(),
-      'local_part'    => new sfWidgetFormInput(),
+      'local_part'    => new sfWidgetFormInputText(),
       'domainname_id' => new sfWidgetFormPropelChoice(array('model' => 'Domainname', 'add_empty' => false)),
-      'destination'   => new sfWidgetFormInput(),
+      'destination'   => new sfWidgetFormInputText(),
       'created_at'    => new sfWidgetFormDateTime(),
       'updated_at'    => new sfWidgetFormDateTime(),
     ));

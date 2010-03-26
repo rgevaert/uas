@@ -1,6 +1,6 @@
 <?php
 
-class ChangePasswordForm extends sfForm
+class ChangePasswordForm extends BaseForm
 {
   public function configure()
   {
