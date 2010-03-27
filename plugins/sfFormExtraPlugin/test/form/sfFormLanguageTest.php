@@ -16,7 +16,7 @@ $t = new lime_test(9, new lime_output_color());
 // initialize objects
 $dispatcher = new sfEventDispatcher();
 
-$sessionPath = sfToolkit::getTmpDir().'/sessions_'.rand(11111, 99999);
+$sessionPath = sys_get_temp_dir().'/sessions_'.rand(11111, 99999);
 $storage = new sfSessionTestStorage(array('session_path' => $sessionPath));
 $user = new sfUser($dispatcher, $storage);
 $user->setCulture('en');

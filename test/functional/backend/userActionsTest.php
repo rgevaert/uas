@@ -26,7 +26,7 @@ $browser->info('1 - The homepage')->
   end()->
   with('response')->begin()->
     info(' 1.1 - Expired jobs are not listed')->
-    checkElement('.jobs td.position:contains("expired")', false)->
+    checkElement('.jobs td.position:matches("expired")', false)->
   end()
 ;
 
