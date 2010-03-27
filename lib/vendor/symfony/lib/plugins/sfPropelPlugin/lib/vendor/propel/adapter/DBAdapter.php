@@ -121,7 +121,6 @@ abstract class DBAdapter {
 	 */
 	public function setCharset(PDO $con, $charset)
 	{
-		$charset = "UTF8";
 		$con->exec("SET NAMES '" . $charset . "'");
 	}
 
