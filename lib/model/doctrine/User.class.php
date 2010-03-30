@@ -70,14 +70,6 @@ class User extends BaseUser
        if(!$this->getId())
         {       
            $this->setUid(UserTable::getMaxUid() + 1);
-           $password = new Password();
-
-           $this->generated_password = $password->getPassword();
-
-           $this->setNtPassword($password->getNtHash());
-           $this->setUnixPassword($password->getNtHash());
-           $this->setCryptPassword($password->getCryptHash());
-           $this->setLmPassword($password->getLmHash());
         }
 		if(!$this->getDomainnameId()){
 			// get the default domainname
@@ -87,6 +79,11 @@ class User extends BaseUser
 
 		if(!$this->getLogin()) $this->generateLogin();
 		if(!$this->getEmailLocalPart()) $this->generateEmailLocalPart();
+
+		if(!$this->getCryptPassword()) {
+			$password = new Password();
+		   	$this->setPasswordObject($password);
+		}
 
        return parent::save(); 
 	}
@@ -167,13 +164,19 @@ class User extends BaseUser
 		return $local_part_to_try;
 	}
 	
-	public function setPassword(Password $password)
+	public function setPassword($pass)
+	{
+		$pwd_obj = new Password($pass);
+		return $this->setPasswordObject($pwd_obj);
+	}
+	
+	public function setPasswordObject(Password $password)
 	{		
-        $this->setNtPassword($password->getNtHash());
-        $this->setLmPassword($password->getLmHash());
+//        $this->setNtPassword($password->getNtHash());
+//        $this->setLmPassword($password->getLmHash());
         $this->setCryptPassword($password->getCryptHash());
-        $this->setUnixPassword($password->getUnixHash());                      
-        return $this->save();           
+//        $this->setUnixPassword($password->getUnixHash());                      
+        //return $this->save();           
 	}
 	
 	public function checkPassword(Password $password)

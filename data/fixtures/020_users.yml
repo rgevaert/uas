@@ -5,6 +5,7 @@ User:
     fathers_name:       Gessese
     grand_fathers_name: W
     login:              eyuelg
+    password:           password
     gid:                2000
     uid:                2000
     alternate_email:    eyuel@yahoo.com
