@@ -1,5 +1,5 @@
 generator:
-  class: sfPropelGenerator
+  class: sfDoctrineGenerator
   param:
     model_class:           UnixAccount
     theme:                 admin
@@ -8,7 +8,7 @@ generator:
     singular:              ~
     plural:                ~
     route_prefix:          unix_account
-    with_propel_route:     1
+    with_doctrine_route:     1
 
     config:
       actions: ~
