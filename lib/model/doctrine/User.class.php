@@ -83,6 +83,7 @@ class User extends BaseUser
 		if(!$this->getCryptPassword()) {
 			$password = new Password();
 		   	$this->setPasswordObject($password);
+			$this->generated_password = $password->getPassword();
 		}
 
        return parent::save(); 
