@@ -4,6 +4,8 @@ class ChangePasswordForm extends BaseForm
 {
   public function configure()
   {
+	unset($this['created_at'], $this['updated_at']);
+	
     $this->setWidgets(array(
     'password'             =>new sfWidgetFormInputPassword(),
     'new_password'         =>new sfWidgetFormInputPassword(),

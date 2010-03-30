@@ -12,6 +12,8 @@ class DomainnameForm extends BaseDomainnameForm
 {
   public function configure()
   {
+	unset($this['created_at'], $this['updated_at']);
+	
     $this->validatorSchema['name'] = new sfValidatorRegex( array ('pattern' => '/((?:[-a-z0-9]+\.)+[a-z]{2,})$/i' ));
   }
 }

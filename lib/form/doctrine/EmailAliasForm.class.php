@@ -12,9 +12,9 @@ class EmailAliasForm extends BaseEmailAliasForm
 {
   public function configure()
   {
+		unset($this['created_at'], $this['updated_at']);
+	
         $this->validatorSchema['destination'] = new sfValidatorEmail();
-        $this->validatorSchema['local_part'] = new sfValidatorRegex(array(
-         'pattern'=>'/^[a-zA-Z0-9-\._]+$/'));
-        //$this->validatorSchema['local_part'] = new sfValidatorNumber(array('max'=>20, 'min'=>10));
+        $this->validatorSchema['local_part'] = new sfValidatorRegex(array('pattern'=>'/^[a-zA-Z0-9-\._]+$/'));
   }
 }

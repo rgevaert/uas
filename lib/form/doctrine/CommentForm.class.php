@@ -33,6 +33,7 @@ class CommentForm extends BaseCommentForm
   public function configure()
   {
     parent::configure();
+	unset($this['created_at'], $this['updated_at']);
     $this->configure_specific();  
   }
 }
