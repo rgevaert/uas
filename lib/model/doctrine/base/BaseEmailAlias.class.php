@@ -32,7 +32,6 @@ abstract class BaseEmailAlias extends sfDoctrineRecord
         $this->hasColumn('local_part', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('domainname_id', 'integer', null, array(

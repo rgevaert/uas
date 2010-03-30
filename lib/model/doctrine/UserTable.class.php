@@ -15,11 +15,8 @@ class UserTable extends Doctrine_Table
 
     static public function getMaxUid()
 	{
-		$connection = Propel::getConnection();
-		$query = "SELECT MAX(" . UserPeer::UID . ") AS max FROM " . UserPeer::TABLE_NAME;
-		$result = $connection->query($query);
-		$row = $result->fetch();
-		return $row['max'];
+		$result = Doctrine::getTable('User')->createQuery('c')->select('MAX(c.uid) AS uid')->fetchArray();
+		return $result[0]['uid'];
 	}
 
 	static public function check_if_login_exists($login = "")

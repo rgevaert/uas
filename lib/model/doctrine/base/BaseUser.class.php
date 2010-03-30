@@ -93,19 +93,16 @@ abstract class BaseUser extends sfDoctrineRecord
         $this->hasColumn('name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('fathers_name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('grand_fathers_name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('login', 'string', 50, array(
@@ -170,6 +167,15 @@ abstract class BaseUser extends sfDoctrineRecord
              ));
 
 
+        $this->index('name', array(
+             'fields' => 
+             array(
+              0 => 'name',
+              1 => 'fathers_name',
+              2 => 'grand_fathers_name',
+             ),
+             'type' => 'unique',
+             ));
         $this->index('email_address', array(
              'fields' => 
              array(

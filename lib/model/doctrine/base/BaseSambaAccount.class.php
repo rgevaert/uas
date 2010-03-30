@@ -33,7 +33,6 @@ abstract class BaseSambaAccount extends sfDoctrineRecord
         $this->hasColumn('hostname', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
 

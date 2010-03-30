@@ -33,10 +33,7 @@ abstract class BaseEmailAliasForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'EmailAlias', 'column' => array('local_part'))),
-        new sfValidatorDoctrineUnique(array('model' => 'EmailAlias', 'column' => array('local_part', 'domainname_id', 'destination'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'EmailAlias', 'column' => array('local_part', 'domainname_id', 'destination')))
     );
 
     $this->widgetSchema->setNameFormat('email_alias[%s]');

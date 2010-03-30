@@ -33,10 +33,7 @@ abstract class BaseUnixAccountForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'UnixAccount', 'column' => array('hostname'))),
-        new sfValidatorDoctrineUnique(array('model' => 'UnixAccount', 'column' => array('user_id', 'hostname'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'UnixAccount', 'column' => array('user_id', 'hostname')))
     );
 
     $this->widgetSchema->setNameFormat('unix_account[%s]');

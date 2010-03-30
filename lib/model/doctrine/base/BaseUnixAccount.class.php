@@ -36,7 +36,6 @@ abstract class BaseUnixAccount extends sfDoctrineRecord
         $this->hasColumn('hostname', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'unique' => true,
              'length' => '255',
              ));
         $this->hasColumn('quota', 'integer', null, array(

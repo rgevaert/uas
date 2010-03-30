@@ -1,6 +1,6 @@
 User:
   eyuel:
-    domainname_id:          ju
+    DomainName:          ju
     name:               Eyuel
     fathers_name:       Gessese
     grand_fathers_name: W
@@ -12,7 +12,7 @@ User:
     expires_at:         2010-12-31
 
   shimels:
-    domainname_id:          ju
+    DomainName:          ju
     name:               Shimels
     fathers_name:       Chala
     grand_fathers_name: Z
@@ -24,7 +24,7 @@ User:
     expires_at:         2010-12-31
 
   habtom:
-    domainname_id:          mu
+    DomainName:          mu
     name:               Habtom
     fathers_name:       K
     grand_fathers_name: Z
@@ -36,7 +36,7 @@ User:
     expires_at:         2010-12-31
 
   yemane:
-    domainname_id:          mu
+    DomainName:          mu
     name:               Yemane
     fathers_name:       S
     grand_fathers_name: G

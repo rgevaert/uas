@@ -49,7 +49,7 @@ class Password
         {
                 $specialChars = array(
                    "$","@","#",")","(","[","]","?","=","%","!");
-                $two_special = $specialChars[rand(0,11)].$specialChars[rand(0,11)];
+                $two_special = $specialChars[rand(0,10)].$specialChars[rand(0,10)];
                 $two_number = chr(rand(48,57)).chr(rand(48,57));
                 $two_capital = chr(rand(65,90)).chr(rand(65,90));
                 $two_sletters = chr(rand(97,122)).chr(rand(97,122));

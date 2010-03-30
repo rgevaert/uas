@@ -1,15 +1,15 @@
 EmailAlias:
   alias1:
-    domainname_id: ju
+    DomainName: ju
     local_part: webmaster
     destination: eyuel.gessese@ju.edu.et
 
   alias2:
-    domainname_id: ju
+    DomainName: ju
     local_part: webmaster
     destination: shimels.chala@ju.edu.et
 
   alias3:
-    domainname_id: mu
+    DomainName: mu
     local_part: webmaster
     destination: habtom.kaysey@mu.edu.et

@@ -62,11 +62,9 @@ abstract class BaseUserForm extends BaseFormDoctrine
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('name'))),
-        new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('fathers_name'))),
-        new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('grand_fathers_name'))),
         new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('login'))),
         new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('uid'))),
+        new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('name', 'fathers_name', 'grand_fathers_name'))),
         new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('email_local_part', 'domainname_id'))),
       ))
     );

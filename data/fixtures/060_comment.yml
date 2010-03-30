@@ -1,12 +1,12 @@
 Comment:
   comment1: 
-     user_id: eyuel
+     User: eyuel
      subject: suggestion one
      message: suggestion one message
      created_at: 2010-12-31
      
   comment2:
-     user_id: habtom
+     User: habtom
      subject: suggestion two
      message: suggestion two message
      created_at: 2010-12-31

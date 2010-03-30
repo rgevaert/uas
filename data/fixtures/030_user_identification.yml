@@ -1,17 +1,17 @@
 UserIdentification:
   useridentification1:
     identification: 2000/1
-    user_id:        eyuel
+    User:        eyuel
 
   useridentification2:
     identification: ABC
-    user_id:        eyuel
+    User:        eyuel
 
 
   useridentification3:
     identification: 2000/2
-    user_id:        habtom
+    User:        habtom
 
   useridentification4:
     identification: 2000/5
-    user_id:        yemane
+    User:        yemane

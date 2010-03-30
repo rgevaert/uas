@@ -7,9 +7,9 @@ User:
     actAs: { Timestampable: ~ }
     columns:
         domainname_id:    { type: integer, notnull: true }
-        name:   { type: string(255), notnull: true, unique: true }
-        fathers_name: { type: string(255), notnull: true, unique: true }
-        grand_fathers_name: { type: string(255), notnull: true, unique: true }
+        name:   { type: string(255), notnull: true}
+        fathers_name: { type: string(255), notnull: true }
+        grand_fathers_name: { type: string(255), notnull: true }
         login:        { type: string(50), notnull: true, unique: true }
         phone:        { type: string(255) }
         nt_password:  { type: string(255) }
@@ -26,6 +26,9 @@ User:
     relations:
         DomainName: { onDelete: CASCADE, local: domainname_id, foreign: id, foreignAlias: Users }
     indexes:
+      name:
+          fields: [name, fathers_name, grand_fathers_name]
+          type: unique
       email_address: 
           fields: [email_local_part, domainname_id]
           type: unique
@@ -43,7 +46,7 @@ UnixAccount:
     actAs: { Timestampable: ~ }
     columns:
         user_id:      { type: integer, notnull: true } 
-        hostname:     { type: string(255), notnull: true, unique: true }
+        hostname:     { type: string(255), notnull: true }
         quota:        { type: integer, default: '500000' }
     relations:
         User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: UnixAccounts }
@@ -70,7 +73,7 @@ SambaAccount:
     actAs: { Timestampable: ~ }
     columns:
         user_id:      { type: integer, notnull: true }
-        hostname:     { type: string(255), notnull: true, unique: true }
+        hostname:     { type: string(255), notnull: true }
     indexes:
         account:
             fields: [user_id, hostname]
@@ -81,7 +84,7 @@ SambaAccount:
 EmailAlias:
     actAs: { Timestampable: ~ }
     columns:
-      local_part:   { type: string(255), notnull: true, unique: true }
+      local_part:   { type: string(255), notnull: true }
       domainname_id:    { type: integer, notnull: true }
       destination:  { type: string(255), notnull: true }
     relations:

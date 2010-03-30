@@ -31,10 +31,7 @@ abstract class BaseSambaAccountForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'SambaAccount', 'column' => array('hostname'))),
-        new sfValidatorDoctrineUnique(array('model' => 'SambaAccount', 'column' => array('user_id', 'hostname'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'SambaAccount', 'column' => array('user_id', 'hostname')))
     );
 
     $this->widgetSchema->setNameFormat('samba_account[%s]');
