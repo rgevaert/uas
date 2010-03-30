@@ -1,0 +1,103 @@
+DomainName:
+    actAs: { Timestampable: ~ }
+    columns:
+        name:         { type: string(255), notnull: true, unique: true }
+
+User:
+    actAs: { Timestampable: ~ }
+    columns:
+        domainname_id:    { type: integer, notnull: true }
+        name:   { type: string(255), notnull: true, unique: true }
+        fathers_name: { type: string(255), notnull: true, unique: true }
+        grand_fathers_name: { type: string(255), notnull: true, unique: true }
+        login:        { type: string(50), notnull: true, unique: true }
+        phone:        { type: string(255) }
+        nt_password:  { type: string(255) }
+        lm_password:  { type: string(255) }
+        crypt_password: { type: string(255) }
+        unix_password: { type: string(255) }
+        gid:          { type: integer, notnull: true }
+        uid:          { type: integer, notnull: true, unique: true }
+        status:       { type: string(20), notnull: true, default: 'disactivated' }
+        alternate_email: { type: string(255) }
+        email_local_part:   { type: string(255), notnull: true }
+        email_quota:        { type: string(32), notnull: true, default: '500000S' }
+        expires_at:   { type: timestamp, notnull: true }
+    relations:
+        DomainName: { onDelete: CASCADE, local: domainname_id, foreign: id, foreignAlias: Users }
+    indexes:
+      email_address: 
+          fields: [email_local_part, domainname_id]
+          type: unique
+  
+UserIdentification:
+    actAs: { Timestampable: ~ }
+    columns:
+        identification:       { type: string(255), unique: true } 
+        user_id:      { type: integer, notnull: true }
+    relations:
+        User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: UserIdentifications }
+
+
+UnixAccount:
+    actAs: { Timestampable: ~ }
+    columns:
+        user_id:      { type: integer, notnull: true } 
+        hostname:     { type: string(255), notnull: true, unique: true }
+        quota:        { type: integer, default: '500000' }
+    relations:
+        User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: UnixAccounts }
+    indexes:
+        account:
+            fields: [user_id, hostname]
+            type: unique
+
+FtpAccount:
+    actAs: { Timestampable: ~ }
+    columns:
+        user_id:      { type: integer, notnull: true } 
+        up_bandwidth: { type: integer, default: 0 }
+        down_bandwidth: { type: integer, default: 0 }
+        ip_access:    { type: string(255), default: '*' }
+        quota_size:   { type: integer, default: 0 }
+        quota_files:  { type: integer, default: 0 }
+    relations:
+        User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: FtpAccounts }
+        
+      
+
+SambaAccount:
+    actAs: { Timestampable: ~ }
+    columns:
+        user_id:      { type: integer, notnull: true }
+        hostname:     { type: string(255), notnull: true, unique: true }
+    indexes:
+        account:
+            fields: [user_id, hostname]
+            type: unique
+    relations:
+        User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: SambaAccounts }
+
+EmailAlias:
+    actAs: { Timestampable: ~ }
+    columns:
+      local_part:   { type: string(255), notnull: true, unique: true }
+      domainname_id:    { type: integer, notnull: true }
+      destination:  { type: string(255), notnull: true }
+    relations:
+        DomainName: { onDelete: CASCADE, local: domainname_id, foreign: id, foreignAlias: EmailAlias }
+    indexes:
+        email_alias: 
+            fields: [local_part, domainname_id, destination]
+            type: unique
+  
+Comment:
+    actAs: { Timestampable: ~ }
+    columns:
+      user_id:      { type: integer, notnull: true }
+      subject:      { type: string(255), notnull: true }
+      message:      { type: string(500), notnull: true }
+      is_public:    { type: boolean, default: 0 }
+      is_activated: { type: boolean, default: 0 }
+    relations:
+        User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: Comment }
