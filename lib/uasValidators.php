@@ -3,7 +3,7 @@ class uasValidatorLoginExists extends sfValidatorBase
 {
   protected function doClean($login)
   {
-	$user = UserPeer::getUserFromLogin($login);
+	$user = UserTable::getUserFromLogin($login);
 
     if (!$user)
     {
@@ -24,7 +24,7 @@ class uasValidatorPasswordIsCorrect extends sfValidatorBase
   protected function doClean($password)
   {
 	$login = $_POST['credentials']['login'];
-	$user = UserPeer::getUserFromLogin($login);
+	$user = UserTable::getUserFromLogin($login);
 
     if (!$user->checkPassword(new Password($password)))
     {
