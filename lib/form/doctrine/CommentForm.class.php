@@ -10,16 +10,11 @@
  */
 class CommentForm extends BaseCommentForm
 {
-  public function configure_specific()
-  { 
+  public function configure_specific(){ 
+	unset($this['created_at'], $this['updated_at']);
+	
     $this->widgetSchema['message'] = new sfWidgetFormTextarea();	   
-    //$this->widgetSchema['user_id'] = new sfWidgetFormInputHidden();
-    //$current_id = new User();
-    //$current_user = $this->getObject()->getUser();
-    //var_dump($current_user);
-    //echo "current id=" . $current_user."\n";
     $this->widgetSchema['user_id'] = new sfWidgetFormInputHidden(array(), array('value' =>1));
-    //die();
     $this->validatorSchema['subject'] = new sfValidatorString(array(
         'max_length'=>255), array(
         'invalid' => 'Should not exceed 255 characters'
