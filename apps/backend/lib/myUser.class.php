@@ -16,7 +16,7 @@ class myUser extends sfBasicSecurityUser
     public function getUserHistory()
     {
         $ids = $this->getAttribute('user_history', array());
-        return UserPeer::retrieveByPKs($ids);
+        return Doctrine::getTable('User')->createQuery()->andWhereIn('id', $ids);
     }
     public function resetUserHistory()
     {

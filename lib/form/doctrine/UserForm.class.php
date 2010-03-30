@@ -24,11 +24,11 @@ class UserForm extends BaseUserForm
 	      ('pattern'=>'/^[a-zA-Z\s]{2,}$/', 'required' => false), array('invalid' => 'Grand Father name is invalid, Enter Any character in the range a-z or A-Z, spaces and minimum two characters'
     ));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
-        'choices' => UserPeer::$status_types,
+        'choices' => UserTable::$status_types,
         'expanded' => true,
     ));
     $this->validatorSchema['status'] = new sfValidatorChoice(array(
-        'choices' => array_keys(UserPeer::$status_types),
+        'choices' => array_keys(UserTable::$status_types),
     ));
 
     $this->validatorSchema['gid'] = new sfValidatorInteger(array(
@@ -45,7 +45,7 @@ class UserForm extends BaseUserForm
 	     ('pattern'=>'/^[\d]+[SC]$/'));
 	
 	$this->widgetSchema['gid'] = new sfWidgetFormChoice(array(
-        'choices' => UserPeer::$gid_types,
+        'choices' => UserTable::$gid_types,
         'multiple' => false,
     ));	   
 

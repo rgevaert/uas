@@ -43,7 +43,7 @@
 			</tr>
 			<tr>
 				<td><label>Email address</label></td>
-				<td><?php echo $user->getEmailLocalPart() . "@" . $user->getDomainname()->getName(); ?></td>
+				<td><?php echo $user->getEmailLocalPart() . "@" . $user->getDomainName()->getName(); ?></td>
 			</tr>
 			<tr>
 				<td><label>Alternate Email address</label></td>

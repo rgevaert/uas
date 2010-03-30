@@ -18,7 +18,7 @@ class userActions extends autoUserActions
         //$user = UserPeer::retrieveByPk($request->getParameter('id'));
        // $user = $this->getRoute()->getObject();
         $id = $request->getParameter('id'); 
-        $user = UserPeer::retrieveByPk($id);
+        $user = Doctrine::getTable('User')->find($id);
        
         $user->ToggleStatus();
         $this->getUser()->setFlash('notice', 'Status is changed successfully.');
@@ -27,7 +27,7 @@ class userActions extends autoUserActions
     public function executeBatchToggle_status(sfWebRequest $request)
     {
         $ids = $request->getParameter('ids'); 
-        $users = UserPeer::retrieveByPks($ids);
+		$users = Doctrine::getTable('User')->createQuery('q')->whereIn('id', $ids)->execute();
         foreach ($users as $user)
         {
             $user->ToggleStatus();        
@@ -44,7 +44,7 @@ class userActions extends autoUserActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-    $this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object  does not exist (%s).', $request->getParameter('id')));
+    $this->user = $this->getRoute()->getObject();
     $user->delete();
 
     $this->redirect('user/index');
@@ -53,28 +53,28 @@ class userActions extends autoUserActions
   public function executeResetpassword(sfWebRequest $request)
   {
     // Get the current user
-	$user = UserPeer::retrieveByPk($request->getParameter('id'));
+    $this->user = $this->getRoute()->getObject();
 
     // Set the password
     $password = new Password();
-	$user->setPassword($password);
+	$this->user->setPasswordObject($password);
 
     // Flash message
     $generated_pass = $password->getPassword();
-    $this->getUser()->setFlash('generated_pass',$generated_pass);
+    $this->getUser()->setFlash('generated_pass', $generated_pass);
     $this->getUser()->setFlash('notice', "User password has been reset");
 
     // Redirect the user back to the user's page
-    $this->redirect('user/ListShow?id='.$user->getId());
+    $this->redirect('user/ListShow?id='.$this->user->getId());
   }
 
 
   public function executeListExtend(sfWebRequest $request)
   {
         $id = $request->getParameter('id'); 
-        $user = UserPeer::retrieveByPk($id);
+        $this->user = $this->getRoute()->getObject();
        
-        $user->displayExtendExpiresAt();
+        $this->user->displayExtendExpiresAt();
         $this->getUser()->setFlash('notice', 'Account expriry time has been extended successfully.');
         $this->redirect('user/ListShow?id='.$id);    
   }

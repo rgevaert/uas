@@ -25,27 +25,30 @@ class sessionActions extends sfActions
     if(!$username OR !$user_password)
     {
         $this->getUser()->setFlash('error','You must provide Username / Password');
-    }
+    	return;
+	}
 
-    // Getting the user object
-    $c = new Criteria();
-    $c->add(UserPeer::LOGIN, $username);
-    $user = UserPeer::doSelectOne($c);    
-
+	$user = Doctrine::getTable('User')->findOneByLogin($username);
+	
     // Check the user in db
     if($user)
     {
         $password = new Password($user_password);  
 
-        if($user->checkPassword($password) && $user->getCredential())
-        {
-            $this->getUser()->addCredential($user->getCredential());
-            $this->getUser()->setAuthenticated(true);
-            $this->getUser()->setFlash('notice', "Welcome " . $user->getCredential());
-            $this->redirect('@user');            
-        }
+        if($user->checkPassword($password)) {
+			if($user->getCredential()) {
+            	$this->getUser()->addCredential($user->getCredential());
+            	$this->getUser()->setAuthenticated(true);
+            	$this->getUser()->setFlash('notice', "Welcome " . $user->getCredential());
+            	$this->redirect('@user');            
+        	} else {
+		    	$this->getUser()->setFlash('error','You do not have the needed credentials.');
+				return;
+			}
+    	}
     }
     $this->getUser()->setFlash('error','You are not authorized.');
+	return;
   }
  
   public function executeLogout(sfWebRequest $request)
