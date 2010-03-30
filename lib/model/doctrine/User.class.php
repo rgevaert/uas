@@ -92,7 +92,7 @@ class User extends BaseUser
 	{		
 		$a = array(
 			$this->getName() . $suffix,
-			$this->getName() . $this->getFathersname() . $suffix			
+			$this->getName() . $this->getFathersName() . $suffix			
 			);
 
         $a = array_map('strtolower', $a);
@@ -108,7 +108,7 @@ class User extends BaseUser
 		$counter = 0;
 
 		$login_to_try = array_shift($logins_to_try);		
-		while(!UserPeer::check_if_login_exists($login_to_try)){
+		while(!UserTable::check_if_login_exists($login_to_try)){
 			if(count($logins_to_try) == 0){
 				$counter++;
 				$logins_to_try = $this->get_all_possible_logins($counter);
@@ -129,10 +129,10 @@ class User extends BaseUser
     protected function get_all_possible_local_part($suffix = "")
     {
         $a = array(
-            $this->getName() . "." . $this->getFathersname() . $suffix,
+            $this->getName() . "." . $this->getFathersName() . $suffix,
             $this->getName() . ".". $this->getGrandFathersName() . $suffix,
-            $this->getFathersname() . ".". $this->getName() . $suffix,
-            $this->getFathersname() . ".". $this->getGrandFathersName() . $suffix,
+            $this->getFathersName() . ".". $this->getName() . $suffix,
+            $this->getFathersName() . ".". $this->getGrandFathersName() . $suffix,
         );
 
         $a = array_map('strtolower', $a);
@@ -148,7 +148,7 @@ class User extends BaseUser
 		$counter = 0;
 
 		$local_part_to_try = array_shift($local_parts_to_try);
-		while(!UserPeer::check_if_local_part_exists($local_part_to_try))
+		while(!UserTable::check_if_local_part_exists($local_part_to_try))
 		    {
 			    if(count($local_parts_to_try) == 0){
 				    $counter++;
@@ -172,11 +172,10 @@ class User extends BaseUser
 	
 	public function setPasswordObject(Password $password)
 	{		
-//        $this->setNtPassword($password->getNtHash());
-//        $this->setLmPassword($password->getLmHash());
+        $this->setNtPassword($password->getNtHash());
+        $this->setLmPassword($password->getLmHash());
         $this->setCryptPassword($password->getCryptHash());
-//        $this->setUnixPassword($password->getUnixHash());                      
-        //return $this->save();           
+        $this->setUnixPassword($password->getUnixHash());                      
 	}
 	
 	public function checkPassword(Password $password)
@@ -193,22 +192,15 @@ class User extends BaseUser
 
     public function listDelete()
     {
-        $criteria =  new Criteria();
-        $criteria->add(UserPeer::ID, $this->getId());
-        $criteria->add(FtpAccountPeer::USER_ID, $this->getId());
-        $criteria->add(SambaAccountPeer::USER_ID, $this->getId());
-        $criteria->add(UnixAccountPeer::USER_ID, $this->getId());
-        $criteria->add(UserIdentificationPeer::USER_ID, $this->getId());
-        UserPeer::doDelete($criteria);                
-        //return true;
+		$this->delete();
     }
 
 	public function getLoginName($email_address)
 	{
 	     $a = explode("@",$email_address);
 	     $c = new Criteria();
-	     $c->add(UserPeer::EMAIL_LOCAL_PART, $a[0]);                  
-          $login = UserPeer::doSelect($c);
+	     $c->add(UserTable::EMAIL_LOCAL_PART, $a[0]);                  
+          $login = UserTable::doSelect($c);
           return $login->getLogin();
 	}    
 }

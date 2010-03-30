@@ -1,13 +1,13 @@
 <?php
 
 /**
-	* user actions.
-	*
-	* @package    uas
-	* @subpackage user
-	* @author     Your name here
-	* @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
-	*/
+* user actions.
+*
+* @package    uas
+* @subpackage user
+* @author     Your name here
+* @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
+*/
 class userActions extends sfActions
 {
 	public function executeIndex(sfWebRequest $request)
@@ -23,7 +23,7 @@ class userActions extends sfActions
 
 		if($current_id == $requested_id )
 		{       
-			$this->user = UserPeer::retrieveByPk($request->getParameter('id'));
+			$this->user = Doctrine::getTable('User')->find($request->getParameter('id'));
 			$this->forward404Unless($this->user);
 		}
 		else
@@ -39,7 +39,7 @@ class userActions extends sfActions
 
 		if($current_id == $requested_id )
 		{ 
-			$this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
+			$this->forward404Unless($user = Doctrine::getTable('User')->find($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
 			$this->form = new FrontendUserForm($user);
 		}
 		else
@@ -50,16 +50,11 @@ class userActions extends sfActions
 	public function executeUpdate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-		$this->forward404Unless($user = UserPeer::retrieveByPk($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
+		$this->forward404Unless($user = Doctrine::getTable('User')->find($request->getParameter('id')), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
 		$this->form = new FrontendUserForm($user);
 		$this->processForm($request, $this->form);
 		$this->setTemplate('edit');
 	}
-	/*public function executeComment(sfWebRequest $request)
-	{
-	     $current_id = $this->getUser()->getAttribute('user_id');
-          $this->redirect('coment/new?id='.$current_id);  
-	}*/
 
 	protected function processForm(sfWebRequest $request, sfForm $form)
 	{
@@ -71,41 +66,34 @@ class userActions extends sfActions
 		}
 	}
 
-	// public function executeShowchangepassword(sfWebRequest $request)
-	// {
-		// 	$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
-		// 	$this->form = new ChangePasswordForm();
-		// 	$this->setTemplate('changepassword');
-		// }
+	public function executeChangepassword(sfWebRequest $request)
+	{
+		$this->form = new ChangePasswordForm();
+		$this->user = Doctrine::getTable('User')->find($this->getUser()->getAttribute('user_id'));
+		if($request->isMethod('post')){ // if the form is submitted
 
-		public function executeChangepassword(sfWebRequest $request)
-		{
-			$this->form = new ChangePasswordForm();
-			$this->user = UserPeer::retrieveByPk($this->getUser()->getAttribute('user_id'));
-			if($request->isMethod('post')){ // if the form is submitted
+			$this->form->bind($request->getParameter('changepassword'));
+			if ($this->form->isValid())
+			{
+				$pass_parameters = $request->getParameter('changepassword');
+				$password = new Password($pass_parameters['new_password']);
+				$current_password = new Password($pass_parameters['password']);
 
-				$this->form->bind($request->getParameter('changepassword'));
-				if ($this->form->isValid())
-				{
-					$pass_parameters = $request->getParameter('changepassword');
-					$password = new Password($pass_parameters['new_password']);
-					$current_password = new Password($pass_parameters['password']);
-
-					if($this->user->checkPassword($current_password))
-					{           
-						$this->user->setPassword($password);
-						$this->getUser()->setFlash('notice', "You have changed your password successfully");
-					}
-					else
-					{
-						$this->getUser()->setFlash('notice', "Please type your existing password correctly");
-						$this->redirect('user/changepassword');
-					}
-					$this->redirect('user/show?id='.$this->user->getId());
+				if($this->user->checkPassword($current_password))
+				{           
+					$this->user->setPasswordObject($password);
+					$this->getUser()->setFlash('notice', "You have changed your password successfully");
 				}
-			} else { // not a post, just a get
-				//		$this->setTemplate('changepassword');
+				else
+				{
+					$this->getUser()->setFlash('notice', "Please type your existing password correctly");
+					$this->redirect('user/changepassword');
+				}
+				$this->redirect('user/show?id='.$this->user->getId());
 			}
-
+		} else { // not a post, just a get
+			//		$this->setTemplate('changepassword');
 		}
+
 	}
+}

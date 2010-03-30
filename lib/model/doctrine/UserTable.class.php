@@ -21,33 +21,18 @@ class UserTable extends Doctrine_Table
 
 	static public function check_if_login_exists($login = "")
 	{
-		$criteria = new Criteria();
-		$criteria->add(self::LOGIN, $login);
-		$count = self::doCount($criteria);
-		if($count == 0){
-			return true;
-		} else {
-			return false;
-		}
+		return Doctrine::getTable('User')->createQuery('q')->where('login = ?', $login)->count() == 0;
 	}
 
     static public function check_if_local_part_exists($local_part = "")
     {
-      	$criteria = new Criteria();
-    	$criteria->add(self::EMAIL_LOCAL_PART, $local_part);
-    	$count = self::doCount($criteria);
-    	if($count == 0){
-            return true;
-        } else {
-            return false;
-        }
+		$data = Doctrine::getTable('User')->findOneByEmailLocalPart($local_part);
+    	return !$data;
     }
 
 	static public function getUserFromLogin($login)
 	{
-	     $c = new Criteria();
-          $c->add(self::LOGIN, $login);
-          return self::doSelectOne($c);	   
+		return self::findOneByLogin($login);
 	}
 	
 	static public function getUserFromEmailLocalPart($email_local_part)
