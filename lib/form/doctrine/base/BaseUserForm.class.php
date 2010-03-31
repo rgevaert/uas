@@ -33,6 +33,7 @@ abstract class BaseUserForm extends BaseFormDoctrine
       'email_local_part'   => new sfWidgetFormInputText(),
       'email_quota'        => new sfWidgetFormInputText(),
       'expires_at'         => new sfWidgetFormDateTime(),
+      'sfguarduser_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'add_empty' => true)),
       'created_at'         => new sfWidgetFormDateTime(),
       'updated_at'         => new sfWidgetFormDateTime(),
     ));
@@ -56,6 +57,7 @@ abstract class BaseUserForm extends BaseFormDoctrine
       'email_local_part'   => new sfValidatorString(array('max_length' => 255)),
       'email_quota'        => new sfValidatorString(array('max_length' => 32, 'required' => false)),
       'expires_at'         => new sfValidatorDateTime(),
+      'sfguarduser_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('sfGuardUser'), 'required' => false)),
       'created_at'         => new sfValidatorDateTime(),
       'updated_at'         => new sfValidatorDateTime(),
     ));

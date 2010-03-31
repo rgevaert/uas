@@ -22,7 +22,9 @@
  * @property string $email_local_part
  * @property string $email_quota
  * @property timestamp $expires_at
+ * @property integer $sfguarduser_id
  * @property DomainName $DomainName
+ * @property sfGuardUser $sfGuardUser
  * @property Doctrine_Collection $UserIdentifications
  * @property Doctrine_Collection $UnixAccounts
  * @property Doctrine_Collection $FtpAccounts
@@ -46,7 +48,9 @@
  * @method string              getEmailLocalPart()      Returns the current record's "email_local_part" value
  * @method string              getEmailQuota()          Returns the current record's "email_quota" value
  * @method timestamp           getExpiresAt()           Returns the current record's "expires_at" value
+ * @method integer             getSfguarduserId()       Returns the current record's "sfguarduser_id" value
  * @method DomainName          getDomainName()          Returns the current record's "DomainName" value
+ * @method sfGuardUser         getSfGuardUser()         Returns the current record's "sfGuardUser" value
  * @method Doctrine_Collection getUserIdentifications() Returns the current record's "UserIdentifications" collection
  * @method Doctrine_Collection getUnixAccounts()        Returns the current record's "UnixAccounts" collection
  * @method Doctrine_Collection getFtpAccounts()         Returns the current record's "FtpAccounts" collection
@@ -69,7 +73,9 @@
  * @method User                setEmailLocalPart()      Sets the current record's "email_local_part" value
  * @method User                setEmailQuota()          Sets the current record's "email_quota" value
  * @method User                setExpiresAt()           Sets the current record's "expires_at" value
+ * @method User                setSfguarduserId()       Sets the current record's "sfguarduser_id" value
  * @method User                setDomainName()          Sets the current record's "DomainName" value
+ * @method User                setSfGuardUser()         Sets the current record's "sfGuardUser" value
  * @method User                setUserIdentifications() Sets the current record's "UserIdentifications" collection
  * @method User                setUnixAccounts()        Sets the current record's "UnixAccounts" collection
  * @method User                setFtpAccounts()         Sets the current record's "FtpAccounts" collection
@@ -165,6 +171,10 @@ abstract class BaseUser extends sfDoctrineRecord
              'type' => 'timestamp',
              'notnull' => true,
              ));
+        $this->hasColumn('sfguarduser_id', 'integer', 4, array(
+             'type' => 'integer',
+             'length' => '4',
+             ));
 
 
         $this->index('name', array(
@@ -191,6 +201,11 @@ abstract class BaseUser extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('DomainName', array(
              'local' => 'domainname_id',
+             'foreign' => 'id',
+             'onDelete' => 'CASCADE'));
+
+        $this->hasOne('sfGuardUser', array(
+             'local' => 'sfguarduser_id',
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
 

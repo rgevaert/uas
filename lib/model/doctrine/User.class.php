@@ -67,8 +67,8 @@ class User extends BaseUser
 
     public function save(Doctrine_Connection $con = null)
 	{
-       if(!$this->getId())
-        {       
+		// a new record?
+       if(!$this->getId()){       
            $this->setUid(UserTable::getMaxUid() + 1);
         }
 		if(!$this->getDomainnameId()){
@@ -85,6 +85,13 @@ class User extends BaseUser
 		   	$this->setPasswordObject($password);
 			$this->generated_password = $password->getPassword();
 		}
+		
+		// linking a one-on-one sfGuardUser
+		$sfguard_user = $this->getSfGuardUser();
+		$sfguard_user->setUsername($this->getLogin());
+		$sfguard_user->setIsActive(true);
+		$sfguard_user->save();
+		$this->setSfguarduserId($sfguard_user->getId());
 
        return parent::save(); 
 	}
@@ -177,6 +184,14 @@ class User extends BaseUser
         $this->setLmPassword($password->getLmHash());
         $this->setCryptPassword($password->getCryptHash());
         $this->setUnixPassword($password->getUnixHash());                      
+	}
+	
+	static public function checkSfGuardPassword($username, $password)
+	{
+		$sfguser = Doctrine::getTable('sfGuardUser')->findOneByUsername($username);
+		$user = Doctrine::getTable('User')->findOneBySfguarduserId($sfguser->getId());
+		$password_obj = new Password($password);
+		return $user->checkPassword($password_obj);
 	}
 	
 	public function checkPassword(Password $password)
