@@ -35,8 +35,8 @@ class sessionActions extends sfActions
 
 		if($form->isValid()){
 			$credentials = $request->getParameter('credentials');
-			$login = $credentials[login];
-			$user = UserPeer::getUserFromLogin($login);
+			$login = $credentials['login'];
+			$user = UserTable::getUserFromLogin($login);
 			
 			// set the session correctly
 	        $this->getUser()->setAuthenticated(true);

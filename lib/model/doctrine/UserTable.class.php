@@ -32,7 +32,7 @@ class UserTable extends Doctrine_Table
 
 	static public function getUserFromLogin($login)
 	{
-		return self::findOneByLogin($login);
+		return Doctrine::getTable('User')->findOneByLogin($login);
 	}
 	
 	static public function getUserFromEmailLocalPart($email_local_part)

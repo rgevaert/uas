@@ -1,7 +1,7 @@
 <h1>Please login</h1>
-<form action="<?= url_for('session/dologin'); ?>" method="post">
+<form action="<?php echo url_for('session/dologin'); ?>" method="post">
 
-	<?= $form ?>
+	<?php echo $form ?>
 
 	<input type="submit" value="login"><br/>
 	<br/>
