@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>User Administration System</title>
-	<?php use_stylesheet('admin.css') ?>
+   <?php use_stylesheet('admin.css') ?>
    <?php include_javascripts() ?>
    <?php include_stylesheets() ?></head>
 <body>
@@ -13,7 +13,7 @@
 		<p>User Administration System</p>
           <p>
            <?php if($sf_user->isAuthenticated()): ?>
-               <?php echo link_to('Logout | ', 'session/logout') ?>  
+               <?php echo link_to('Logout | ', '@sf_guard_signout') ?>  
            <?php endif; ?>
            <?php echo link_to('En', 'session/en') ?> | 
            <?php echo link_to('Tig', 'session/tig') ?> | 
@@ -32,8 +32,9 @@
 		          <li><?php echo link_to('Domains', '@domainname') ?></li>
 		          <li><?php echo link_to('Unix', '@unix_account') ?></li>
 		          <li><?php echo link_to('FTP', '@ftp_account') ?></li>
-                          <li><?php echo link_to('Samba', '@samba_account') ?></li>
-                          <li><?php echo link_to('Comments', '@comment') ?></li>
+                  <li><?php echo link_to('Samba', '@samba_account') ?></li>
+                  <li><?php echo link_to('Comments', '@comment') ?></li>
+                  <li><?php echo link_to('Permissions', '@sf_guard_permission') ?></li>
 
 		</ul>
 	</div>

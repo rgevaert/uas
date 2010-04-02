@@ -4,23 +4,18 @@ class SambaAccountTable extends Doctrine_Table
 {
 	public function getHostnames($value='')
 	{
-		$criteria = new Criteria();
-	 	$criteria->clearSelectColumns();
-	    $criteria->addSelectColumn(self::HOSTNAME);
-		$criteria->setDistinct();
+		$hosts = Doctrine::getTable('SambaAccount')->createQuery()
+			->distinct($flag = true)
+			->select('hostname')
+			->fetchArray();
 
-		$stmt = self::doSelectStmt($criteria);
-		while($host = $stmt->fetchColumn(0))
-		{
-		      $results[] = $host;
-		}
-		
-		return $results;
+		print_r($hosts);
+		return $hosts;
 	}
 
 	public function getActiveAccounts($hostname)
 	{
-		return $this->createQuery()
+		return Doctrine::getTable('SambaAccount')->createQuery()
 			->leftJoin('User u')
 			->andWhere('status = ?', 'activated')
 			->andWhere('hostname = ?', $hostname)

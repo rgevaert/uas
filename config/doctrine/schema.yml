@@ -23,8 +23,10 @@ User:
         email_local_part:   { type: string(255), notnull: true }
         email_quota:        { type: string(32), notnull: true, default: '500000S' }
         expires_at:   { type: timestamp, notnull: true }
+        sfguarduser_id: { type: integer(4) }
     relations:
         DomainName: { onDelete: CASCADE, local: domainname_id, foreign: id, foreignAlias: Users }
+        sfGuardUser: { onDelete: CASCADE, local: sfguarduser_id, foreign: id, foreignAlias: UasUser, foreignType: one }
     indexes:
       name:
           fields: [name, fathers_name, grand_fathers_name]

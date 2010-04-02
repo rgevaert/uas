@@ -15,7 +15,7 @@ class uasGeneratesmbpasswdTask extends sfBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       // add your own options here
     ));
 
@@ -40,7 +40,7 @@ EOF;
     $path = $arguments['path'] ? $arguments['path'] : '/tmp';
     
 	if($hostname == 'all'){
-	  	$hostnames = SambaAccountPeer::getHostnames();		
+	  	$hostnames = SambaAccountTable::getHostnames();		
 	} else {
 		$hostnames[] = $hostname;
 	}
@@ -49,7 +49,7 @@ EOF;
 	foreach($hostnames as $hostname){
 
 		$fh = fopen($path . '/' . $hostname . '.smbpasswd', 'w');
-		foreach(SambaAccountPeer::getActiveAccounts($hostname) as $samba_account){
+		foreach(SambaAccountTable::getActiveAccounts($hostname) as $samba_account){
 			fwrite($fh, $samba_account->getSmbpasswdLine() . "\n");
 		}
 		fclose($fh);

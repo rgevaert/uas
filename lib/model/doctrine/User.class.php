@@ -199,12 +199,12 @@ class User extends BaseUser
 		return $this->getCryptPassword() == $password->getCryptHash();
 	}
 	
-	public function getCredential()
-	{
-        if(in_array($this->login,sfConfig::get('app_admin'))) return 'admin';
-        if(in_array($this->login,sfConfig::get('app_secretary'))) return 'secretary' ;
-        return null;
-	}
+	// public function getCredential()
+	// {
+	//         if(in_array($this->login,sfConfig::get('app_admin'))) return 'admin';
+	//         if(in_array($this->login,sfConfig::get('app_secretary'))) return 'secretary' ;
+	//         return null;
+	// }
 
     public function listDelete()
     {
